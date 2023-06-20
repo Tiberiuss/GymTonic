@@ -20,6 +20,6 @@ public class RoutineService {
     }
 
     public void create(Routine routine) {
-        repository.create(routine);
+        repository.save(routine);
     }
 }

@@ -1,16 +1,21 @@
 package com.gym.GymTonic.model;
 
-import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import java.util.Set;
+
 @Entity
-@Table(name = "routine")
+@Table(name = "routine_table")
 public class Routine {
 
     @Id
@@ -26,9 +31,19 @@ public class Routine {
     private Integer id;
     private String name;
     private Integer user_id;
-    private DayOfWeek date;
+    private LocalDate date;
+    @ManyToMany
+    @JoinTable(
+        name = "routine_exercises", 
+        joinColumns = @JoinColumn(name = "routine_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id")
+    )
+    private Set<Exercise> exercises;
 
-    public Routine(String name, Integer user_id, DayOfWeek date) {
+    public Routine() {
+    }
+
+    public Routine(String name, Integer user_id, LocalDate date) {
         this.name = name;
         this.user_id = user_id;
         this.date = date;
@@ -58,12 +73,20 @@ public class Routine {
         this.user_id = user_id;
     }
 
-    public DayOfWeek getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
-    public void setDate(DayOfWeek date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Set<Exercise> getExercises() {
+        return this.exercises;
+    }
+
+    public void setExercises(Set<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
     @Override

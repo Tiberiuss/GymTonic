@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GymTonicApplication<GymTonic>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.gym.GymTonic.GymTonicApplication",
+            "projectName": "GymTonic",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

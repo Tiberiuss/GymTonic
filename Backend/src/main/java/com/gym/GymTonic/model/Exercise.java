@@ -8,11 +8,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "exercise")
+@Table(name = "exercise_table")
 public class Exercise {
 
     @Id
-        @SequenceGenerator(
+    @SequenceGenerator(
         name = "exercise_sequence",
         sequenceName = "exercise_sequence",
         allocationSize = 1
@@ -24,6 +24,9 @@ public class Exercise {
     private Integer id;
     private String name;
     private Material material;
+
+    public Exercise() {
+    }
 
     public Exercise(String name, Material material) {
         this.name = name;

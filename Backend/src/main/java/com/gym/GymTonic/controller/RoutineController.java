@@ -17,13 +17,14 @@ public class RoutineController {
     public RoutineController(RoutineService service) {
         this.service = service;
     }
+
     @GetMapping
-    public List<Routine> findAll(){
+    public List<Routine> findAll() {
         return service.findAll();
     }
 
     @PostMapping
-    public void create(@RequestBody Routine routine){
+    public void create(@RequestBody Routine routine) {
         service.create(routine);
     }
 }
