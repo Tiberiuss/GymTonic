@@ -1,5 +1,7 @@
 package com.gym.GymTonic.model;
 
+import java.time.DayOfWeek;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,26 +10,28 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "exercise")
-public class Exercise {
+@Table(name = "routine")
+public class Routine {
 
     @Id
-        @SequenceGenerator(
-        name = "exercise_sequence",
-        sequenceName = "exercise_sequence",
+    @SequenceGenerator(
+        name = "routine_sequence",
+        sequenceName = "routine_sequence",
         allocationSize = 1
     )
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "exercise_sequence"
+        generator = "routine_sequence"
     )
     private Integer id;
     private String name;
-    private Material material;
+    private Integer user_id;
+    private DayOfWeek date;
 
-    public Exercise(String name, Material material) {
+    public Routine(String name, Integer user_id, DayOfWeek date) {
         this.name = name;
-        this.material = material;
+        this.user_id = user_id;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -46,12 +50,20 @@ public class Exercise {
         this.name = name;
     }
 
-    public Material getMaterial() {
-        return this.material;
+    public Integer getUser_id() {
+        return this.user_id;
     }
 
-    public void setMaterial(Material material) {
-        this.material = material;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
+
+    public DayOfWeek getDate() {
+        return this.date;
+    }
+
+    public void setDate(DayOfWeek date) {
+        this.date = date;
     }
 
     @Override
@@ -59,7 +71,8 @@ public class Exercise {
         return "{" +
             " id='" + getId() + "'" +
             ", name='" + getName() + "'" +
-            ", material='" + getMaterial() + "'" +
+            ", user_id='" + getUser_id() + "'" +
+            ", date='" + getDate() + "'" +
             "}";
     }
 

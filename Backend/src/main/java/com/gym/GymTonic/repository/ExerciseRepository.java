@@ -16,4 +16,12 @@ public class ExerciseRepository {
     public void create(Exercise exercise) {
         exerciseList.add(exercise);
     }
+
+    public void delete_by_id(Integer id) {
+        for (Exercise exercise : this.exerciseList){
+            if (exercise.getId() == id){
+                exerciseList.remove(exercise);
+            }
+        }
+    }
 }
