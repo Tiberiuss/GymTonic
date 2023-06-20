@@ -17,8 +17,9 @@ public class ExerciseController {
     public ExerciseController(ExerciseService service) {
         this.service = service;
     }
+
     @GetMapping
-    public List<Exercise> findAll(){
+    public List<Exercise> findAll() {
         return service.findAll();
     }
 

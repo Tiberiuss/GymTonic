@@ -21,6 +21,6 @@ public class ExerciseService {
     }
 
     public void create(Exercise exercise) {
-        repository.create(exercise);
+        repository.save(exercise);
     }
 }
