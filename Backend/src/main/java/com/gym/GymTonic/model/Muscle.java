@@ -17,11 +17,13 @@ public class Muscle {
     )
     private Integer id;
     private String muscle_name;
-    private Integer muscle_group_id;
+    @ManyToOne
+    @JoinColumn(name = "muscle_group_id", nullable = false)
+    private MuscleGroup muscle_group;
 
-    public Muscle(String muscle_name, Integer muscle_group_id){
+    public Muscle(String muscle_name, MuscleGroup muscle_group){
         this.muscle_name = muscle_name;
-        this.muscle_group_id = muscle_group_id;
+        this.muscle_group = muscle_group;
     }
 
     public Integer getId() {
@@ -40,12 +42,12 @@ public class Muscle {
         this.muscle_name = muscle_name;
     }
 
-    public Integer getMuscle_group_id() {
-        return muscle_group_id;
+    public MuscleGroup getMuscle_group() {
+        return muscle_group;
     }
 
-    public void setMuscle_group_id(Integer muscle_group_id) {
-        this.muscle_group_id = muscle_group_id;
+    public void setMuscle_group(MuscleGroup muscle_group) {
+        this.muscle_group = muscle_group;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class Muscle {
         return "Muscle{" +
                 "id=" + id +
                 ", muscle_name='" + muscle_name + '\'' +
-                ", muscle_group_id=" + muscle_group_id +
+                ", muscle_group=" + muscle_group +
                 '}';
     }
 }

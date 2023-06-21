@@ -1,6 +1,7 @@
 package com.gym.GymTonic.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "muscle_group")
@@ -17,6 +18,8 @@ public class MuscleGroup {
     )
     private Integer id;
     private String group;
+    @OneToMany(mappedBy = "muscle_group")
+    private Collection<Muscle> muscles;
 
     public MuscleGroup(String group){
         this.group = group;

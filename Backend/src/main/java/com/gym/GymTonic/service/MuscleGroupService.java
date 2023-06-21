@@ -20,6 +20,6 @@ public class MuscleGroupService {
     }
 
     public void create(MuscleGroup muscle_group) {
-        repository.create(muscle_group);
+        repository.save(muscle_group);
     }
 }
