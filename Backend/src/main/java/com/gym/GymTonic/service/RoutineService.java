@@ -32,8 +32,12 @@ public class RoutineService {
         }
     }
 
-    public int update(Routine routine) {
+    public int update(Integer id, Routine routine) {
         try{
+            if (repository.findById(id).isEmpty()) {
+                return 500;
+            }
+            routine.setId(id);
             repository.save(routine);
             return 200;
         }catch (Exception e){
@@ -42,9 +46,9 @@ public class RoutineService {
         }
     }
 
-    public int delete(Routine routine) {
+    public int delete(Integer id) {
         try{
-            repository.delete(routine);
+            repository.deleteById(id);;
             return 200;
         }catch (Exception e){
             System.out.println(e);

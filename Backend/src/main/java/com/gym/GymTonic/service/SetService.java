@@ -33,8 +33,12 @@ public class SetService {
         }
     }
 
-    public int update(Set set) {
+    public int update(Integer id, Set set) {
         try{
+            if (repository.findById(id).isEmpty()) {
+                return 500;
+            }
+            set.setId(id);
             repository.save(set);
             return 200;
         }catch (Exception e){
@@ -43,9 +47,9 @@ public class SetService {
         }
     }
 
-    public int delete(Set set) {
+    public int delete(Integer id) {
         try{
-            repository.delete(set);
+            repository.deleteById(id);;
             return 200;
         }catch (Exception e){
             System.out.println(e);

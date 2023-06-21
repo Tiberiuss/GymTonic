@@ -33,13 +33,13 @@ public class RoutineController {
         service.create(routine);
     }
 
-    @PutMapping
-    public int update(@RequestBody Routine routine){
-        return service.update(routine);
+    @PutMapping("/id={id}")
+    public int update(@PathVariable Integer id, @RequestBody Routine routine){
+        return service.update(id, routine);
     }
 
-    @DeleteMapping
-    public int delete(@RequestBody Routine routine){
-        return service.delete(routine);
+    @DeleteMapping("/id={id}")
+    public int delete(@PathVariable Integer id){
+        return service.delete(id);
     }
 }

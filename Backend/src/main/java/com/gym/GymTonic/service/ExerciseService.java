@@ -39,8 +39,12 @@ public class ExerciseService {
         }
     }
 
-    public int update(Exercise exercise) {
+    public int update(Integer id, Exercise exercise) {
         try{
+            if (repository.findById(id).isEmpty()) {
+                return 500;
+            }
+            exercise.setId(id);
             repository.save(exercise);
             return 200;
         }catch (Exception e){
@@ -49,9 +53,9 @@ public class ExerciseService {
         }
     }
 
-    public int delete(Exercise exercise) {
+    public int delete(Integer id) {
         try{
-            repository.delete(exercise);
+            repository.deleteById(id);;
             return 200;
         }catch (Exception e){
             System.out.println(e);

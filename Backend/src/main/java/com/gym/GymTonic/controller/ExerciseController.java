@@ -33,13 +33,13 @@ public class ExerciseController {
         return service.create(exercise);
     }
 
-    @PutMapping
-    public int update(@RequestBody Exercise exercise){
-        return service.update(exercise);
+    @PutMapping("/id={id}")
+    public int update(@PathVariable Integer id, @RequestBody Exercise exercise){
+        return service.update(id, exercise);
     }
 
-    @DeleteMapping
-    public int delete(@RequestBody Exercise exercise){
-        return service.delete(exercise);
+    @DeleteMapping("/id={id}")
+    public int delete(@PathVariable Integer id){
+        return service.delete(id);
     }
 }

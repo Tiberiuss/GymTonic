@@ -2,11 +2,13 @@ package com.gym.GymTonic.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,13 +42,13 @@ public class SetController {
         service.create(set);
     }
 
-    @PutMapping
-    public int update(@RequestBody Set set){
-        return service.update(set);
+    @PutMapping("/id={id}")
+    public int update(@PathVariable Integer id, @RequestBody Set set){
+        return service.update(id, set);
     }
 
-    @DeleteMapping
-    public int delete(@RequestBody Set set){
-        return service.delete(set);
+    @DeleteMapping("/id={id}")
+    public int delete(@PathVariable Integer id){
+        return service.delete(id);
     }
 }
