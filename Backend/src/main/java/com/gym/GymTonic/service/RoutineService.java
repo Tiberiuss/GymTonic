@@ -22,4 +22,33 @@ public class RoutineService {
     public void create(Routine routine) {
         repository.save(routine);
     }
+
+    public Routine findById(Integer id) {
+        try{
+            return repository.findById(id).get();
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public int update(Routine routine) {
+        try{
+            repository.save(routine);
+            return 200;
+        }catch (Exception e){
+            System.out.println(e);
+            return 500;
+        }
+    }
+
+    public int delete(Routine routine) {
+        try{
+            repository.delete(routine);
+            return 200;
+        }catch (Exception e){
+            System.out.println(e);
+            return 500;
+        }
+    }
 }

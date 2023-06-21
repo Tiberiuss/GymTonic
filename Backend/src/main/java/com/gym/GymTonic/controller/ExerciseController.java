@@ -23,8 +23,23 @@ public class ExerciseController {
         return service.findAll();
     }
 
+    @GetMapping
+    public Exercise findExerciseById(@PathVariable Integer id) {
+        return service.findById(id);
+    }
+
     @PostMapping
-    public void create(@RequestBody Exercise exercise){
-        service.create(exercise);
+    public int create(@RequestBody Exercise exercise){
+        return service.create(exercise);
+    }
+
+    @PutMapping
+    public int update(@RequestBody Exercise exercise){
+        return service.update(exercise);
+    }
+
+    @DeleteMapping
+    public int delete(@RequestBody Exercise exercise){
+        return service.delete(exercise);
     }
 }

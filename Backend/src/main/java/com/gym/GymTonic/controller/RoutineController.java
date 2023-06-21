@@ -23,8 +23,23 @@ public class RoutineController {
         return service.findAll();
     }
 
+    @GetMapping
+    public Routine findExerciseById(@PathVariable Integer id) {
+        return service.findById(id);
+    }
+
     @PostMapping
     public void create(@RequestBody Routine routine) {
         service.create(routine);
+    }
+
+    @PutMapping
+    public int update(@RequestBody Routine routine){
+        return service.update(routine);
+    }
+
+    @DeleteMapping
+    public int delete(@RequestBody Routine routine){
+        return service.delete(routine);
     }
 }

@@ -23,4 +23,33 @@ public class SetService {
     public void create(Set set) {
         repository.save(set);
     }
+
+    public Set findById(Integer id) {
+        try{
+            return repository.findById(id).get();
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public int update(Set set) {
+        try{
+            repository.save(set);
+            return 200;
+        }catch (Exception e){
+            System.out.println(e);
+            return 500;
+        }
+    }
+
+    public int delete(Set set) {
+        try{
+            repository.delete(set);
+            return 200;
+        }catch (Exception e){
+            System.out.println(e);
+            return 500;
+        }
+    }
 }
