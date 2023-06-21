@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+
 
 @Entity
 @Table(name = "exercise_table")
@@ -23,6 +26,7 @@ public class Exercise {
     )
     private Integer id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Material material;
 
     public Exercise() {

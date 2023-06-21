@@ -17,12 +17,12 @@ public class MuscleGroup {
             generator = "muscle_group_sequence"
     )
     private Integer id;
-    private String group;
+    private String category;
     @OneToMany(mappedBy = "muscle_group")
     private Collection<Muscle> muscles;
 
-    public MuscleGroup(String group){
-        this.group = group;
+    public MuscleGroup(String category){
+        this.category = category;
     }
 
     public Integer getId() {
@@ -33,19 +33,19 @@ public class MuscleGroup {
         this.id = id;
     }
 
-    public String getGroup() {
-        return group;
+    public String getCategory() {
+        return category;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
     public String toString() {
         return "MuscleGroup{" +
                 "id=" + id +
-                ", group='" + group + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }
