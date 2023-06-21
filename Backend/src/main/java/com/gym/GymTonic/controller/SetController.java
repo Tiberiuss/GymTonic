@@ -30,7 +30,7 @@ public class SetController {
         return service.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/id={id}")
     public Set findExerciseById(@PathVariable Integer id) {
         return service.findById(id);
     }

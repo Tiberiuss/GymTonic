@@ -18,12 +18,12 @@ public class ExerciseController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping()
     public List<Exercise> findAll() {
         return service.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/id={id}")
     public Exercise findExerciseById(@PathVariable Integer id) {
         return service.findById(id);
     }

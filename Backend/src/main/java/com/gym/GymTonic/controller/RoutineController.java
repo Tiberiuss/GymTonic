@@ -23,7 +23,7 @@ public class RoutineController {
         return service.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/id={id}")
     public Routine findExerciseById(@PathVariable Integer id) {
         return service.findById(id);
     }
