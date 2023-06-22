@@ -6,13 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
 
-import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -33,18 +34,18 @@ public class Exercise {
     private String name;
     @Enumerated(EnumType.STRING)
     private Material material;
-    @OneToMany
+    @ManyToMany
     @JoinTable(
         name = "exercise_muscle", 
         joinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(name = "muscle_id", referencedColumnName = "id")
     )
-    private List<Muscle> muscle;
+    private Set<Muscle> muscle;
 
     public Exercise() {
     }
 
-    public Exercise(String name, Material material, List<Muscle> muscle) {
+    public Exercise(String name, Material material, Set<Muscle> muscle) {
         this.name = name;
         this.material = material;
         this.muscle = muscle;
@@ -74,11 +75,11 @@ public class Exercise {
         this.material = material;
     }
 
-    public List<Muscle> getMuscle() {
+    public Set<Muscle> getMuscle() {
         return this.muscle;
     }
 
-    public void setMuscle(List<Muscle> muscle) {
+    public void setMuscle(Set<Muscle> muscle) {
         this.muscle = muscle;
     }
 
@@ -88,6 +89,7 @@ public class Exercise {
             " id='" + getId() + "'" +
             ", name='" + getName() + "'" +
             ", material='" + getMaterial() + "'" +
+            ", muscle='" + getMuscle() + "'" +
             "}";
     }
 
