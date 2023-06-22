@@ -26,8 +26,13 @@ public class MuscleService {
         return repository.findById(id).get();
     }
 
-    public void create(Muscle muscle) {
-        repository.save(muscle);
+    public int create(Muscle muscle) {
+        try{
+            repository.save(muscle);
+            return 200;
+        }catch(Exception e){
+            return 500;
+        }
     }
 
     public int delete(Integer id){

@@ -1,6 +1,5 @@
 package com.gym.GymTonic.controller;
 
-import com.gym.GymTonic.model.Muscle;
 import com.gym.GymTonic.model.MuscleGroup;
 import com.gym.GymTonic.service.MuscleGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,8 @@ public class MuscleGroupController {
     }
 
     @PostMapping
-    public void create(@RequestBody MuscleGroup muscle_group){
-        service.create(muscle_group);
+    public int create(@RequestBody MuscleGroup muscle_group){
+        return service.create(muscle_group);
     }
 
     @DeleteMapping("/id={id}")

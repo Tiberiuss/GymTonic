@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/muscle")
@@ -28,8 +27,8 @@ public class MuscleController {
     }
 
     @PostMapping
-    public void create(@RequestBody Muscle muscle){
-        service.create(muscle);
+    public int create(@RequestBody Muscle muscle){
+        return service.create(muscle);
     }
 
     @DeleteMapping("/id={id}")

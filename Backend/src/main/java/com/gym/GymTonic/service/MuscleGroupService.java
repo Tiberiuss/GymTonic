@@ -23,8 +23,14 @@ public class MuscleGroupService {
         return repository.findById(id).get();
     }
 
-    public void create(MuscleGroup muscle_group) {
-        repository.save(muscle_group);
+    public int create(MuscleGroup muscle_group) {
+        try{
+            repository.save(muscle_group);
+            return 200;
+        }catch(Exception e){
+            System.out.println(e);
+            return 500;
+        }
     }
 
     public int delete(Integer id){

@@ -4,10 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
+
+import java.util.List;
 
 
 @Entity
@@ -28,13 +33,21 @@ public class Exercise {
     private String name;
     @Enumerated(EnumType.STRING)
     private Material material;
+    @OneToMany
+    @JoinTable(
+        name = "exercise_muscle", 
+        joinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(name = "muscle_id", referencedColumnName = "id")
+    )
+    private List<Muscle> muscle;
 
     public Exercise() {
     }
 
-    public Exercise(String name, Material material) {
+    public Exercise(String name, Material material, List<Muscle> muscle) {
         this.name = name;
         this.material = material;
+        this.muscle = muscle;
     }
 
     public Integer getId() {
@@ -59,6 +72,14 @@ public class Exercise {
 
     public void setMaterial(Material material) {
         this.material = material;
+    }
+
+    public List<Muscle> getMuscle() {
+        return this.muscle;
+    }
+
+    public void setMuscle(List<Muscle> muscle) {
+        this.muscle = muscle;
     }
 
     @Override
