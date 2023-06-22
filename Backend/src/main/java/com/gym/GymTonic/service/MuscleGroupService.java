@@ -40,8 +40,8 @@ public class MuscleGroupService {
     public int update(Integer id, MuscleGroup muscle_group){
         try{
             MuscleGroup mg = repository.findById(id).get();
-            mg.setGroup(muscle_group.getGroup());
-            mg.setId(muscle_group.getId());
+            mg.setCategory(muscle_group.getCategory());
+            mg.setId(id);
             repository.save(mg);
             return 200;
         }catch(Exception e){

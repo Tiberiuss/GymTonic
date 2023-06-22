@@ -20,7 +20,7 @@ public class MuscleGroup {
     private String category;
     @OneToMany(mappedBy = "muscle_group")
     private Collection<Muscle> muscles;
-
+    public MuscleGroup(){}
     public MuscleGroup(String category){
         this.category = category;
     }

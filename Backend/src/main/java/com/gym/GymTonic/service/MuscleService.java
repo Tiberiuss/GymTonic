@@ -84,7 +84,7 @@ public class MuscleService {
         }*/
         try {
             Muscle m = repository.findById(id).get();
-            m.setId(muscle.getId());
+            m.setId(id);
             m.setMuscle_name(muscle.getMuscle_name());
             m.setMuscle_group(muscle.getMuscle_group());
             repository.save(m);

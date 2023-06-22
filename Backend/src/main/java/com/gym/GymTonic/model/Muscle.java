@@ -21,6 +21,9 @@ public class Muscle {
     @JoinColumn(name = "muscle_group_id", nullable = false)
     private MuscleGroup muscle_group;
 
+    public Muscle() {
+    }
+
     public Muscle(String muscle_name, MuscleGroup muscle_group){
         this.muscle_name = muscle_name;
         this.muscle_group = muscle_group;
