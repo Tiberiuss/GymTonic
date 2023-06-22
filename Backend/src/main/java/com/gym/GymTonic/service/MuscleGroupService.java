@@ -19,7 +19,34 @@ public class MuscleGroupService {
         return repository.findAll();
     }
 
+    public MuscleGroup findMuscleGroupById(Integer id){
+        return repository.findById(id).get();
+    }
+
     public void create(MuscleGroup muscle_group) {
         repository.save(muscle_group);
+    }
+
+    public int delete(Integer id){
+        try{
+            repository.deleteById(id);
+            return 200;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return 500;
+        }
+    }
+
+    public int update(Integer id, MuscleGroup muscle_group){
+        try{
+            MuscleGroup mg = repository.findById(id).get();
+            mg.setGroup(muscle_group.getGroup());
+            mg.setId(muscle_group.getId());
+            repository.save(mg);
+            return 200;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return 500;
+        }
     }
 }
