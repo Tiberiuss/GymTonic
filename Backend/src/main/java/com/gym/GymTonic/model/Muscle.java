@@ -18,7 +18,7 @@ public class Muscle {
     private Integer id;
     private String muscle_name;
     @ManyToOne
-    @JoinColumn(name = "muscle_group_id", nullable = false)
+    @JoinColumn(name = "muscle_group_id", nullable = true)
     private MuscleGroup muscle_group;
 
     public Muscle() {
