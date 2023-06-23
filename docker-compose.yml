@@ -1,0 +1,34 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.2
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: [ "CMD", "curl", "-u", "elastic:searchPathRules", "-f", "localhost:9200" ]
+      interval: 30s
+      retries: 10
+
+  api:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - 9090:8080
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  vue:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+    ports:
+      - 9091:3000
+    depends_on:
+      - api
