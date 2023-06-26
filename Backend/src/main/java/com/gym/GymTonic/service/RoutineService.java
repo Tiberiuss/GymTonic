@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service
 public class RoutineService {
     private final RoutineRepository repository;
@@ -16,7 +19,7 @@ public class RoutineService {
     }
 
     public List<Routine> findAll() {
-        return repository.findAll();
+        return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
     }
 
     public void create(Routine routine) {

@@ -1,8 +1,7 @@
 package com.gym.GymTonic.repository;
 
 import com.gym.GymTonic.model.Exercise;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ExerciseRepository extends JpaRepository<Exercise, Integer>{
+public interface ExerciseRepository extends ElasticsearchRepository<Exercise, Integer>{
 }

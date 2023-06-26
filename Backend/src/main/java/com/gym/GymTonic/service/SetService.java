@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.gym.GymTonic.model.Set;
 import com.gym.GymTonic.repository.SetRepository;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class SetService {
@@ -17,7 +19,7 @@ public class SetService {
     }
 
     public List<Set> findAll() {
-        return repository.findAll();
+        return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
     }
 
     public void create(Set set) {

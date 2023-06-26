@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class MuscleService {
@@ -19,7 +21,7 @@ public class MuscleService {
     }
 
     public List<Muscle> findAll() {
-        return repository.findAll();
+        return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
     }
 
     public Muscle findMuscleById(@PathVariable Integer id){

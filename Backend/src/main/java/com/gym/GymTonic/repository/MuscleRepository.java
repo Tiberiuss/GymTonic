@@ -1,12 +1,9 @@
 package com.gym.GymTonic.repository;
 
 import com.gym.GymTonic.model.Muscle;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public interface MuscleRepository extends JpaRepository<Muscle, Integer> {
+public interface MuscleRepository extends ElasticsearchRepository<Muscle, Integer> {
 
 }

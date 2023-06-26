@@ -1,8 +1,7 @@
 package com.gym.GymTonic.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import com.gym.GymTonic.model.Set;
 
-public interface SetRepository extends JpaRepository<Set, Integer>{
+public interface SetRepository extends ElasticsearchRepository<Set, Integer> {
 }
