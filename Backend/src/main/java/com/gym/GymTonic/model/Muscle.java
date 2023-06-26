@@ -1,14 +1,13 @@
 package com.gym.GymTonic.model;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 @Document(indexName = "muscle")
 public class Muscle {
-    private Integer id;
+    @Id
+    private String id;
     private String muscle_name;
-
     private MuscleGroup muscle_group;
 
     public Muscle() {
@@ -19,11 +18,11 @@ public class Muscle {
         this.muscle_group = muscle_group;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

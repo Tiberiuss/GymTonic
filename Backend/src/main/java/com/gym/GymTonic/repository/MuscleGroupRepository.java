@@ -5,6 +5,6 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
 
 
-public interface MuscleGroupRepository extends ElasticsearchRepository<MuscleGroup, Integer> {
+public interface MuscleGroupRepository extends ElasticsearchRepository<MuscleGroup, String> {
 
 }

@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-//@Service
+@Service
 public class MuscleService {
     private final MuscleRepository repository;
 
@@ -24,7 +23,7 @@ public class MuscleService {
         return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
     }
 
-    public Muscle findMuscleById(@PathVariable Integer id){
+    public Muscle findMuscleById(@PathVariable String id){
         return repository.findById(id).get();
     }
 
@@ -37,7 +36,7 @@ public class MuscleService {
         }
     }
 
-    public int delete(Integer id){
+    public int delete(String id){
         /*int i = 0;
         boolean found = false;
         List<Muscle> muscles = repository.findAll();
@@ -69,7 +68,7 @@ public class MuscleService {
 
     }
 
-    public int update(Integer id, Muscle muscle){
+    public int update(String id, Muscle muscle){
         /*int i = 0;
         boolean found = false;
         List<Muscle> muscles = repository.findAll();

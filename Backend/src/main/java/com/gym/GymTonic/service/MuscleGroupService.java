@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-//@Service
+@Service
 public class MuscleGroupService {
     private final MuscleGroupRepository repository;
 
@@ -22,7 +22,7 @@ public class MuscleGroupService {
         return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
     }
 
-    public MuscleGroup findMuscleGroupById(Integer id){
+    public MuscleGroup findMuscleGroupById(String id){
         return repository.findById(id).get();
     }
 
@@ -36,7 +36,7 @@ public class MuscleGroupService {
         }
     }
 
-    public int delete(Integer id){
+    public int delete(String id){
         try{
             repository.deleteById(id);
             return 200;
@@ -46,7 +46,7 @@ public class MuscleGroupService {
         }
     }
 
-    public int update(Integer id, MuscleGroup muscle_group){
+    public int update(String id, MuscleGroup muscle_group){
         try{
             MuscleGroup mg = repository.findById(id).get();
             mg.setCategory(muscle_group.getCategory());

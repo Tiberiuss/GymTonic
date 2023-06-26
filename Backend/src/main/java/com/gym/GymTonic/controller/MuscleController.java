@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/v1/muscle")
 public class MuscleController {
     private final MuscleService service;
@@ -22,7 +22,7 @@ public class MuscleController {
     }
 
     @GetMapping("/id={id}")
-    public Muscle findMuscleById(@PathVariable Integer id){
+    public Muscle findMuscleById(@PathVariable String id){
         return service.findMuscleById(id);
     }
 
@@ -32,12 +32,12 @@ public class MuscleController {
     }
 
     @DeleteMapping("/id={id}")
-    public int delete(@PathVariable Integer id){
+    public int delete(@PathVariable String id){
         return service.delete(id);
     }
 
     @PutMapping("/id={id}")
-    public int update(@PathVariable Integer id, @RequestBody Muscle muscle){
+    public int update(@PathVariable String id, @RequestBody Muscle muscle){
         return service.update(id, muscle);
     }
 }
