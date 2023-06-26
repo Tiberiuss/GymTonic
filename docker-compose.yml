@@ -4,12 +4,21 @@ services:
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
+      - network.bind_host=0.0.0.0
     ports:
       - 9200:9200
+      - 9300:9300
     healthcheck:
       test: [ "CMD", "curl", "-u", "elastic:searchPathRules", "-f", "localhost:9200" ]
       interval: 30s
       retries: 10
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.2
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+    ports:
+      - 5601:5601
 
   api:
     build:
