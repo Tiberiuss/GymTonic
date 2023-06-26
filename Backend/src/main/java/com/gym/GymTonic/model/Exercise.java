@@ -1,50 +1,35 @@
 package com.gym.GymTonic.model;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
 
-import java.util.Set;
+
+import java.util.Collection;
 
 
-@Entity
-@Table(name = "exercise_table")
+@Document(indexName = "exercise")
 public class Exercise {
 
     @Id
-    @SequenceGenerator(
-        name = "exercise_sequence",
-        sequenceName = "exercise_sequence",
-        allocationSize = 1
-    )
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "exercise_sequence"
-    )
-    private Integer id;
+    private String id;
     private String name;
-    @Enumerated(EnumType.STRING)
     private Material material;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "exercise_muscle", 
-        joinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id"), 
-        inverseJoinColumns = @JoinColumn(name = "muscle_id", referencedColumnName = "id")
-    )
-    private Set<Muscle> muscle;
+    private Collection<Muscle> muscle;
 
     public Exercise() {
     }
 
-    public Exercise(String name, Material material, Set<Muscle> muscle) {
+    public Exercise(String name, Material material, Collection<Muscle> muscle) {
         this.name = name;
         this.material = material;
         this.muscle = muscle;
     }
 
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,11 +49,11 @@ public class Exercise {
         this.material = material;
     }
 
-    public Set<Muscle> getMuscle() {
+    public Collection<Muscle> getMuscle() {
         return this.muscle;
     }
 
-    public void setMuscle(Set<Muscle> muscle) {
+    public void setMuscle(Collection<Muscle> muscle) {
         this.muscle = muscle;
     }
 

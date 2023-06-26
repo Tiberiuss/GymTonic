@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gym.GymTonic.model.Set;
 import com.gym.GymTonic.service.SetService;
 
-@RestController
+//@RestController
 @RequestMapping("/api/v1/set")
 public class SetController {
     

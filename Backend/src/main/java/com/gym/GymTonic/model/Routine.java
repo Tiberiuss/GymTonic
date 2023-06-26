@@ -2,42 +2,19 @@ package com.gym.GymTonic.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import java.util.Set;
 
-@Entity
-@Table(name = "routine_table")
+//@Entity
+//@Table(name = "routine_table")
 public class Routine {
 
-    @Id
-    @SequenceGenerator(
-        name = "routine_sequence",
-        sequenceName = "routine_sequence",
-        allocationSize = 1
-    )
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "routine_sequence"
-    )
+
     private Integer id;
     private String name;
     private Integer user_id;
     private LocalDate date;
-    @ManyToMany
-    @JoinTable(
-        name = "routine_exercises", 
-        joinColumns = @JoinColumn(name = "routine_id", referencedColumnName = "id"), 
-        inverseJoinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id")
-    )
+
     private Set<Exercise> exercises;
 
     public Routine() {

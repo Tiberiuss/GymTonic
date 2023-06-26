@@ -32,7 +32,7 @@ public class ExerciseService {
         }
     }
 
-    public Exercise findById(Integer id) {
+    public Exercise findById(String id) {
         try{
             return repository.findById(id).get();
         }catch (Exception e){
@@ -41,7 +41,7 @@ public class ExerciseService {
         }
     }
 
-    public int update(Integer id, Exercise exercise) {
+    public int update(String id, Exercise exercise) {
         try{
             if (repository.findById(id).isEmpty()) {
                 return 500;
@@ -55,7 +55,7 @@ public class ExerciseService {
         }
     }
 
-    public int delete(Integer id) {
+    public int delete(String id) {
         try{
             repository.deleteById(id);;
             return 200;

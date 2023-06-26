@@ -1,38 +1,20 @@
 package com.gym.GymTonic.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "set_table")
+
+//@Entity
+//@Table(name = "set_table")
 public class Set {
-    @Id
-    @SequenceGenerator(
-        name = "set_sequence",
-        sequenceName = "set_sequence",
-        allocationSize = 1
-    )
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "set_sequence"
-    )
+
     private Integer id;
     private Integer number;
     private Integer reps;
     private Float weight;
     
-    @ManyToOne
-    @JoinColumn(name = "routine_id")
+
     private Routine routine;
 
-    @ManyToOne
-    @JoinColumn(name = "exercise_id")
+
     private Exercise exercise;
 
     public Set() {

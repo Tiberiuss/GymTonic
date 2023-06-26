@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+//@Service
 public class MuscleGroupService {
     private final MuscleGroupRepository repository;
 

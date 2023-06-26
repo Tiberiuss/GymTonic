@@ -24,7 +24,7 @@ public class ExerciseController {
     }
 
     @GetMapping("/id={id}")
-    public Exercise findExerciseById(@PathVariable Integer id) {
+    public Exercise findExerciseById(@PathVariable String id) {
         return service.findById(id);
     }
 
@@ -34,12 +34,12 @@ public class ExerciseController {
     }
 
     @PutMapping("/id={id}")
-    public int update(@PathVariable Integer id, @RequestBody Exercise exercise){
+    public int update(@PathVariable String id, @RequestBody Exercise exercise){
         return service.update(id, exercise);
     }
 
     @DeleteMapping("/id={id}")
-    public int delete(@PathVariable Integer id){
+    public int delete(@PathVariable String id){
         return service.delete(id);
     }
 }

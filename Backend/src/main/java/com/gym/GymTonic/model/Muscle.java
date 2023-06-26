@@ -1,24 +1,14 @@
 package com.gym.GymTonic.model;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "muscle")
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+@Document(indexName = "Muscle")
 public class Muscle {
-    @Id
-    @SequenceGenerator(
-            name = "muscle_sequence",
-            sequenceName = "muscle_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "muscle_sequence"
-    )
     private Integer id;
     private String muscle_name;
-    @ManyToOne
-    @JoinColumn(name = "muscle_group_id", nullable = true)
+
     private MuscleGroup muscle_group;
 
     public Muscle() {

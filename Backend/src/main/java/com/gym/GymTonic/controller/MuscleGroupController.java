@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+
+//@RestController
 @RequestMapping("/api/v1/muscle_group")
 public class MuscleGroupController {
     private final MuscleGroupService service;
