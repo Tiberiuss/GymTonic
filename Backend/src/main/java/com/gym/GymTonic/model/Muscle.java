@@ -4,7 +4,7 @@ package com.gym.GymTonic.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "Muscle")
+@Document(indexName = "muscle")
 public class Muscle {
     private Integer id;
     private String muscle_name;

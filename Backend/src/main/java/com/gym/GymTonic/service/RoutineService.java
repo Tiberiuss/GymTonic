@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 
-//@Service
+@Service
 public class RoutineService {
     private final RoutineRepository repository;
 
@@ -27,7 +27,7 @@ public class RoutineService {
         repository.save(routine);
     }
 
-    public Routine findById(Integer id) {
+    public Routine findById(String id) {
         try{
             return repository.findById(id).get();
         }catch (Exception e){
@@ -36,7 +36,7 @@ public class RoutineService {
         }
     }
 
-    public int update(Integer id, Routine routine) {
+    public int update(String id, Routine routine) {
         try{
             if (repository.findById(id).isEmpty()) {
                 return 500;
@@ -50,7 +50,7 @@ public class RoutineService {
         }
     }
 
-    public int delete(Integer id) {
+    public int delete(String id) {
         try{
             repository.deleteById(id);;
             return 200;

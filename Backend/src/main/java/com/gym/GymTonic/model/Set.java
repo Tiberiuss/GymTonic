@@ -1,12 +1,13 @@
 package com.gym.GymTonic.model;
 
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
 
-//@Entity
-//@Table(name = "set_table")
+@Document(indexName = "set")
 public class Set {
-
-    private Integer id;
+    @Id
+    private String id;
     private Integer number;
     private Integer reps;
     private Float weight;
@@ -28,11 +29,11 @@ public class Set {
         this.exercise = exercise;
     }
 
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-//@Service
+@Service
 public class SetService {
     private final SetRepository repository;
 
@@ -26,7 +26,7 @@ public class SetService {
         repository.save(set);
     }
 
-    public Set findById(Integer id) {
+    public Set findById(String id) {
         try{
             return repository.findById(id).get();
         }catch (Exception e){
@@ -35,7 +35,7 @@ public class SetService {
         }
     }
 
-    public int update(Integer id, Set set) {
+    public int update(String id, Set set) {
         try{
             if (repository.findById(id).isEmpty()) {
                 return 500;
@@ -49,7 +49,7 @@ public class SetService {
         }
     }
 
-    public int delete(Integer id) {
+    public int delete(String id) {
         try{
             repository.deleteById(id);;
             return 200;

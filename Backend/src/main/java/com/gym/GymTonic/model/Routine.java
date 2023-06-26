@@ -1,16 +1,17 @@
 package com.gym.GymTonic.model;
 
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import java.time.LocalDate;
 
 
 import java.util.Set;
 
-//@Entity
-//@Table(name = "routine_table")
+@Document(indexName = "routine")
 public class Routine {
 
 
-    private Integer id;
+    private String id;
     private String name;
     private Integer user_id;
     private LocalDate date;
@@ -26,11 +27,11 @@ public class Routine {
         this.date = date;
     }
 
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

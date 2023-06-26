@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/v1/routine")
 public class RoutineController {
 
@@ -24,7 +24,7 @@ public class RoutineController {
     }
 
     @GetMapping("/id={id}")
-    public Routine findExerciseById(@PathVariable Integer id) {
+    public Routine findExerciseById(@PathVariable String id) {
         return service.findById(id);
     }
 
@@ -34,12 +34,12 @@ public class RoutineController {
     }
 
     @PutMapping("/id={id}")
-    public int update(@PathVariable Integer id, @RequestBody Routine routine){
+    public int update(@PathVariable String id, @RequestBody Routine routine){
         return service.update(id, routine);
     }
 
     @DeleteMapping("/id={id}")
-    public int delete(@PathVariable Integer id){
+    public int delete(@PathVariable String id){
         return service.delete(id);
     }
 }

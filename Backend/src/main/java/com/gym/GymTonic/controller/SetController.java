@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gym.GymTonic.model.Set;
 import com.gym.GymTonic.service.SetService;
 
-//@RestController
+@RestController
 @RequestMapping("/api/v1/set")
 public class SetController {
     
@@ -33,7 +33,7 @@ public class SetController {
     }
 
     @GetMapping("/id={id}")
-    public Set findExerciseById(@PathVariable Integer id) {
+    public Set findExerciseById(@PathVariable String id) {
         return service.findById(id);
     }
 
@@ -43,12 +43,12 @@ public class SetController {
     }
 
     @PutMapping("/id={id}")
-    public int update(@PathVariable Integer id, @RequestBody Set set){
+    public int update(@PathVariable String id, @RequestBody Set set){
         return service.update(id, set);
     }
 
     @DeleteMapping("/id={id}")
-    public int delete(@PathVariable Integer id){
+    public int delete(@PathVariable String id){
         return service.delete(id);
     }
 }
