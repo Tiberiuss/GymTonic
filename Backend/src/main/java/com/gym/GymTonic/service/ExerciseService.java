@@ -41,6 +41,31 @@ public class ExerciseService {
         }
     }
 
+    public List<Exercise> findByName(String name){
+        return repository.findByName(name);
+    }
+
+    /*public Exercise findByName(String name){
+        try {
+            List<Exercise> exercises = StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
+            Exercise e = new Exercise();
+            boolean found = false;
+            int i = 0;
+            while (i < exercises.size() && found == false) {
+                if (exercises.get(i).getName().equals(name)) {
+                    e = exercises.get(i);
+                    found = true;
+                } else {
+                    i++;
+                }
+            }
+            return e;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }*/
+
     public int update(String id, Exercise exercise) {
         try{
             if (repository.findById(id).isEmpty()) {
