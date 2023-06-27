@@ -3,6 +3,12 @@
     <i class="glyphicon glyphicon-search white"></i>
 </template>
 
+<script lang="ts">
+export default {
+    emits: ['searchExercises']
+}
+</script>
+
 <style>
 .white {
     color: white;

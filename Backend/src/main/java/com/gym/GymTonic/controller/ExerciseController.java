@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/exercise")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ExerciseController {
 
     private final ExerciseService service;

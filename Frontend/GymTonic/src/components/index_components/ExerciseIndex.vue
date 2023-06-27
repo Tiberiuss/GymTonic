@@ -27,7 +27,7 @@
         </div>
         <div class="exercise-muscles" v-for="muscle in muscles">
             <p>
-                {{ muscle }}
+                {{ muscle['muscle_name'] }}
             </p>
         </div>
     </section>

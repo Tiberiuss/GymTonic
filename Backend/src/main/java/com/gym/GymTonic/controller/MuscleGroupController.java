@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/muscle_group")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MuscleGroupController {
     private final MuscleGroupService service;
 

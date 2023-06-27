@@ -1,16 +1,40 @@
 <script setup lang="ts">
     import ExerciseIndex from './ExerciseIndex.vue';
-
-    const exercises = ['{ "name": "Biceps", "muscles": ["Biceps", "Arms"]}'] // Aux Exercises Array
-
 </script>
 <template>
 <div class="section-grid">
-    <ExerciseIndex :muscles="JSON.parse(element).muscles" v-for="element in exercises">
-        <template #exercise-title>{{ JSON.parse(element).name }}</template>
+    <ExerciseIndex :muscles="element['muscle']" v-for="element in exercises">
+        <template #exercise-title>{{ element['name'] }}</template>
     </ExerciseIndex>
 </div>
 </template>
+
+<script lang="ts">
+export default {
+    data() {
+        return {
+            exercises: [],
+            status: false
+        }
+    },
+    async mounted() {
+        const response = await fetch(
+            'http://localhost:8080/api/v1/exercise',
+            {
+                method: 'GET',
+                headers: { "Content-type": "application/json; charset=UTF-8" },
+            }
+        );
+
+        if (response["status"] != 200 && response["status"] != 201) {
+          this.status = true;
+          return;
+        }
+
+        this.exercises = await response.json()
+    }
+}
+</script>
 
 <style>
 .section-grid {
