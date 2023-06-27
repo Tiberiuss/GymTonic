@@ -5,37 +5,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gym.GymTonic.model.Exercise;
 import com.gym.GymTonic.model.Material;
 import com.gym.GymTonic.model.Muscle;
-import com.gym.GymTonic.repository.ExerciseRepository;
 import com.gym.GymTonic.service.ExerciseService;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gym.GymTonic.service.MuscleService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.core.io.Resource;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Component
 public class CSVHelper {
 
-    private ExerciseService exerciseService;
+    private final ExerciseService exerciseService;
+    private final MuscleService muscleService;
 
-    public CSVHelper(ExerciseService exerciseService) {
+    private final ElasticsearchOperations elasticsearchOperations;
+
+    public CSVHelper(ExerciseService exerciseService, MuscleService muscleService, ElasticsearchOperations elasticsearchOperations) {
         this.exerciseService = exerciseService;
+        this.muscleService = muscleService;
+        this.elasticsearchOperations = elasticsearchOperations;
     }
 
     @Value("classpath:workout-data.json")
@@ -43,22 +38,22 @@ public class CSVHelper {
 
     @PostConstruct
     private void initDB() {
+        elasticsearchOperations.indexOps(IndexCoordinates.of("exercise")).delete();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode exercise = objectMapper.readTree(resourceFile.getInputStream());
-            Iterator<JsonNode> iterator = exercise.iterator();
 
             for (JsonNode el : exercise) {
                 exerciseService.create(new Exercise(el.get("exercise_name").textValue(),
                         Material.valueOf(el.get("Category").textValue().toUpperCase()),
-                        StreamSupport.stream(el.get("target").spliterator(), false).map(i -> StreamSupport.stream(i.spliterator(), false).map(b -> new Muscle(b.textValue(), null)).collect(Collectors.toSet())).flatMap(Set::stream).collect(Collectors.toSet())
+                        StreamSupport.stream(el.get("target").spliterator(), false).map(i -> StreamSupport.stream(i.spliterator(), false).map(b -> {
+                                    Muscle m = new Muscle(b.textValue(), null);
+                                    muscleService.create(m);
+                                    return m;
+                                }
+                        ).collect(Collectors.toSet())).flatMap(Set::stream).collect(Collectors.toSet())
                 ));
             }
-            /*
-            iterator.forEachRemaining(el -> {
-
-            });*/
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
