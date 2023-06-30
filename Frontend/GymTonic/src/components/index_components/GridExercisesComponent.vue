@@ -1,12 +1,14 @@
 <script setup lang="ts">
+    import SearchComponent from './SearchComponent.vue';
     import ExerciseIndex from './ExerciseIndex.vue';
     import axios from 'axios';
 </script>
 <template>
+<SearchComponent  @set-query="sendQuery"/>
 <div v-if="!status" class="section-grid">
-    <ExerciseIndex :muscles="element['muscle']" v-for="element in exercises">
-        <template #exercise-title>{{ element['name'] }}</template>
+    <ExerciseIndex :element="element" v-for="element in exercises">
     </ExerciseIndex>
+    <router-view></router-view>
 </div>
 <div v-else>
     An error ocurred.
@@ -19,6 +21,17 @@ export default {
         return {
             exercises: [],
             status: false
+        }
+    },
+    methods: {
+        sendQuery(value: any){
+            this.status = false
+            axios.get('http://localhost:8080/api/v1/exercise/name=' + value)
+            .then(response => (this.exercises = response.data))
+            .catch(error => {
+                console.log(error)
+                this.status = true
+            })
         }
     },
     async mounted() {
@@ -36,7 +49,7 @@ export default {
 .section-grid {
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-gap: 2vw;
+    grid-gap: 30px;
     width: 90vw;
     height: 80vh;
 }

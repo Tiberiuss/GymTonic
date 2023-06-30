@@ -29,6 +29,11 @@ public class ExerciseController {
         return service.findById(id);
     }
 
+    @GetMapping("/name={name}")
+    public List<Exercise> findExerciseByName(@PathVariable String name){
+        return service.findByName(name);
+    }
+
     @PostMapping
     public int create(@RequestBody Exercise exercise){
         return service.create(exercise);

@@ -5,7 +5,7 @@
 
 <script lang="ts">
     export default {
-        props: ['muscles']
+        props: ['element']
     }
 </script>
 <template>
@@ -16,19 +16,19 @@
         <div class="exercise-desc">
             <div class="exercise-extra">
                 <p class="exercise-title">
-                    <slot name="exercise-title"></slot>
+                    {{ element.name }}
                 </p>
                 <div class="exercise-icons">
-                    <a class="description-icon">
+                    <router-link :to="`/index/${element.id}`">
                         <IconExerciseDescription></IconExerciseDescription>
-                    </a>
+                    </router-link>
                     <a class="progress-icon">
                         <IconExerciseProgress></IconExerciseProgress>
                     </a>
                 </div>
             </div>
             <div class="exercise-muscles">
-                <p class="muscle-text" v-for="muscle in muscles">
+                <p class="muscle-text" v-for="muscle in element['muscle']">
                     {{ muscle['muscle_name'] }}
                 </p>
             </div>
@@ -37,8 +37,9 @@
 </template>
 <style>
     .exercise {
-        margin-top: 1%;
-        min-height: 200px;
+        margin-top: 10px;
+        min-height: 215px;
+        max-height: 350px;
         display: grid;
         grid-template-columns: 50% 50%;
     }
@@ -87,8 +88,8 @@
     }
 
     @media screen and (max-width: 1000px) {
-        .exercise {
-            min-height: 200px;
+        .exercise{
+            height: 200px;
             display: grid;
             grid-template-columns: 50% 50%;
         }
