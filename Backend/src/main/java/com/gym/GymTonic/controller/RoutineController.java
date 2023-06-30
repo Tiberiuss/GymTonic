@@ -1,6 +1,6 @@
 package com.gym.GymTonic.controller;
 
-import com.gym.GymTonic.model.Routine;
+import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.service.RoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,25 +1,27 @@
 package com.gym.GymTonic.service;
 
-import com.gym.GymTonic.model.Exercise;
-import com.gym.GymTonic.repository.ExerciseRepository;
+import com.gym.GymTonic.model.elastic.Exercise;
+import com.gym.GymTonic.repository.elastic.ExerciseElasticRepository;
+import com.gym.GymTonic.repository.mongo.ExerciseMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class ExerciseService {
-    private final ExerciseRepository repository;
+    private final ExerciseElasticRepository repository;
+    private final ExerciseMongoRepository repositoryMongo;
+
 
     @Autowired
-    public ExerciseService(ExerciseRepository repository) {
+    public ExerciseService(ExerciseElasticRepository repository, ExerciseMongoRepository repositoryMongo) {
         this.repository = repository;
+        this.repositoryMongo = repositoryMongo;
     }
 
     public List<Exercise> findAll() {
-        return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
+        return repository.findAll();
     }
 
     public int create(Exercise exercise) {

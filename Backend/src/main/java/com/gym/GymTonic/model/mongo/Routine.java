@@ -1,16 +1,17 @@
-package com.gym.GymTonic.model;
+package com.gym.GymTonic.model.mongo;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import com.gym.GymTonic.model.elastic.Exercise;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
 
 import java.util.Set;
 
-@Document(indexName = "routine")
+@Document
 public class Routine {
-
-
+    @Id
     private String id;
     private String name;
     private Integer user_id;

@@ -1,10 +1,12 @@
-package com.gym.GymTonic.model;
+package com.gym.GymTonic.model.mongo;
 
 
+import com.gym.GymTonic.model.elastic.Exercise;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(indexName = "set")
+
+@Document
 public class Set {
     @Id
     private String id;

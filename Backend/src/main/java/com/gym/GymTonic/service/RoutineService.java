@@ -1,7 +1,7 @@
 package com.gym.GymTonic.service;
 
-import com.gym.GymTonic.model.Routine;
-import com.gym.GymTonic.repository.RoutineRepository;
+import com.gym.GymTonic.model.mongo.Routine;
+import com.gym.GymTonic.repository.mongo.RoutineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

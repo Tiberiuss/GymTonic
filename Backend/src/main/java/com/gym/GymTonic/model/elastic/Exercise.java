@@ -1,9 +1,9 @@
-package com.gym.GymTonic.model;
+package com.gym.GymTonic.model.elastic;
 
+import com.gym.GymTonic.model.Material;
+import com.gym.GymTonic.model.Muscle;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 
 import java.util.Collection;
@@ -16,7 +16,6 @@ public class Exercise {
     private String id;
     private String name;
     private Material material;
-    @Field(type = FieldType.Nested)
     private Collection<Muscle> muscle;
 
     public Exercise() {
