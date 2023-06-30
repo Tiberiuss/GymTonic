@@ -1,4 +1,4 @@
-package com.gym.GymTonic.helper;
+package com.gym.GymTonic.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,20 +14,18 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
-public class CSVHelper {
+public class JSONLoader {
 
     private final ExerciseService exerciseService;
 
     private final ElasticsearchOperations elasticsearchOperations;
 
-    public CSVHelper(ExerciseService exerciseService, ElasticsearchOperations elasticsearchOperations) {
+    public JSONLoader(ExerciseService exerciseService, ElasticsearchOperations elasticsearchOperations) {
         this.exerciseService = exerciseService;
         this.elasticsearchOperations = elasticsearchOperations;
     }
