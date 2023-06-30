@@ -45,8 +45,8 @@ public class JSONLoader {
                         Material.valueOf(el.get("Category").textValue().toUpperCase()),
                         StreamSupport.stream(el.get("target").spliterator(), false).map(i -> StreamSupport.stream(i.spliterator(), false).map(b ->
                                 Muscle.fromString(b.textValue().toUpperCase())
-                        ).collect(Collectors.toSet())).flatMap(Set::stream).collect(Collectors.toSet())
-                ));
+                        ).collect(Collectors.toSet())).flatMap(Set::stream).collect(Collectors.toSet()),
+                        StreamSupport.stream(el.get("videoURL").spliterator(),false).map(JsonNode::textValue).toList()));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

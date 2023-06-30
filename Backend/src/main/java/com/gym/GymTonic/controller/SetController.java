@@ -1,6 +1,8 @@
 package com.gym.GymTonic.controller;
 
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +18,10 @@ import com.gym.GymTonic.service.SetService;
 
 @RestController
 @RequestMapping("/api/v1/set")
+@RequiredArgsConstructor
 public class SetController {
     
     private final SetService service;
-
-    @Autowired
-    public SetController(SetService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Set> findAll() {

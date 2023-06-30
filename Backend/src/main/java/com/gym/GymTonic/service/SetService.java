@@ -1,5 +1,6 @@
 package com.gym.GymTonic.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@RequiredArgsConstructor
 public class SetService {
     private final SetRepository repository;
 
-    @Autowired
-    public SetService(SetRepository repository) {
-        this.repository = repository;
-    }
-
     public List<Set> findAll() {
-        return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
+        return repository.findAll().stream().collect(Collectors.toList());
     }
 
     public void create(Set set) {

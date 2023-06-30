@@ -2,6 +2,7 @@ package com.gym.GymTonic.service;
 
 import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.repository.mongo.RoutineRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,9 @@ import java.util.stream.StreamSupport;
 
 
 @Service
+@RequiredArgsConstructor
 public class RoutineService {
     private final RoutineRepository repository;
-
-    @Autowired
-    public RoutineService(RoutineRepository repository){
-        this.repository = repository;
-    }
 
     public List<Routine> findAll() {
         return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
