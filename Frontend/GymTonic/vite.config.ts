@@ -8,6 +8,9 @@ export default defineConfig(({mode}) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
+    server:{
+      proxy: 'http://localhost:8080/'
+    },
     preview: {
       host: env.HOST,
       port: Number(env.PORT) || 3000,

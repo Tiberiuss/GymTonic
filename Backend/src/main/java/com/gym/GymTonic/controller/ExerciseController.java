@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/exercise")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class ExerciseController {
 
     private final ExerciseService service;
@@ -24,11 +25,6 @@ public class ExerciseController {
     public Exercise findExerciseById(@PathVariable String id) {
         return service.findById(id);
     }
-
-    /*@GetMapping("/name={name}")
-    public Exercise findExerciseByName(@PathVariable String name){
-        return service.findByName(name);
-    }*/
 
     @GetMapping("/name={name}")
     public List<Exercise> findExerciseByName(@PathVariable String name){

@@ -19,6 +19,10 @@ public class ExerciseService {
         return repository.findAll();
     }
 
+    public List<Exercise> findByName(String name){
+        return repository.findByName(name);
+    }
+
     public int create(Exercise exercise) {
         try{
             repository.save(exercise);
