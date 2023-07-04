@@ -1,19 +1,38 @@
 <script setup lang="ts">
     import IconExerciseDescription from '../icons/IconExerciseDescription.vue';
     import IconExerciseProgress from '../icons/IconExerciseProgress.vue';
-</script>
+    import IconAddExercise from '../icons/IconAddExercise.vue';
+    import { ref } from 'vue';
 
-<script lang="ts">
-    export default {
-        props: ['element']
+    const props = defineProps(['element', 'componentType'])
+    const emit = defineEmits(['addExercise', 'deleteExercise'])
+
+    const exerciseDesc = ref(null)
+
+    var buttonClicked = false;
+
+    function clkButton() {
+        buttonClicked = !buttonClicked;
+    
+        if (buttonClicked) {
+            emit('addExercise', props.element)
+            exerciseDesc.value.style.backgroundColor = "#a15814";
+        }else{
+            emit('deleteExercise', props.element)
+            exerciseDesc.value.style.backgroundColor = "#CC6F1A";
+        }
     }
+
 </script>
 <template>
     <section class="exercise">
         <div class="img">
+            <button class="add-button" @click="clkButton" v-if="componentType">
+                <IconAddExercise />
+            </button>
             <img />
         </div>
-        <div class="exercise-desc">
+        <div ref="exerciseDesc" class="exercise-desc">
             <div class="exercise-extra">
                 <p class="exercise-title">
                     {{ element.name }}
@@ -29,13 +48,21 @@
             </div>
             <div class="exercise-muscles">
                 <p class="muscle-text" v-for="muscle in element['muscle']">
-                    {{ muscle['muscle_name'] }}
+                    {{ muscle }}
                 </p>
             </div>
         </div>
     </section>
 </template>
 <style>
+    .add-button {
+        height: 50px;
+        width: 50px;
+        border-radius: 20px;
+        border: 0px;
+        background-color: rgba(96, 91, 91, 0.291);
+    }
+
     .exercise {
         margin-top: 10px;
         min-height: 215px;
@@ -50,6 +77,7 @@
     }
 
     .exercise-desc {
+        
         background-color: #CC6F1A;
         border-bottom-right-radius: 20px;
         display: grid;
@@ -84,7 +112,7 @@
         border-radius: 20px;
         text-align: center;
         height: 20px;
-        font-size: 12px;
+        font-size: 9px;
     }
 
     @media screen and (max-width: 1000px) {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import SearchIcon from '../icons/IconSearch.vue';
-import axios from 'axios';
+import { ref } from 'vue';
+
+const query = ref("")
 </script>
 <template>
     <input class="searchbar" type="text" v-model="query" placeholder="Search..." />
@@ -8,19 +10,6 @@ import axios from 'axios';
         <SearchIcon></SearchIcon>
     </button>
 </template>
-
-<script lang="ts">
-export default {
-    data() {
-        return {
-            query: "",
-        }
-    },
-    async mounted() {
-
-    }
-}
-</script>
 
 <style>
 .searchbar {
@@ -36,5 +25,7 @@ export default {
 .button-search {
     background-color: transparent;
     border: 0px;
+    height: 25px;
+    width: 25px;
 }
 </style>

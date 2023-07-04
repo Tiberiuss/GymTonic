@@ -2,9 +2,7 @@ package com.gym.GymTonic.service;
 
 import com.gym.GymTonic.model.elastic.Exercise;
 import com.gym.GymTonic.repository.elastic.ExerciseElasticRepository;
-import com.gym.GymTonic.repository.mongo.ExerciseMongoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExerciseService {
     private final ExerciseElasticRepository repository;
-    private final ExerciseMongoRepository repositoryMongo;
 
     public List<Exercise> findAll() {
         return repository.findAll();
@@ -40,10 +37,6 @@ public class ExerciseService {
             System.out.println(e);
             return null;
         }
-    }
-
-    public List<Exercise> findByName(String name){
-        return repository.findByName(name);
     }
 
     /*public Exercise findByName(String name){

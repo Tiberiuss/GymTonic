@@ -3,7 +3,6 @@ package com.gym.GymTonic.service;
 import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.repository.mongo.RoutineRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

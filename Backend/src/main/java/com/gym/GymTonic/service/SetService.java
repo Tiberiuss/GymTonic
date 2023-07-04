@@ -1,14 +1,12 @@
 package com.gym.GymTonic.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gym.GymTonic.model.mongo.Set;
 import com.gym.GymTonic.repository.mongo.SetRepository;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor

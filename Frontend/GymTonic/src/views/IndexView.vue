@@ -1,13 +1,9 @@
 
-<script setup lang="ts">
-    import GridExercisesComponent from '../components/index_components/GridExercisesComponent.vue';
+<script setup>
+    import GridExercisesComponent from '@/components/index_components/GridExercisesComponent.vue';
 </script>
 <template>
-    <main class="main">
+    <main>
         <GridExercisesComponent/>
     </main>
 </template>
-
-<style>
-
-</style>

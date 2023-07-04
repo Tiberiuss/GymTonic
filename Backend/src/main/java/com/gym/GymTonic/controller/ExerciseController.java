@@ -3,7 +3,6 @@ package com.gym.GymTonic.controller;
 import com.gym.GymTonic.model.elastic.Exercise;
 import com.gym.GymTonic.service.ExerciseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
