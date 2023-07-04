@@ -1,10 +1,15 @@
 package com.gym.GymTonic.service;
 
+import com.gym.GymTonic.model.elastic.Exercise;
 import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.repository.mongo.RoutineRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -16,7 +21,7 @@ public class RoutineService {
     private final RoutineRepository repository;
 
     public List<Routine> findAll() {
-        return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList());
+        return repository.findAll();
     }
 
     public void create(Routine routine) {
@@ -24,35 +29,15 @@ public class RoutineService {
     }
 
     public Routine findById(String id) {
-        try{
-            return repository.findById(id).get();
-        }catch (Exception e){
-            System.out.println(e);
-            return null;
-        }
+        return repository.findById(id).get();
     }
 
-    public int update(String id, Routine routine) {
-        try{
-            if (repository.findById(id).isEmpty()) {
-                return 500;
-            }
-            routine.setId(id);
-            repository.save(routine);
-            return 200;
-        }catch (Exception e){
-            System.out.println(e);
-            return 500;
-        }
+    public void update(String id, Routine routine) {
+        routine.setId(id);
+        repository.save(routine);
     }
 
-    public int delete(String id) {
-        try{
-            repository.deleteById(id);;
-            return 200;
-        }catch (Exception e){
-            System.out.println(e);
-            return 500;
-        }
+    public void delete(String id) {
+        repository.deleteById(id);
     }
 }
