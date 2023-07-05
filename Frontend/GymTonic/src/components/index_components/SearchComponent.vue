@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import SearchIcon from '../icons/IconSearch.vue';
 import { ref } from 'vue';
+import IconSearch from "@/components/icons/IconSearch.vue";
+
+defineEmits(['set-query']);
+
 
 const query = ref("")
 </script>
 <template>
-    <input class="searchbar" type="text" v-model="query" placeholder="Search..." />
+    <input class="searchbar" type="text" v-model="query" placeholder="Search..." @input="$emit('set-query', query)"/>
     <button class="button-search" @click="$emit('set-query', query)">
-        <SearchIcon></SearchIcon>
+      <IconSearch/>
     </button>
 </template>
 

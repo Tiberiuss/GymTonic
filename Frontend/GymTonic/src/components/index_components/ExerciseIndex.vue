@@ -8,8 +8,8 @@
     const emit = defineEmits(['addExercise', 'deleteExercise'])
 
     const exerciseDesc = ref(null)
-
-    var buttonClicked = false;
+    const video = ref();
+    let buttonClicked = false;
 
     function clkButton() {
         buttonClicked = !buttonClicked;
@@ -25,12 +25,12 @@
 
 </script>
 <template>
-    <section class="exercise">
+    <section class="exercise" @mouseenter="video.play()" @mouseleave="video.currentTime=0;video.pause()">
         <div class="img">
             <button class="add-button" @click="clkButton" v-if="componentType">
                 <IconAddExercise />
             </button>
-            <img />
+          <video ref="video" class="exercise__video" :src=element.video[0] muted loop></video>
         </div>
         <div ref="exerciseDesc" class="exercise-desc">
             <div class="exercise-extra">
@@ -69,6 +69,12 @@
         max-height: 350px;
         display: grid;
         grid-template-columns: 50% 50%;
+    }
+
+    .exercise__video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .img {

@@ -1,13 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import {userService} from "@/services/user.service";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('../views/IndexView.vue'),
+      name: 'landing',
+      component: () => import('@/views/LandingView.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/LoginView.vue'),
+      meta: {guest:true}
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/RegisterView.vue'),
+      meta: {guest:true}
     },
     {
       path: '/index',
@@ -18,7 +30,7 @@ const router = createRouter({
       path: '/index/:itemId',
       name: 'index-item',
       props: true,
-      component: () => import('../views/ExerciseDetailsView.vue')
+      component: () => import('../views/ExerciseDetailsView.vue'),
     },
     {
       path: '/routine/create',
@@ -33,5 +45,15 @@ const router = createRouter({
     }
   ]
 })
+
+router.beforeEach((to) => {
+  if(to.matched.some(record => record.meta.auth) && !userService.isAuthenticated())
+    return {path:'/login'};
+})
+
+router.beforeEach((to) => {
+  if (to.matched.some((record) => record.meta.guest) && userService.isAuthenticated())
+    return {path:"/"};
+});
 
 export default router
