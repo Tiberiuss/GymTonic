@@ -2,7 +2,6 @@ package com.gym.GymTonic.repository.elastic;
 
 import com.gym.GymTonic.model.elastic.Exercise;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

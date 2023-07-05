@@ -54,8 +54,8 @@ public class ExerciseController {
         }
     }
 
-    @GetMapping("/name={name}")
-    public ResponseEntity<?> findExerciseByName(@PathVariable String name){
+    @GetMapping(params = "name")
+    public ResponseEntity<?> findExerciseByName(@RequestParam("name") String name){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         List<Exercise> exerciseList = service.findByName(name);
         if(!exerciseList.isEmpty()){
