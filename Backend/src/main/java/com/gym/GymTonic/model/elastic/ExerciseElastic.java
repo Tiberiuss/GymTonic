@@ -16,7 +16,7 @@ import java.util.Collection;
 @ToString
 @Getter
 @Setter
-public class Exercise {
+public class ExerciseElastic {
 
     @Id
     private String id;

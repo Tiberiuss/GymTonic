@@ -1,10 +1,9 @@
 package com.gym.GymTonic.controller;
 
-import com.gym.GymTonic.model.elastic.Exercise;
+import com.gym.GymTonic.dto.ExerciseDTO;
+import com.gym.GymTonic.model.elastic.ExerciseElastic;
 import com.gym.GymTonic.service.ExerciseService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class ExerciseController {
     @GetMapping()
     public ResponseEntity<?> findAll() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<Exercise> exerciseList = service.findAll();
+        List<ExerciseDTO> exerciseList = service.findAll();
         if(!exerciseList.isEmpty()){
             map.put("status", 1);
             map.put("data", exerciseList);
@@ -42,9 +41,9 @@ public class ExerciseController {
     public ResponseEntity<?> findExerciseById(@PathVariable String id) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            Exercise exercise = service.findById(id);
+            ExerciseDTO exerciseDTO = service.findById(id);
             map.put("status", 1);
-            map.put("data", exercise);
+            map.put("data", exerciseDTO);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception ex) {
             map.clear();
@@ -57,10 +56,10 @@ public class ExerciseController {
     @GetMapping(params = "name")
     public ResponseEntity<?> findExerciseByName(@RequestParam("name") String name){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<Exercise> exerciseList = service.findByName(name);
-        if(!exerciseList.isEmpty()){
+        List<ExerciseDTO> exerciseDTOList = service.findByName(name);
+        if(!exerciseDTOList.isEmpty()){
             map.put("status", 1);
-            map.put("data", exerciseList);
+            map.put("data", exerciseDTOList);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
         else{
@@ -72,19 +71,19 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Exercise exercise){
+    public ResponseEntity create(@RequestBody ExerciseDTO exerciseDTO){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        service.create(exercise);
+        service.create(exerciseDTO);
         map.put("status", 1);
         map.put("message", "Saved");
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
 
     @PutMapping("/id={id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody Exercise exercise){
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody ExerciseDTO exerciseDTO){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try{
-            service.update(id, exercise);
+            service.update(id, exerciseDTO);
             map.put("status", 1);
             map.put("data", service.findById(id));
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -100,7 +99,7 @@ public class ExerciseController {
     public ResponseEntity delete(@PathVariable String id){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            Exercise exercise = service.findById(id);
+            ExerciseDTO exerciseDTO = service.findById(id);
             service.delete(id);
             map.put("status", 1);
             map.put("message", "Deleted");

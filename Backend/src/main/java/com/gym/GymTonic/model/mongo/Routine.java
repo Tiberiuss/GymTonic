@@ -1,6 +1,6 @@
 package com.gym.GymTonic.model.mongo;
 
-import com.gym.GymTonic.model.elastic.Exercise;
+import com.gym.GymTonic.model.mongo.ExerciseMongo;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,5 +26,5 @@ public class Routine {
     @NonNull
     private LocalDate date;
     @NonNull
-    private Set<Exercise> exercises;
+    private Set<ExerciseMongo> exerciseMongo;
 }

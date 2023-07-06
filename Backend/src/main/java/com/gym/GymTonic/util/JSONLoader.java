@@ -2,7 +2,8 @@ package com.gym.GymTonic.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gym.GymTonic.model.elastic.Exercise;
+import com.gym.GymTonic.dto.ExerciseDTO;
+import com.gym.GymTonic.model.elastic.ExerciseElastic;
 import com.gym.GymTonic.model.Material;
 import com.gym.GymTonic.model.Muscle;
 import com.gym.GymTonic.service.ExerciseService;
@@ -41,7 +42,7 @@ public class JSONLoader {
             JsonNode exercise = objectMapper.readTree(resourceFile.getInputStream());
 
             for (JsonNode el : exercise) {
-                exerciseService.create(new Exercise(el.get("exercise_name").textValue(),
+                exerciseService.create(new ExerciseDTO(el.get("exercise_name").textValue(),
                         Material.valueOf(el.get("Category").textValue().toUpperCase()),
                         StreamSupport.stream(el.get("target").spliterator(), false).map(i -> StreamSupport.stream(i.spliterator(), false).map(b ->
                                 Muscle.fromString(b.textValue().toUpperCase())
