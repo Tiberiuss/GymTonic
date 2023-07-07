@@ -24,22 +24,27 @@ const router = createRouter({
     {
       path: '/index',
       name: 'index',
-      component: () => import('../views/IndexView.vue'),
+      component: () => import('@/views/IndexView.vue'),
     },
     {
       path: '/index/:itemId',
       name: 'index-item',
-      component: () => import('../views/ExerciseDetailsView.vue'),
+      component: () => import('@/views/ExerciseDetailsView.vue'),
     },
     {
       path: '/routine/create',
       name: 'createroutine',
-      component: () => import('../views/CreateRoutine.vue'),
+      component: () => import('@/views/CreateRoutine.vue'),
     },
     {
       path: '/routine/create/addname',
       name: 'addnameroutine',
-      component: () => import('../views/PreviewRoutineView.vue'),
+      component: () => import('@/views/PreviewRoutineView.vue'),
+    },
+    {
+      path: '/routine/sets',
+      name: 'routinesets',
+      component: () => import('@/views/RoutineSetsView.vue')
     }
   ]
 })

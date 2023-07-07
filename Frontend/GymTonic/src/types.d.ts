@@ -12,3 +12,10 @@ export interface ExerciseList {
     data: Exercise[],
     status: int
 }
+
+export interface Routine {
+    name:string,
+    user_id:number,
+    date:string,
+    exerciseMongo: Array<Exercise>
+}

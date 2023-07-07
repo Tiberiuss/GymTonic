@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { routineService } from '@/services/routine.service';
 
 const store = useStore();
 const router = useRouter();
@@ -37,7 +38,7 @@ async function createRoutine(){
         postRequest.exerciseMongo.push(JSON.parse(key))
     });
 
-    await axios.post('http://localhost:8080/api/v1/routine', postRequest).then( () => {
+    await routineService.createRoutine(postRequest).then( () => {
         store.commit('cleanList')
         router.push({ path: '/routine/create' })
     }).catch( () => {
