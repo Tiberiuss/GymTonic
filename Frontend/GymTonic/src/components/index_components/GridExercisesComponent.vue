@@ -4,10 +4,14 @@
     import {ref, onMounted} from 'vue';
     import {exerciseService} from "@/services/exercise.service";
     import type {Exercise} from "@/types";
+    import { useStore } from 'vuex';
+    import { useRouter } from 'vue-router';
 
+    const store = useStore();
+    const router = useRouter();
     const exercises = ref<Exercise[]>()
-    const selectedExercises = ref<Exercise[]>([])
     const status = ref(false)
+    const statusMsg = ref("")
     
     defineProps({
         componentType: String
@@ -32,37 +36,35 @@
             exercises.value=[];
             status.value = true;
         }else if (res.result){
-          console.log("COSITAS")
           exercises.value = res.result.data;
         }
     }
 
-    async function addExercise(exercise: Exercise) {
-        selectedExercises.value.push(exercise)
+    async function nextCreate() {
+        if (store.state.selectedExercises.size != 0){
+            router.push({name: 'addnameroutine'})
+        }else{
+            statusMsg.value = "You must select one or more exercises."
+        }
     }
 
-    async function deleteExercise(exercise: Exercise) {
-        const index = selectedExercises.value.indexOf(exercise);
-        if (index > -1)
-          selectedExercises.value.splice(index,1);
-    }
 </script>
 
 <template>
-  <div class="exercises">
+<div class="exercises">
+    <p v-if="componentType">{{ statusMsg }}</p>
     <div>
         <SearchComponent  @set-query="sendQuery"/>
-        <button v-if="componentType" @click="$router.push({name: 'addnameroutine', params: {exerciseList: selectedExercises}})" class="create-routine">NEXT</button>
+        <button v-if="componentType" @click="nextCreate" class="create-routine">NEXT</button>
     </div>
     <div v-if="!status" class="section-grid">
-        <ExerciseIndex @addExercise="addExercise" @deleteExercise="deleteExercise" :component-type=componentType :element=element v-for="element in exercises">
+        <ExerciseIndex @addExercise="store.commit('addExercise', JSON.stringify(element))" @deleteExercise="store.commit('deleteExercise', JSON.stringify(element))" :component-type=componentType :element=element v-for="element in exercises" v-bind:key="element.id">
         </ExerciseIndex>
-        <router-view></router-view>
     </div>
     <div v-else>
         An error ocurred.
     </div>
-  </div>
+</div>
 </template>
 
 <style>

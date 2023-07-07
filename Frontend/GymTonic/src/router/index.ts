@@ -29,7 +29,6 @@ const router = createRouter({
     {
       path: '/index/:itemId',
       name: 'index-item',
-      props: true,
       component: () => import('../views/ExerciseDetailsView.vue'),
     },
     {
@@ -40,7 +39,6 @@ const router = createRouter({
     {
       path: '/routine/create/addname',
       name: 'addnameroutine',
-      props: true,
       component: () => import('../views/PreviewRoutineView.vue'),
     }
   ]

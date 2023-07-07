@@ -4,8 +4,8 @@ import IconSearch from "@/components/icons/IconSearch.vue";
 
 defineEmits(['set-query']);
 
-
 const query = ref("")
+
 </script>
 <template>
     <input class="searchbar" type="text" v-model="query" placeholder="Search..." @input="$emit('set-query', query)"/>

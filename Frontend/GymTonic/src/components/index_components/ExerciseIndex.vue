@@ -2,14 +2,26 @@
     import IconExerciseDescription from '../icons/IconExerciseDescription.vue';
     import IconExerciseProgress from '../icons/IconExerciseProgress.vue';
     import IconAddExercise from '../icons/IconAddExercise.vue';
-    import { ref } from 'vue';
+    import { onMounted, ref, computed } from 'vue';
+    import { useStore } from 'vuex';
 
     const props = defineProps(['element', 'componentType'])
     const emit = defineEmits(['addExercise', 'deleteExercise'])
 
-    const exerciseDesc = ref(null)
+    const exerciseDesc = ref()
     const video = ref();
     let buttonClicked = false;
+
+    const store = useStore();
+
+    const selectedExercises = computed(() => store.state.selectedExercises)
+
+    onMounted(() => {
+        if (selectedExercises.value.has(JSON.stringify(props.element))) {
+            buttonClicked = true
+            exerciseDesc.value.style.backgroundColor = "#a15814";
+        }
+    })
 
     function clkButton() {
         buttonClicked = !buttonClicked;
@@ -47,7 +59,7 @@
                 </div>
             </div>
             <div class="exercise-muscles">
-                <p class="muscle-text" v-for="muscle in element['muscle']">
+                <p class="muscle-text" v-for="muscle in element['muscle']" v-bind:key="muscle.id">
                     {{ muscle }}
                 </p>
             </div>
@@ -61,6 +73,8 @@
         border-radius: 20px;
         border: 0px;
         background-color: rgba(96, 91, 91, 0.291);
+        position: absolute;
+        z-index: 10;
     }
 
     .exercise {
