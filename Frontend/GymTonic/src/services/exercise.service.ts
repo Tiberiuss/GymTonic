@@ -1,6 +1,6 @@
 import client from "@/client";
 import {type AxiosInstance} from "axios";
-import type {APIResponse, ExerciseList} from "@/types";
+import type {APIResponse, Exercise, ExerciseList} from "@/types";
 
 
 class ExerciseService {
@@ -30,6 +30,20 @@ class ExerciseService {
             return {
                 result:{
                     data: result.data.splice(1,5),
+                    status: result.status,
+                }
+            };
+        } catch (error) {
+            return {error:true};
+        }
+    }
+
+    async getById(id: string):APIResponse<ExerciseList>{
+        try {
+            const {data:result} = await this.client.get<ExerciseList>(`/exercise?id=${id}`);
+            return {
+                result:{
+                    data: result.data.splice(1,1),
                     status: result.status,
                 }
             };

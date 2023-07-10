@@ -1,53 +1,87 @@
 <script setup lang="ts">
-    import { useRouter, useRoute } from 'vue-router';
-    import axios from 'axios';
-    import { ref } from 'vue';
-    import type { Exercise } from '@/types';
+    import { useRouter, useRoute } from 'vue-router'
+    import axios from 'axios'
+    import {onBeforeMount, onUpdated, ref } from 'vue'
+    import { exerciseService } from '@/services/exercise.service'
 
-    const router = useRouter();
-    const route = useRoute();
-    const statusMsg = ref("");
-    const status = ref(false);
-    const video = ref();
-    const exercise = ref(null);
+    const router = useRouter()
+    const route = useRoute()
+    const statusMsg = ref('')
+    const status = ref(false)
+    const exercise = ref()
 
-    await axios.get('http://localhost:8080/api/v1/exercise/id=' + route.params.itemId)
-    .then((response) => {
-        exercise.value = response.data.data
-    })
-    .catch( () => {
-        statusMsg.value = "Server error."
-        status.value = true
-    })
+    onBeforeMount(async() => {
+        const res = await exerciseService.getById(String(route.params.itemId))
+        
+        if (res.error) {
+            status.value = true
+            statusMsg.value = 'Error loading the exercise.'
+        } else if (res.result) {
+            exercise.value = res.result.data[0]
+        }
 
-    console.log(exercise.value)
-
-    if (exercise.value == null){
+        if (exercise.value == null) {
         statusMsg.value = "The exercise ID doesn't exist."
         status.value = true
-    }
-
+        }
+    })
 </script>
 
 <template>
-    <p v-if="status">{{statusMsg}}</p>
+    <button @click="router.push('/index')" class="back">GO BACK</button>
+    <p v-if="status">{{ statusMsg }}</p>
     <div v-else class="detail-grid">
         <div>
-            {{ exercise.value.id }}
+            <video :src="exercise.video[0]" class="exercise_video" controls muted loop></video>
+            <video :src="exercise.video[1]" class="exercise_video" controls muted loop></video>
+        </div>
+        <div>
+            <h1>
+                {{ exercise.name }}
+            </h1>
+            Muscle
+            <ul>
+                <li v-for="muscleData in exercise.muscle" :key="muscleData">
+                    {{ muscleData }}
+                </li>
+            </ul>
+            Material: {{ exercise.material }}
         </div>
     </div>
 </template>
 
 <style>
-.detail-grid {
-    display: grid;
-    grid-template-columns: 30% 70%;
-    margin: 10px;
+.back {
+    border-radius: 5px;
+    background-color: #ea542a;
+    color: black;
+    border: 0px;
+    height: 30px;
+    margin: 20px;
 }
 
-.exercise__video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+.detail-grid {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin: 30px;
+    color: white;
+}
+
+.detail-grid div{
+    margin-left: 20px;
+}
+
+.exercise_video {
+    margin-top: 20px;
+    width: 90%;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 800px){
+    .detail-grid{
+        display: inline;
+        margin: 30px;
+        color: white;
     }
+}
 </style>
