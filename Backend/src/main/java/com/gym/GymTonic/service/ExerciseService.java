@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,10 @@ public class ExerciseService {
         return repositoryElastic.findAll().stream().map(this::convertEntityToDTO).toList();
     }
 
+    public Page<ExerciseDTO> findAllWithPagination(int offset, int pageSize) {
+        return (Page<ExerciseDTO>) repositoryElastic.findAll(PageRequest.of(offset, pageSize)).map(this::convertEntityToDTO);
+    }
+
 
     public void create(ExerciseDTO exerciseDTO) {
         repositoryElastic.save(convertDTOToElasticEntity(exerciseDTO));
@@ -37,7 +43,15 @@ public class ExerciseService {
     }
 
     public List<ExerciseDTO> findByName(String name){
-        return repositoryElastic.findByName(name).stream().map(this::convertEntityToDTO).toList();
+        return repositoryElastic.findByNameContaining(name).stream().map(this::convertEntityToDTO).toList();
+    }
+
+    public List<ExerciseDTO> findByNameOrMuscleOrMaterial(String name, String muscle, String material){
+        return repositoryElastic.findByNameOrMuscleOrMaterialContaining(name, muscle, material).stream().map(this::convertEntityToDTO).toList();
+    }
+
+    public Page<ExerciseDTO> findByNameWithPagination(String name, int offset, int pageSize){
+        return (Page<ExerciseDTO>) repositoryElastic.findAllByNameContaining(name, PageRequest.of(offset, pageSize)).map(this::convertEntityToDTO);
     }
 
 
