@@ -25,26 +25,31 @@ const router = createRouter({
       path: '/index',
       name: 'index',
       component: () => import('@/views/IndexView.vue'),
+      meta: {auth:true}
     },
     {
       path: '/index/:itemId',
       name: 'index-item',
       component: () => import('@/views/ExerciseDetailsView.vue'),
+      meta: {auth:true}
     },
     {
       path: '/routine/create',
       name: 'createroutine',
       component: () => import('@/views/CreateRoutine.vue'),
+      meta: {auth:true}
     },
     {
       path: '/routine/create/addname',
       name: 'addnameroutine',
       component: () => import('@/views/PreviewRoutineView.vue'),
+      meta: {auth:true}
     },
     {
       path: '/routine/sets',
       name: 'routinesets',
-      component: () => import('@/views/RoutineSetsView.vue')
+      component: () => import('@/views/RoutineSetsView.vue'),
+      meta: {auth:true}
     }
   ]
 })
@@ -56,7 +61,7 @@ router.beforeEach((to) => {
 
 router.beforeEach((to) => {
   if (to.matched.some((record) => record.meta.guest) && userService.isAuthenticated())
-    return {path:"/"};
+    return {path:"/index"};
 });
 
 export default router

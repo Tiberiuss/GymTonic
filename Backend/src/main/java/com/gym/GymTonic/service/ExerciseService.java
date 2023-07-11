@@ -20,9 +20,7 @@ import java.util.List;
 public class ExerciseService {
     private final ExerciseElasticRepository repositoryElastic;
     private final ExerciseMongoRepository repositoryMongo;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public List<ExerciseDTO> findAll() {
         return repositoryElastic.findAll().stream().map(this::convertEntityToDTO).toList();

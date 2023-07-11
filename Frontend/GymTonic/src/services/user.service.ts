@@ -1,6 +1,7 @@
 import client from "@/client";
 import {type AxiosInstance} from "axios";
 import type {APIResponse} from "@/types";
+import router from "@/router";
 
 
 class UserService {
@@ -11,21 +12,22 @@ class UserService {
     }
 
     isAuthenticated(){
-        return !!localStorage.getItem("user");
+        console.log(!!localStorage.getItem("token"))
+        return !!localStorage.getItem("token");
     }
 
     removeToken(){
-        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        router.go(0);
     }
 
-    storeToken(token:object) {
-        localStorage.setItem("user",JSON.stringify(token));
+    storeToken(token:string) {
+        localStorage.setItem("token",token);
     }
     async register(user: string,password:string):APIResponse<any> {
         try {
-            //const {data:result} = await this.client.post(`/register`,{user,password});
-            const result = {"user":1}
-            this.storeToken(result);
+            const {data:result} = await this.client.post(`auth/register`,{username:user,password});
+            this.storeToken(result.token);
             return {result};
         } catch (error) {
             return {error:true};
@@ -33,9 +35,8 @@ class UserService {
     }
     async login(user: string,password:string):APIResponse<any> {
         try {
-            //const {data:result} = await this.client.post(`/login`,{user,password});
-            const result = {"user":1}
-            this.storeToken(result);
+            const {data:result} = await this.client.post(`auth/login`,{username:user,password});
+            this.storeToken(result.token);
             return {result:{...result}};
         } catch (error) {
             return {error:true};
@@ -43,7 +44,7 @@ class UserService {
     }
     async logout(name: string):APIResponse<any> {
         try {
-            const {data:result} = await this.client.post(`/logout`);
+            const {data:result} = await this.client.post(`auth/logout`);
             this.removeToken();
             return {...result};
         } catch (error) {

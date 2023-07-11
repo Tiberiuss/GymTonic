@@ -3,15 +3,20 @@ import LandingComponent from "@/components/LandingComponent.vue";
 import {ref} from "vue";
 import {userService} from "@/services/user.service";
 import {useRouter} from "vue-router";
+import IconError from "@/components/icons/IconError.vue";
+import FormValidation from "@/components/FormValidation.vue";
 
 const router = useRouter();
 const user = ref();
 const password = ref();
+const error = ref();
 
 async function login(){
+  console.log(user.value)
   const res = await userService.login(user.value,password.value);
-  console.log(res);
-  return router.push("/")
+  if (res.error)
+    error.value = "Wrong credentials.";
+  else return router.go(0)
 }
 
 </script>
@@ -21,9 +26,9 @@ async function login(){
     <form class="form" @submit.prevent="login">
       <h1 class="form__title">LOG IN</h1>
 
-      <input class="form__input" type="text" id="user" placeholder="Username" required>
-      <input class="form__input" type="password" id="passwd" placeholder="Password" required>
-
+      <input class="form__input" v-model="user" type="text" id="user" placeholder="Username" required>
+      <input class="form__input" v-model="password" type="password" id="passwd" placeholder="Password" required>
+      <FormValidation :error="error"/>
       <div class="form__buttons">
         <router-link class="create" to="/register">CREATE ACCOUNT</router-link>
         <input class="form__login button" type="submit" value="LOG IN">
