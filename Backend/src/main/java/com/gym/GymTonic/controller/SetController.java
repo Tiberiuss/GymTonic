@@ -26,7 +26,7 @@ import com.gym.GymTonic.service.SetService;
 @RestController
 @RequestMapping("/api/v1/set")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class SetController {
     
     private final SetService service;
