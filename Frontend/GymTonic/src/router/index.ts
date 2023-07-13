@@ -50,7 +50,13 @@ const router = createRouter({
       name: 'routinesets',
       component: () => import('@/views/RoutineSetsView.vue'),
       meta: {auth:true}
-    }
+    },
+    {
+      path: '/chart',
+      name: 'chart',
+      component: () => import('@/views/ChartView.vue'),
+      meta: {auth:false}
+    },
   ]
 })
 
