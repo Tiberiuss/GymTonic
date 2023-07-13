@@ -81,7 +81,7 @@
 .create-routine {
     float: right;
     border-radius: 5px;
-    background-color: #CC6F1A;
+    background-color: var(--orange-color);
     color: black;
     border: 0px;
     margin-right: 50px;
@@ -100,7 +100,7 @@
     .create-routine {
     float: left;
     border-radius: 5px;
-    background-color: #CC6F1A;
+    background-color: var(--orange-color);
     color: black;
     border: 0px;
     margin-top: 10px;

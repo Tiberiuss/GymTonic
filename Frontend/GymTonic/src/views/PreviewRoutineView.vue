@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ExerciseIndex from '@/components/index_components/ExerciseIndex.vue';
-import axios from 'axios';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -92,7 +91,7 @@ async function createRoutine(){
 
 .create {
     border-radius: 5px;
-    background-color: #CC6F1A;
+    background-color: var(--orange-color);
     color: black;
     border: 0px;
     height: 30px;
@@ -100,7 +99,7 @@ async function createRoutine(){
 
 .back {
     border-radius: 5px;
-    background-color: #ea542a;
+    background-color: var(--red-color);
     color: black;
     border: 0px;
     height: 30px;

@@ -19,3 +19,46 @@ export interface Routine {
     date:string,
     exerciseMongo: Array<Exercise>
 }
+
+export interface RoutineList {
+    data: Routine[],
+    status: int
+}
+
+export interface Sets {
+    id: number,
+    reps: number,
+    weight: number
+}
+
+export interface Logs {
+    exerciseId: string,
+    sets: Array<Sets>
+}
+
+export interface payloadInitializeSets {
+    routineId: string,
+    exercises: Array<Exercise>
+}
+
+export interface payloadAddSets {
+    index: number,
+    set: Sets
+}
+
+export interface payloadReps {
+    index: number,
+    setId: number,
+    reps: number
+}
+
+export interface payloadWeight {
+    index: number,
+    setId: number,
+    weight: number
+}
+
+export interface payloadDeleteSets {
+    index: number,
+    setId: number
+}

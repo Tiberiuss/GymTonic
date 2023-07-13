@@ -21,8 +21,8 @@
         }
 
         if (exercise.value == null) {
-        statusMsg.value = "The exercise ID doesn't exist."
-        status.value = true
+            statusMsg.value = "The exercise ID doesn't exist."
+            status.value = true
         }
     })
 </script>
@@ -53,7 +53,7 @@
 <style>
 .back {
     border-radius: 5px;
-    background-color: #ea542a;
+    background-color: var(--red-color);
     color: black;
     border: 0px;
     height: 30px;

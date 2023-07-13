@@ -18,7 +18,7 @@ const query = ref("")
 .searchbar {
     border-radius: 2px;
     border-color: transparent;
-    background-color: #362C2C;
+    background-color: var(--grey-color);
     width: 200px;
     height: 30px;
     margin-right: -25px;

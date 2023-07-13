@@ -23,4 +23,5 @@ import router from "@/router";
     margin: 0.5em;
     z-index: 10;
   }
+    @import '@/style/global-variables.css';
 </style>

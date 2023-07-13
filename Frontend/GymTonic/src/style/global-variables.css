@@ -1,0 +1,11 @@
+:root {
+    --orange-color: #CC6F1A;
+    --green-color: #2d9a41;
+    --red-color: #ea542a;
+    --red-delete-color: #ff3700;
+    --white-transparent-color: #ffffff87;
+    --grey-color: #362C2C;
+    --form-user-color: rgba(217, 217, 217, 0.12);
+    --input-user-color: rgba(217, 217, 217, 0.40);
+    --acc-exist-color: rgba(217, 217, 217, 1);
+}

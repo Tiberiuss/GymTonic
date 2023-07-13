@@ -41,7 +41,7 @@ import LandingComponent from "@/components/LandingComponent.vue";
 
    &__ball {
      position: absolute;
-     background-color: #CC6F1A;
+     background-color: var(--orange-color);
      height: 20rem;
      width: 20rem;
      border-radius: 10em;

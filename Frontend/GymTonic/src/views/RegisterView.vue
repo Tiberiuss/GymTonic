@@ -49,7 +49,7 @@ async function register() {
     justify-content: stretch;
     gap: 1em;
     padding: 2em 10em;
-    background-color: rgba(217, 217, 217, 0.12);
+    background-color: var(--form-user-color);
     border-radius: 2em;
 
     @media (max-width: 600px) {
@@ -62,7 +62,7 @@ async function register() {
 
     &__input {
       padding: 1em;
-      background-color: rgba(217, 217, 217, 0.40);
+      background-color: var(--input-user-color);
       border:none;
       border-radius: 0.5em;
       color: white;
@@ -74,7 +74,7 @@ async function register() {
     }
 
     &__existing_acc {
-      color: rgba(217, 217, 217, 1);
+      color: var(--acc-exist-color);
       text-decoration: none;
       align-self: end;
     }

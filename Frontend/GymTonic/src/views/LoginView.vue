@@ -44,7 +44,7 @@ async function login(){
     justify-content: stretch;
     gap: 1em;
     padding: 2em 10em;
-    background-color: rgba(217, 217, 217, 0.12);
+    background-color: var(--form-user-color);
     border-radius: 2em;
 
     @media (max-width: 600px) {
@@ -57,7 +57,7 @@ async function login(){
 
     &__input {
       padding: 1em;
-      background-color: rgba(217, 217, 217, 0.40);
+      background-color: var(--input-user-color);
       border:none;
       border-radius: 0.5em;
       color: white;

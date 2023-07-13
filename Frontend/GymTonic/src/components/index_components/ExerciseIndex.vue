@@ -72,7 +72,7 @@
         width: 50px;
         border-radius: 20px;
         border: 0px;
-        background-color: rgba(96, 91, 91, 0.291);
+        background-color: var(--white-transparent-color);
         position: absolute;
         z-index: 10;
     }
@@ -92,13 +92,13 @@
     }
 
     .img {
-        background-color: rgb(76, 72, 72);
+        background-color: var(--grey-color);
         border-top-left-radius: 20px;
     }
 
     .exercise-desc {
         
-        background-color: #CC6F1A;
+        background-color: var(--orange-color);
         border-bottom-right-radius: 20px;
         display: grid;
         grid-template-rows: 60% 40%;
