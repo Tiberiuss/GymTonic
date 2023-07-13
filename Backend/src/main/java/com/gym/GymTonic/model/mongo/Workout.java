@@ -1,28 +1,30 @@
 package com.gym.GymTonic.model.mongo;
 
-
-import com.gym.GymTonic.model.mongo.ExerciseMongo;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
+@Document
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
 @Getter
 @Setter
-public class Set {
-    @NonNull
-    private Integer number;
-    @NonNull
-    private Integer reps;
-    @NonNull
-    private Float weight;
+public class Workout {
+    @Id
+    private String id;
     @NonNull
     @DBRef
-    private ExerciseMongo exerciseMongo;
-
+    private Routine routine;
+    @NonNull
+    private LocalDate date;
+    @NonNull
+    private List<Set> set;
 }

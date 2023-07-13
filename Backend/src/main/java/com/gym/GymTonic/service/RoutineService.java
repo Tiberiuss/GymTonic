@@ -1,5 +1,7 @@
 package com.gym.GymTonic.service;
 
+import com.gym.GymTonic.dto.RoutineDTO;
+import com.gym.GymTonic.mapper.RoutineMapper;
 import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.repository.mongo.RoutineRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoutineService {
     private final RoutineRepository repository;
+    private final RoutineMapper mapper;
 
-    public List<Routine> findAll() {
-        return repository.findAll();
+    public List<RoutineDTO> findAll() {
+        return repository.findAll().stream().map(mapper::toDTO).toList();
     }
 
     public void create(Routine routine) {

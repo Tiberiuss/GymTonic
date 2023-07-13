@@ -1,43 +1,31 @@
 package com.gym.GymTonic.controller;
 
+import com.gym.GymTonic.dto.WorkoutDTO;
+import com.gym.GymTonic.model.mongo.Workout;
+import com.gym.GymTonic.service.WorkoutService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.gym.GymTonic.model.mongo.Routine;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.gym.GymTonic.model.mongo.Set;
-import com.gym.GymTonic.service.SetService;
-
 @RestController
-@RequestMapping("/api/v1/set")
+@RequestMapping("/api/v1/workout")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
-public class SetController {
-    
-    private final SetService service;
+@CrossOrigin(origins = "http://localhost:5173")
+public class WorkoutController {
+    private final WorkoutService service;
 
     @GetMapping
     public ResponseEntity<?> findAll() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<Set> setList = service.findAll();
-        if (!setList.isEmpty()) {
+        List<WorkoutDTO> workoutList = service.findAll();
+        if (!workoutList.isEmpty()) {
             map.put("status", 1);
-            map.put("data", setList);
+            map.put("data", workoutList);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } else {
             map.clear();
@@ -51,9 +39,9 @@ public class SetController {
     public ResponseEntity<?> findRoutineById(@PathVariable String id) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            Set set = service.findById(id);
+            Workout workout = service.findById(id);
             map.put("status", 1);
-            map.put("data", set);
+            map.put("data", workout);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception ex) {
             map.clear();
@@ -64,19 +52,19 @@ public class SetController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Set set){
+    public ResponseEntity create(@RequestBody Workout workout){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        service.create(set);
+        service.create(workout);
         map.put("status", 1);
         map.put("message", "Saved");
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
 
     @PutMapping("/id={id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody Set set){
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody Workout workout){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try{
-            service.update(id, set);
+            service.update(id, workout);
             map.put("status", 1);
             map.put("data", service.findById(id));
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -92,7 +80,7 @@ public class SetController {
     public ResponseEntity delete(@PathVariable String id){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            Set set = service.findById(id);
+            Workout workout = service.findById(id);
             service.delete(id);
             map.put("status", 1);
             map.put("message", "Deleted");

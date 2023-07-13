@@ -1,6 +1,7 @@
 package com.gym.GymTonic.service;
 
 import com.gym.GymTonic.dto.ExerciseDTO;
+import com.gym.GymTonic.mapper.ExerciseMapper;
 import com.gym.GymTonic.model.elastic.ExerciseElastic;
 import com.gym.GymTonic.model.mongo.ExerciseMongo;
 import com.gym.GymTonic.repository.elastic.ExerciseElasticRepository;
@@ -21,9 +22,10 @@ public class ExerciseService {
     private final ExerciseElasticRepository repositoryElastic;
     private final ExerciseMongoRepository repositoryMongo;
     private final ModelMapper modelMapper;
+    private final ExerciseMapper mapper;
 
     public List<ExerciseDTO> findAll() {
-        return repositoryElastic.findAll().stream().map(this::convertEntityToDTO).toList();
+        return repositoryElastic.findAll().stream().map(mapper::toDTO).toList();
     }
 
     public Page<ExerciseDTO> findAllWithPagination(int offset, int pageSize) {

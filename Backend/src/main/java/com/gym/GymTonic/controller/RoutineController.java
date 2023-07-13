@@ -1,5 +1,6 @@
 package com.gym.GymTonic.controller;
 
+import com.gym.GymTonic.dto.RoutineDTO;
 import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.service.RoutineService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class RoutineController {
     @GetMapping
     public ResponseEntity<?> findAll() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        List<Routine> routineList = service.findAll();
+        List<RoutineDTO> routineList = service.findAll();
         if (!routineList.isEmpty()) {
             map.put("status", 1);
             map.put("data", routineList);

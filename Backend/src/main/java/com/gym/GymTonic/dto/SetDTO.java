@@ -1,20 +1,18 @@
-package com.gym.GymTonic.model.mongo;
-
+package com.gym.GymTonic.dto;
 
 import com.gym.GymTonic.model.mongo.ExerciseMongo;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
 @Getter
 @Setter
-public class Set {
+public class SetDTO {
     @NonNull
     private Integer number;
     @NonNull
@@ -22,7 +20,5 @@ public class Set {
     @NonNull
     private Float weight;
     @NonNull
-    @DBRef
-    private ExerciseMongo exerciseMongo;
-
+    private ExerciseDTO exerciseMongo;
 }
