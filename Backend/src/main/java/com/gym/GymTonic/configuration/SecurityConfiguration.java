@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .authorizeHttpRequests(auth ->
-                    auth.antMatchers("/api/v1/auth/**").permitAll()
+                    auth.antMatchers("/api/v1/auth/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
                             .anyRequest().authenticated()
                 )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
