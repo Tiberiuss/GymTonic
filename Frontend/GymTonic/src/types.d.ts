@@ -26,9 +26,9 @@ export interface ExerciseListPaginatedResponse {
 }
 
 export interface Routine {
-    name:string,
-    user_id:number,
-    date:string,
+    name: string,
+    user_id: number,
+    date: string,
     exerciseMongo: Array<Exercise>
 }
 
@@ -73,4 +73,11 @@ export interface payloadWeight {
 export interface payloadDeleteSets {
     index: number,
     setId: number
+}
+
+export interface dayType{
+    letter: string,
+    day: number,
+    today: boolean,
+    iam: boolean
 }

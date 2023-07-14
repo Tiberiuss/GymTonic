@@ -57,6 +57,12 @@ const router = createRouter({
       component: () => import('@/views/ChartView.vue'),
       meta: {auth:false}
     },
+    {
+      path: '/routine',
+      name: 'routineindex',
+      component: () => import('@/views/RoutineIndexView.vue'),
+      meta: {auth:true}
+    }
   ]
 })
 

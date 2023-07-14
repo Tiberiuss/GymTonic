@@ -1,6 +1,6 @@
 import client from "@/client";
 import {type AxiosInstance} from "axios";
-import type {APIResponse, Routine, RoutineList} from "@/types";
+import type {APIResponse, Routine, RoutineList, RoutineResponse} from "@/types";
 
 class RoutineService {
     client: AxiosInstance;
@@ -32,6 +32,20 @@ class RoutineService {
                 }
             };
         } catch (error) {
+            return {error:true};
+        }
+    }
+
+    async getAll():APIResponse<RoutineList> {
+        try {
+            const {data:result} = await this.client.get<RoutineList>("/routine");
+            return {
+                result:{
+                    data: result.data,
+                    status: result.status,
+                }
+            };
+        } catch (e) {
             return {error:true};
         }
     }

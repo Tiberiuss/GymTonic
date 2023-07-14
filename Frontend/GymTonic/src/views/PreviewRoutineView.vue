@@ -27,7 +27,8 @@ async function createRoutine(){
     status.value = false
     statusMsg.value = ""
 
-    const postRequest = { "name": routineName.value,
+    const postRequest = { 
+        "name": routineName.value,
         "user_id": 123,
         "date": "2007-12-03",
         "exerciseMongo": []

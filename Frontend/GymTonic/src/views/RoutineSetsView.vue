@@ -31,11 +31,6 @@
             state.value = true
             stateMsg.value = "The routine doesn't exist."
         }
-        
-        store.commit('inicializeSet', {
-            routineId: routine.value.id,
-            exercises: routine.value.exerciseMongo
-        })
     })
 
     async function routineSave() {
@@ -46,7 +41,7 @@
             stateMsg.value = "The sets aren't saved."
         }else if (res.result){
             store.commit("cleanActualSets")
-            router.push('/routine/create')
+            router.push('/routine')
         }
     }
 
@@ -58,7 +53,7 @@
 </script>
 
 <template>
-    <button class="back" @click="router.push('/routine/create')">GO BACK</button>
+    <button class="back" @click="router.push('/routine')">GO BACK</button>
     <button class="save" @click="routineSave">SAVE</button>
     <div v-if="state">{{ stateMsg }}</div>
     <div v-else class="exercise-information">

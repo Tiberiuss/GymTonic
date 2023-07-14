@@ -30,13 +30,14 @@ const store = createStore<state>({
                 "date": new Date(),
                 "logs": new Array<Logs>()
             }
-            
-            payload.exercises.forEach((exercise) => {
-                state.actualSets.logs.push({
-                    "exerciseId": exercise.id,
-                    "sets": new Array<Sets>()
+            if (payload.exercises != null){
+                payload.exercises.forEach((exercise) => {
+                    state.actualSets.logs.push({
+                        "exerciseId": exercise.id,
+                        "sets": new Array<Sets>()
+                    })
                 })
-            })
+            }
         },
         addSet(state: state, payload: payloadAddSets){
             state.actualSets.logs[payload.index].sets.push(payload.set)
