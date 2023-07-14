@@ -2,6 +2,7 @@ package com.gym.GymTonic.controller;
 
 import com.gym.GymTonic.dto.WorkoutDTO;
 import com.gym.GymTonic.model.mongo.Workout;
+import com.gym.GymTonic.payload.BaseResponse;
 import com.gym.GymTonic.service.WorkoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,76 +21,49 @@ public class WorkoutController {
     private final WorkoutService service;
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> findAll() {
         List<WorkoutDTO> workoutList = service.findAll();
         if (!workoutList.isEmpty()) {
-            map.put("status", 1);
-            map.put("data", workoutList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(workoutList).build(), HttpStatus.OK);
         } else {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/id={id}")
-    public ResponseEntity<?> findRoutineById(@PathVariable String id) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> findRoutineById(@PathVariable String id) {
         try {
-            Workout workout = service.findById(id);
-            map.put("status", 1);
-            map.put("data", workout);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            WorkoutDTO workout = service.findById(id);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(workout).build(), HttpStatus.OK);
         } catch (Exception ex) {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Data is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Workout workout){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> create(@RequestBody WorkoutDTO workout){
         service.create(workout);
-        map.put("status", 1);
-        map.put("message", "Saved");
-        return new ResponseEntity<>(map, HttpStatus.CREATED);
+        return new ResponseEntity<>(BaseResponse.builder().status("1").message("Saved").build(), HttpStatus.CREATED);
     }
 
     @PutMapping("/id={id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody Workout workout){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody WorkoutDTO workout){
         try{
             service.update(id, workout);
-            map.put("status", 1);
-            map.put("data", service.findById(id));
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(service.findById(id)).build(), HttpStatus.OK);
         }catch (Exception ex) {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Data is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/id={id}")
-    public ResponseEntity delete(@PathVariable String id){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> delete(@PathVariable String id){
         try {
-            Workout workout = service.findById(id);
+            service.findById(id);
             service.delete(id);
-            map.put("status", 1);
-            map.put("message", "Deleted");
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").message("Deleted").build(), HttpStatus.OK);
         } catch (Exception ex) {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Data is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 }

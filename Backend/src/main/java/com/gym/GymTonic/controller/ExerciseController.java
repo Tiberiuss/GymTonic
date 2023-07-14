@@ -2,6 +2,7 @@ package com.gym.GymTonic.controller;
 
 import com.gym.GymTonic.dto.ExerciseDTO;
 import com.gym.GymTonic.model.elastic.ExerciseElastic;
+import com.gym.GymTonic.payload.BaseResponse;
 import com.gym.GymTonic.service.ExerciseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,148 +24,97 @@ public class ExerciseController {
     private final ExerciseService service;
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse<List<ExerciseDTO>>> findAll() {
         List<ExerciseDTO> exerciseList = service.findAll();
+        BaseResponse.BaseResponseBuilder<List<ExerciseDTO>> builder = BaseResponse.builder();
         if(!exerciseList.isEmpty()){
-            map.put("status", 1);
-            map.put("data", exerciseList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(exerciseList).build(), HttpStatus.OK);
         }
         else{
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("1").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/pages/{offset}/{pageSize}")
-    public ResponseEntity<?> findAllWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> findAllWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
         Page<ExerciseDTO> exerciseList = service.findAllWithPagination(offset, pageSize);
         if(!exerciseList.isEmpty()){
-            map.put("status", 1);
-            map.put("data", exerciseList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseList).build(), HttpStatus.OK);
         }
         else{
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/id={id}")
-    public ResponseEntity<?> findExerciseById(@PathVariable String id) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> findExerciseById(@PathVariable String id) {
         try {
             ExerciseDTO exerciseDTO = service.findById(id);
-            map.put("status", 1);
-            map.put("data", exerciseDTO);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTO).build(), HttpStatus.OK);
         } catch (Exception ex) {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Data is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping(params = "nom")
-    public ResponseEntity<?> findExerciseByNameOrMuscleOrMaterial(@RequestParam String nom){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> findExerciseByNameOrMuscleOrMaterial(@RequestParam String nom){
         String muscle = nom;
         String material = nom;
         List<ExerciseDTO> exerciseDTOList = service.findByNameOrMuscleOrMaterial(nom, muscle, material);
         if(!exerciseDTOList.isEmpty()){
-            map.put("status", 1);
-            map.put("data", exerciseDTOList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTOList).build(), HttpStatus.OK);
         }
         else{
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping(params = "name")
     public ResponseEntity<?> findExerciseByName(@RequestParam("name") String name){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        String muscle = name;
         List<ExerciseDTO> exerciseDTOList = service.findByName(name);
         if(!exerciseDTOList.isEmpty()){
-            map.put("status", 1);
-            map.put("data", exerciseDTOList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTOList).build(), HttpStatus.OK);
         }
         else{
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/name={name}/pages/{offset}/{pageSize}")
-    public ResponseEntity<?> findExerciseByNameWithPagination(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> findExerciseByNameWithPagination(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
         Page<ExerciseDTO> exerciseDTOList = service.findByNameWithPagination(name, offset, pageSize);
         if(!exerciseDTOList.isEmpty()){
-            map.put("status", 1);
-            map.put("data", exerciseDTOList);
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTOList).build(), HttpStatus.OK);
         }
         else{
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody ExerciseDTO exerciseDTO){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> create(@RequestBody ExerciseDTO exerciseDTO){
         service.create(exerciseDTO);
-        map.put("status", 1);
-        map.put("message", "Saved");
-        return new ResponseEntity<>(map, HttpStatus.CREATED);
+        return new ResponseEntity<>(BaseResponse.builder().status("1").message("Saved").build(), HttpStatus.CREATED);
     }
 
     @PutMapping("/id={id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody ExerciseDTO exerciseDTO){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody ExerciseDTO exerciseDTO){
         try{
             service.update(id, exerciseDTO);
-            map.put("status", 1);
-            map.put("data", service.findById(id));
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").data(service.findById(id)).build(), HttpStatus.OK);
         }catch (Exception ex) {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Data is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/id={id}")
-    public ResponseEntity delete(@PathVariable String id){
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public ResponseEntity<BaseResponse> delete(@PathVariable String id){
         try {
             ExerciseDTO exerciseDTO = service.findById(id);
             service.delete(id);
-            map.put("status", 1);
-            map.put("message", "Deleted");
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(BaseResponse.builder().status("1").message("Deleted").build(), HttpStatus.OK);
         } catch (Exception ex) {
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Data is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 }

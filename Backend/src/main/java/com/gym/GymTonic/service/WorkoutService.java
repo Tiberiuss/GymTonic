@@ -21,20 +21,20 @@ public class WorkoutService {
 
     }
 
-    public Workout findById(String id) {
-        return repository.findById(id).get();
+    public WorkoutDTO findById(String id) {
+        return mapper.toDTO(repository.findById(id).get());
     }
 
-    public void create(Workout workout){
-        repository.save(workout);
+    public void create(WorkoutDTO workout){
+        repository.save(mapper.toEntity(workout));
     }
 
     public void delete(String id){
         repository.deleteById(id);
     }
 
-    public void update(String id, Workout workout){
+    public void update(String id, WorkoutDTO workout){
         workout.setId(id);
-        repository.save(workout);
+        repository.save(mapper.toEntity(workout));
     }
 }

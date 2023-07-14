@@ -20,17 +20,17 @@ public class RoutineService {
         return repository.findAll().stream().map(mapper::toDTO).toList();
     }
 
-    public void create(Routine routine) {
-        repository.save(routine);
+    public void create(RoutineDTO routine) {
+        repository.save(mapper.toEntity(routine));
     }
 
-    public Routine findById(String id) {
-        return repository.findById(id).get();
+    public RoutineDTO findById(String id) {
+        return mapper.toDTO(repository.findById(id).get());
     }
 
-    public void update(String id, Routine routine) {
+    public void update(String id, RoutineDTO routine) {
         routine.setId(id);
-        repository.save(routine);
+        repository.save(mapper.toEntity(routine));
     }
 
     public void delete(String id) {
