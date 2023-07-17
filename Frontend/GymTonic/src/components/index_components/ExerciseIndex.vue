@@ -78,9 +78,18 @@
     }
 
     .exercise {
+<<<<<<< Updated upstream
         display: grid;
         grid-template-columns: 50% 50%;
         padding: 0 1em;
+=======
+        margin-top: 40px;
+        min-height: 215px;
+        max-height: 350px;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        transition: transform 0.5s
+>>>>>>> Stashed changes
     }
 
     .exercise__video {
@@ -89,17 +98,30 @@
       object-fit: cover;
     }
 
-    .img {
-        background-color: var(--grey-color);
+    .img video {
         border-top-left-radius: 20px;
     }
 
     .exercise-desc {
-        
-        background-color: var(--orange-color);
+        background-image: linear-gradient(to right, rgb(154, 77, 4), var(--orange-color));
         border-bottom-right-radius: 20px;
         display: grid;
         grid-template-rows: 60% 40%;
+    }
+
+    .exercise:hover {
+        transform: scale(1.02);
+    }
+
+    .exercise:hover > .exercise-desc > .exercise-extra{
+        background-color: rgb(154, 77, 4);
+        transition: background-color 500ms linear;
+    }
+
+    .exercise:hover > .exercise-desc > .exercise-muscles{
+        background-color: rgb(154, 77, 4);
+        transition: background-color 500ms linear;
+        border-bottom-right-radius: 20px;
     }
 
     .exercise-extra {
@@ -115,7 +137,6 @@
         display: grid;
         grid-template-columns: 50% 50%;
         column-gap: 1vw;
-        margin-right: 3vw;
         margin-left: 1vw;
     }
 

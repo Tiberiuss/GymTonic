@@ -4,6 +4,7 @@
     import { routineService } from '@/services/routine.service';
     import DateComponent from '@/components/date/DateComponent.vue';
     import { useStore } from 'vuex';
+    import type { selectedOption, Exercise } from '@/types';
 
     const router = useRouter()
     const store = useStore()
@@ -11,10 +12,14 @@
     const routines = ref()
     const status = ref<boolean>(false)
     const statusMsg = ref<string>("")
-    const selectedOptions = ref("")
+    const selectedOptions = ref<selectedOption>({
+        date: "", 
+        exercise: new Array<Exercise>(),
+        id: "",
+        name: ""
+    })
 
     watch(selectedOptions, () => {
-        console.log(selectedOptions)
         store.commit('inicializeSet', {
             routineId: selectedOptions.value.id,
             exercises: selectedOptions.value.exercise
@@ -34,7 +39,12 @@
     })
 
     function changeDay(){
-        selectedOptions.value = ""
+        selectedOptions.value = {
+            date: "", 
+            exercise: new Array<Exercise>(),
+            id: "",
+            name: ""
+        }
         store.commit("cleanActualSets")
     }
 
@@ -50,7 +60,7 @@
             </option>
         </select>
         <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
-        <div v-if="selectedOptions != ''" class="routine-show">
+        <div v-if="selectedOptions.id != ''" class="routine-show">
             <button class="see-routine-button" @click="router.push('/routine/' + selectedOptions.id + '/sets')">
                 <h1>SELECTED ROUTINE</h1>
                 <p class="routine-name">{{ selectedOptions.name}}</p>
@@ -86,7 +96,7 @@
 
 .routine-show {
     position: relative;
-    width: 85vw;
+    width: 90vw;
     height: 60vh;
     margin-left: 2.5vw;
     margin-top: 100px;

@@ -2,7 +2,7 @@
 
 body {
   font-family: Montserrat, serif;
-  background-color: black;
+  background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(71, 35, 0))
 }
 
 .button {

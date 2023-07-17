@@ -1,6 +1,6 @@
 import client from "@/client";
 import {type AxiosInstance} from "axios";
-import type {APIResponse, Routine, RoutineList, RoutineResponse} from "@/types";
+import type {APIResponse, Routine, RoutineList} from "@/types";
 
 class RoutineService {
     client: AxiosInstance;
@@ -25,6 +25,9 @@ class RoutineService {
     async getById(id: string):APIResponse<RoutineList>{
         try {
             const {data:result} = await this.client.get<RoutineList>(`/routine/id=${id}`);
+            
+            console.log(result.data)
+
             return {
                 result:{
                     data: result.data,

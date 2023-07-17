@@ -22,6 +22,12 @@ const router = createRouter({
       meta: {guest:true}
     },
     {
+      path: '/hub',
+      name: 'hub',
+      component: () => import('@/views/HubView.vue'),
+      meta: {auth:true}
+    },
+    {
       path: '/index',
       name: 'index',
       component: () => import('@/views/IndexView.vue'),

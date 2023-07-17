@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { routineService } from '@/services/routine.service';
+import type { Exercise } from '@/types';
 
 const store = useStore();
 const router = useRouter();
@@ -29,13 +30,12 @@ async function createRoutine(){
 
     const postRequest = { 
         "name": routineName.value,
-        "user_id": 123,
         "date": "2007-12-03",
-        "exerciseMongo": []
+        "exercise": [] as Exercise[]
     }
 
-    store.state.selectedExercises.forEach((key: String) => {
-        postRequest.exerciseMongo.push(JSON.parse(key))
+    store.state.selectedExercises.forEach((key: string) => {
+        postRequest.exercise.push(JSON.parse(key))
     });
 
     await routineService.createRoutine(postRequest).then( () => {

@@ -27,9 +27,15 @@ export interface ExerciseListPaginatedResponse {
 
 export interface Routine {
     name: string,
-    user_id: number,
     date: string,
-    exerciseMongo: Array<Exercise>
+    exercise: Array<Exercise>
+}
+
+export interface selectedOption {
+    date: string, 
+    exercise: Array<Exercise>
+    id: string,
+    name: string,
 }
 
 export interface RoutineList {

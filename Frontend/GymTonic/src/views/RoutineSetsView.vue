@@ -60,7 +60,7 @@
         <h1>
             {{ routine.name }}
         </h1>
-        <ExerciseSets @errorExercise="errorExercise" :element="element" v-for="element in routine.exerciseMongo" v-bind:key="element.id"></ExerciseSets>
+        <ExerciseSets @errorExercise="errorExercise" :element="element" v-for="element in routine.exercise" v-bind:key="element.id"></ExerciseSets>
     </div>
 </template>
 
