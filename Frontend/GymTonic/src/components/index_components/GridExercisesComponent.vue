@@ -12,6 +12,9 @@
     const exercises = ref<Exercise[]>([]);
     const status = ref(false);
     const statusMsg = ref("");
+    const grid = ref();
+
+    const searchValue = ref("");
     const loader = ref();
     const offset = ref(0);
     const pageSize = 10;
@@ -41,7 +44,7 @@
     }
 
     onMounted(async () => {
-      const res = await exerciseService.getAllPaginated(offset.value,pageSize);
+      const res = await exerciseService.getByNamePaginated(searchValue.value,offset.value,pageSize);
       if (res.error) {
         console.log(res.error);
         exercises.value=[];
@@ -58,14 +61,21 @@
     })
 
     async function sendQuery(value: any) {
+        unwatchScroll();
+        grid.value.scrollTo(0,0);
         status.value = false
-        const res = await exerciseService.getByName(value);
+        offset.value=0;
+        searchValue.value = value;
+        const res = await exerciseService.getByNamePaginated(value,offset.value,pageSize);
         if(res.error) {
             console.log(res.error);
             exercises.value=[];
             status.value = true;
         }else if (res.result){
+          offset.value+=pageSize;
+          watchScroll();
           exercises.value = res.result.data;
+
         }
     }
 
@@ -77,7 +87,7 @@
         }
     }
   async function addMore() {
-    const res = await exerciseService.getAllPaginated(offset.value,pageSize);
+    const res = await exerciseService.getByNamePaginated(searchValue.value,offset.value,pageSize);
     if (res.error) {
       unwatchScroll();
       loader.value.style.visibility = "visible";
@@ -95,7 +105,7 @@
         <SearchComponent  @set-query="sendQuery"/>
         <button v-if="componentType" @click="nextCreate" class="create-routine">NEXT</button>
     </div>
-    <div v-if="!status" class="section-grid">
+    <div v-if="!status" class="section-grid" ref="grid">
         <ExerciseIndex @addExercise="store.commit('addExercise', JSON.stringify(element))" @deleteExercise="store.commit('deleteExercise', JSON.stringify(element))" :component-type=componentType :element=element v-for="element in exercises" v-bind:key="element.id">
         </ExerciseIndex>
       <div class="section-grid__load">

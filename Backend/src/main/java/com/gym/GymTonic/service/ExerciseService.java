@@ -47,7 +47,7 @@ public class ExerciseService {
     }
 
     public Page<ExerciseDTO> findByNameWithPagination(String name, int offset, int pageSize){
-        return (Page<ExerciseDTO>) repositoryElastic.findAllByNameContaining(name, PageRequest.of(offset, pageSize)).map(mapper::toDTO);
+        return (Page<ExerciseDTO>) repositoryElastic.findAllByNameStartingWith(name, PageRequest.of(offset, pageSize)).map(mapper::toDTO);
     }
 
 

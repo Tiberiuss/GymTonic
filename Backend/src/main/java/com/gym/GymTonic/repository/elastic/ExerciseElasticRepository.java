@@ -17,4 +17,6 @@ public interface ExerciseElasticRepository extends ElasticsearchRepository<Exerc
     //Page<ExerciseElastic> findAllWithPagination(Pageable pageable);
     List<ExerciseElastic> findAll();
     Page<ExerciseElastic> findAllByNameContaining(String name, Pageable pageable);
+    Page<ExerciseElastic> findAllByNameStartingWith(String name, Pageable pageable);
+
 }
