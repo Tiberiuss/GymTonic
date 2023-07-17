@@ -37,7 +37,7 @@
 
 </script>
 <template>
-    <section class="exercise" @mouseenter="video.play()" @mouseleave="video.currentTime=0;video.pause()">
+    <section class="exercise" @mouseenter="video.play()" @mouseleave="video.play().then(() => {video.currentTime = 0; video.pause();})">
         <div class="img">
             <button class="add-button" @click="clkButton" v-if="componentType">
                 <IconAddExercise />
@@ -53,9 +53,9 @@
                     <router-link :to="`/index/${element.id}`">
                         <IconExerciseDescription></IconExerciseDescription>
                     </router-link>
-                    <a class="progress-icon">
+                    <router-link :to="`/chart`">
                         <IconExerciseProgress></IconExerciseProgress>
-                    </a>
+                    </router-link>
                 </div>
             </div>
             <div class="exercise-muscles">
@@ -78,11 +78,9 @@
     }
 
     .exercise {
-        margin-top: 10px;
-        min-height: 215px;
-        max-height: 350px;
         display: grid;
         grid-template-columns: 50% 50%;
+        padding: 0 1em;
     }
 
     .exercise__video {
@@ -137,7 +135,6 @@
 
     @media screen and (max-width: 1000px) {
         .exercise{
-            height: 200px;
             display: grid;
             grid-template-columns: 50% 50%;
         }

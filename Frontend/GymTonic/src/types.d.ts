@@ -13,6 +13,18 @@ export interface ExerciseList {
     status: int
 }
 
+export interface ExerciseListPaginated {
+    data: {
+        content: Exercise[],
+    },
+    status: int
+}
+
+export interface ExerciseListPaginatedResponse {
+    data: Exercise[],
+    status: int
+}
+
 export interface Routine {
     name:string,
     user_id:number,

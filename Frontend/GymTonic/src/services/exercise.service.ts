@@ -1,6 +1,6 @@
 import client from "@/client";
 import {type AxiosInstance} from "axios";
-import type {APIResponse, Exercise, ExerciseList} from "@/types";
+import type {APIResponse, Exercise, ExerciseList, ExerciseListPaginated, ExerciseListPaginatedResponse} from "@/types";
 
 
 class ExerciseService {
@@ -16,6 +16,20 @@ class ExerciseService {
             return {
                 result:{
                     data: result.data.splice(1,5),
+                    status: result.status,
+                }
+            };
+        } catch (e) {
+            return {error:true};
+        }
+    }
+
+    async getAllPaginated(offset:number,size:number):APIResponse<ExerciseListPaginatedResponse> {
+        try {
+            const {data:result} = await this.client.get<ExerciseListPaginated>(`/exercise/pages/${offset}/${size}`);
+            return {
+                result:{
+                    data:result.data.content,
                     status: result.status,
                 }
             };

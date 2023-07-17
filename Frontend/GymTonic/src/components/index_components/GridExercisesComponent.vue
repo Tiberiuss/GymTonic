@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import SearchComponent from './SearchComponent.vue';
     import ExerciseIndex from './ExerciseIndex.vue';
-    import {ref, onMounted} from 'vue';
+    import {ref, onMounted, onUnmounted} from 'vue';
     import {exerciseService} from "@/services/exercise.service";
     import type {Exercise} from "@/types";
     import { useStore } from 'vuex';
@@ -9,23 +9,52 @@
 
     const store = useStore();
     const router = useRouter();
-    const exercises = ref<Exercise[]>()
-    const status = ref(false)
-    const statusMsg = ref("")
+    const exercises = ref<Exercise[]>([]);
+    const status = ref(false);
+    const statusMsg = ref("");
+    const loader = ref();
+    const offset = ref(0);
+    const pageSize = 10;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          addMore();
+        }
+      })
+    },{threshold:0.2});
     
     defineProps({
         componentType: String
     })
 
+    function watchScroll(){
+      if (loader.value) {
+        observer.observe(loader.value);
+      }
+    }
+
+    function unwatchScroll(){
+      if (loader.value) {
+        observer.unobserve(loader.value);
+      }
+    }
+
     onMounted(async () => {
-      const res = await exerciseService.getAll();
+      const res = await exerciseService.getAllPaginated(offset.value,pageSize);
       if (res.error) {
         console.log(res.error);
         exercises.value=[];
         status.value = true;
       } else if(res.result) {
+        offset.value+=pageSize;
         exercises.value = res.result.data;
+        watchScroll();
       }
+    })
+
+    onUnmounted(() => {
+      unwatchScroll();
     })
 
     async function sendQuery(value: any) {
@@ -47,7 +76,16 @@
             statusMsg.value = "You must select one or more exercises."
         }
     }
-
+  async function addMore() {
+    const res = await exerciseService.getAllPaginated(offset.value,pageSize);
+    if (res.error) {
+      unwatchScroll();
+      loader.value.style.visibility = "visible";
+    } else if(res.result) {
+      offset.value+=pageSize;
+      exercises.value?.push(...res.result.data);
+    }
+  }
 </script>
 
 <template>
@@ -60,6 +98,9 @@
     <div v-if="!status" class="section-grid">
         <ExerciseIndex @addExercise="store.commit('addExercise', JSON.stringify(element))" @deleteExercise="store.commit('deleteExercise', JSON.stringify(element))" :component-type=componentType :element=element v-for="element in exercises" v-bind:key="element.id">
         </ExerciseIndex>
+      <div class="section-grid__load">
+        <span ref="loader">NO MORE RESULTS...</span>
+      </div>
     </div>
     <div v-else>
         An error ocurred.
@@ -69,13 +110,27 @@
 
 <style>
 .exercises {
-  margin: 1em;
-
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  height: 100vh;
 }
 .section-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(30em,1fr));
     grid-gap: 30px;
+    margin-top: 1em;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.section-grid__load {
+  grid-column: 1/-1;
+  text-align: center;
+}
+
+.section-grid__load span{
+  visibility: hidden;
 }
 
 .create-routine {
