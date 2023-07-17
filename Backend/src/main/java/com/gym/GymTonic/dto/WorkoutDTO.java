@@ -9,16 +9,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
-@ToString
-@Getter
-@Setter
+@AllArgsConstructor
+@Data
 public class WorkoutDTO {
     private String id;
-    @NonNull
     private RoutineDTO routine;
-    @NonNull
     private LocalDate date;
-    @NonNull
     private List<Set> set;
 }

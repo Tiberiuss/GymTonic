@@ -1,30 +1,8 @@
 package com.gym.GymTonic.model.mongo;
 
-import com.gym.GymTonic.model.Material;
-import com.gym.GymTonic.model.Muscle;
-import lombok.*;
-import org.springframework.data.annotation.Id;
+import com.gym.GymTonic.model.Exercise;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-import java.util.Collection;
-
-
 @Document
-@NoArgsConstructor
-@RequiredArgsConstructor
-@ToString
-@Getter
-@Setter
-public class ExerciseMongo {
-
-    @Id
-    private String id;
-    @NonNull
-    private String name;
-    @NonNull
-    private Material material;
-    @NonNull
-    private Collection<Muscle> muscle;
-
+public class ExerciseMongo extends Exercise {
 }

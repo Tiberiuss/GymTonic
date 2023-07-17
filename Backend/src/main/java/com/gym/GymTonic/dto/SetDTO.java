@@ -8,17 +8,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
-@ToString
-@Getter
-@Setter
+@AllArgsConstructor
+@Data
 public class SetDTO {
-    @NonNull
     private Integer number;
-    @NonNull
     private Integer reps;
-    @NonNull
     private Float weight;
-    @NonNull
     private ExerciseDTO exerciseMongo;
 }

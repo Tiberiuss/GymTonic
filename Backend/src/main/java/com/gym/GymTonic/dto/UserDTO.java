@@ -9,12 +9,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
-@ToString
-@Getter
-@Setter
+@AllArgsConstructor
+@Data
 public class UserDTO {
     private String id;
-    @NonNull
     private String username;
 }
