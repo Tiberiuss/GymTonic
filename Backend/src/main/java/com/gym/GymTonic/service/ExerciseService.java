@@ -2,6 +2,7 @@ package com.gym.GymTonic.service;
 
 import com.gym.GymTonic.dto.ExerciseDTO;
 import com.gym.GymTonic.mapper.ExerciseMapper;
+import com.gym.GymTonic.model.mongo.ExerciseMongo;
 import com.gym.GymTonic.repository.elastic.ExerciseElasticRepository;
 import com.gym.GymTonic.repository.mongo.ExerciseMongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,9 @@ public class ExerciseService {
 
 
     public void create(ExerciseDTO exerciseDTO) {
+        ExerciseMongo exerciseMongo = repositoryMongo.save(mapper.toEntityMongo(exerciseDTO));
+        exerciseDTO.setId(exerciseMongo.getId());
         repositoryElastic.save(mapper.toEntityElastic(exerciseDTO));
-        repositoryMongo.save(mapper.toEntityMongo(exerciseDTO));
     }
 
     public ExerciseDTO findById(String id) {
