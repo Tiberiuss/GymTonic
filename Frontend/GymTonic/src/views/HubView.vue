@@ -25,10 +25,25 @@
     grid-template-rows: 35% 52%;
     grid-gap: 5%;
     margin: 5%;
-    height: 100vh;
 }
 
-.hub button {
+.index-hub {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    border: 0px;
+    background-color: transparent;
+}
+
+.routine-hub {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    border: 0px;
+    background-color: transparent;
+}
+
+.progress-hub {
     width: 100%;
     height: 100%;
     border-radius: 40px;
@@ -40,7 +55,7 @@
     grid-column: 1 / -1;
 }
 
-button img {
+.hub button img {
     width: 100%;
     height: 100%;
     border-radius: 40px;
@@ -49,6 +64,13 @@ button img {
 
 button img:hover {
     transform: scale(1.02);
+}
+
+@media screen and (max-width: 900px) {
+    .hub {
+        grid-template-columns: 100%;
+        grid-template-rows: 27% 27% 27%;
+    }
 }
 
 </style>

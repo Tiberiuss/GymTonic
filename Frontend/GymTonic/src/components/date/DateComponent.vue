@@ -50,7 +50,8 @@
         date.value.setDate(date.value.getDate() - 7)
 
         dateStr.value = date.value.toLocaleDateString()
-
+        actualMonth = date.value.getMonth()
+        actualYear = date.value.getFullYear()
     }
 
     function nextWeek(){
@@ -70,15 +71,16 @@
 
         date.value.setDate(date.value.getDate() - 7)
         dateStr.value = date.value.toLocaleDateString()
-        
+        actualMonth = date.value.getMonth()
+        actualYear = date.value.getFullYear()
     }
 
     function newIam(day: dayType){
         week.value.forEach((day) => day.iam = false)        
         day.iam = true
         let auxMove = date.value.getDate() - day.day
-        if (auxMove > 7 || auxMove < -7){
-            if ((actualMonth % 2) == 0){
+        if (auxMove > 7){
+            if (actualMonth == 0 || actualMonth == 2 || actualMonth == 4 || actualMonth == 6 || actualMonth == 7 || actualMonth == 9 || actualMonth == 11){
                 auxMove = auxMove - 31
             } else {
                 if (actualMonth == 1){
@@ -89,6 +91,23 @@
                     }
                 }else{
                     auxMove = auxMove - 30
+                }
+            }
+            date.value.setDate(date.value.getDate() - auxMove)
+            actualMonth = date.value.getMonth()
+            actualYear = date.value.getFullYear()
+        }else if(auxMove < -7){
+            if (actualMonth == 0 || actualMonth == 1 || actualMonth == 3 || actualMonth == 5 || actualMonth == 6 || actualMonth == 7 || actualMonth == 8 || actualMonth == 10){
+                auxMove = auxMove + 31
+            } else {
+                if (actualMonth == 2){
+                    if ((actualYear % 4 == 0) && ((actualYear % 100 != 0) || (actualYear % 400 == 0))){
+                        auxMove = auxMove + 29
+                    }else{
+                        auxMove = auxMove + 28
+                    }
+                }else{
+                    auxMove = auxMove + 30
                 }
             }
             date.value.setDate(date.value.getDate() - auxMove)
@@ -141,10 +160,10 @@
 }
 
 .day-grid {
-    width: 100vw;
     height: 100px;    
     display: grid;
-    grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;
+    margin-left: 20%;
 }
 
 .day {
@@ -154,7 +173,12 @@
     margin-left: 50%;
     border-radius: 30px;
     border: 0px;
+    transition: 800ms;
 }
+
+.day:hover {
+    background-color: var(--red-color);
+} 
 
 .today {
     height: 80px;
@@ -184,6 +208,10 @@
 }
 
 @media screen and (max-width: 800px) {
+    .day-grid {
+        margin-left: 0%;
+    }
+    
     .day {
         height: 80px;
         width: 40px;

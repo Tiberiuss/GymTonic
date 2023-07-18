@@ -3,6 +3,9 @@ import * as d3 from 'd3';
 import {onMounted, ref} from "vue";
 import {types} from "sass";
 import Number = types.Number;
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const svg = ref();
 const margin = {top: 10, right: 50, bottom: 50, left: 50};
@@ -95,6 +98,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <button class="back" @click="router.go(-1)">GO BACK</button>
   <div class="chart">
     <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`"></svg>
     <div>
@@ -123,6 +127,13 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+  .back {
+    margin: 10px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: var(--red-color);
+  }
+
   .chart {
     display: flex;
     justify-content: center;

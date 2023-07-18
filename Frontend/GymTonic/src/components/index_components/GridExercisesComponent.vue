@@ -99,6 +99,7 @@
 </script>
 
 <template>
+<button class="back" @click="$router.go(-1)">GO BACK</button>
 <div class="exercises">
     <p v-if="componentType">{{ statusMsg }}</p>
     <div>
@@ -119,18 +120,30 @@
 </template>
 
 <style>
+
+.back {
+  margin: 10px;
+  border: 0px;
+  border-radius: 5px;
+  background-color: var(--red-color);
+}
+
 .exercises {
   display: flex;
   flex-direction: column;
   padding: 1em;
   height: 100vh;
 }
+
 .section-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(30em,1fr));
     grid-gap: 30px;
     margin-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
     overflow-y: auto;
+    overflow-x: hidden;
     flex: 1;
 }
 

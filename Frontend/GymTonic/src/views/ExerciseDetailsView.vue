@@ -28,7 +28,7 @@
 </script>
 
 <template>
-    <button @click="router.push('/index')" class="back">GO BACK</button>
+    <button onclick="window.history.go(-1);" class="back">GO BACK</button>
     <p v-if="status">{{ statusMsg }}</p>
     <div v-else class="detail-grid">
         <div>

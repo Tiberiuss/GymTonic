@@ -52,18 +52,19 @@
 
 <template>
     <DateComponent @change-day="changeDay"></DateComponent>
+    <button class="back" @click="router.go(-1)">GO BACK</button>
+    <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
     <div class="routines-div">
         <select v-model="selectedOptions" class="select-routine">
-            <option v-bind:value="''" selected disabled>Select a routine.</option>
+            <option v-bind:value="''" disabled>Select a routine.</option>
             <option v-for="routine in routines" v-bind:value="routine" v-bind:key="routine.name">
                 {{ routine.name }}
             </option>
         </select>
-        <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
         <div v-if="selectedOptions.id != ''" class="routine-show">
             <button class="see-routine-button" @click="router.push('/routine/' + selectedOptions.id + '/sets')">
                 <h1>SELECTED ROUTINE</h1>
-                <p class="routine-name">{{ selectedOptions.name}}</p>
+                <p class="routine-name">NAME: {{ selectedOptions.name}}</p>
                 <img class="img-routine" src="@/assets/routine-show.jpg"/>
             </button>
         </div>
@@ -71,9 +72,23 @@
 </template>
 
 <style>
+
+.back {
+    margin: 10px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: var(--red-color);
+    margin-left: 20%;
+    transition: 500ms;
+}
+
+.back:hover {
+    background-color: #a83c1e;
+}
+
 .routines-div {
-    padding: 30px;
-    height: 70vh;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 .select-routine {
@@ -84,6 +99,7 @@
     width: 200px;
     height: 25px;
     float: left;
+    outline: none;
 }
 
 .button-routine {
@@ -92,14 +108,20 @@
     border: 0px;
     border-radius: 10px;
     height: 25px;
+    margin-top: 10px;
+    margin-right: 20%;
+    transition: 500ms;
+}
+
+.button-routine:hover {
+    background-color: rgb(154, 77, 4);
 }
 
 .routine-show {
     position: relative;
-    width: 90vw;
-    height: 60vh;
+    height: 40%;
     margin-left: 2.5vw;
-    margin-top: 100px;
+    margin-top: 2vh;
 }
 
 .see-routine-button {
@@ -107,14 +129,21 @@
     height: 100%;
     border-radius: 10vw;
     border: 0px;
+    margin-top: 5vh;
     background-color: transparent;
+    transition: 500ms;
 }
 
 .see-routine-button h1 {
     position: absolute;
     color: white;
-    margin-left: 12vw;
-    margin-top: 5vh;
+    margin-left: 12%;
+    margin-top: 5%;
+    font-size: 3em;
+}
+
+.see-routine-button:hover {
+    transform: scale(1.1);
 }
 
 .routine-show img {
@@ -127,8 +156,28 @@
     position: absolute;
     color: white;
     font-size: 20px;
-    margin-top: 20vh;
-    margin-left: 12vw;
+    margin-top: 20%;
+    margin-left: 12%;
+    font-size: 2em;
+}
+
+@media screen and (max-width: 800px){
+    .back{
+        margin-left: 5%;
+    }
+
+    .button-routine {
+        margin-right: 5%;
+    }
+
+    .routines-div{
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .see-routine-button h1 {
+        font-size: 1.7em;
+    }
 }
 
 
@@ -138,8 +187,11 @@
     }
     
     .button-routine {
-        float: right;
-        margin-top: 20px;
+        margin: 10px;
+    }
+
+    .see-routine-button h1 {
+        font-size: 1.5em;
     }
 }
 </style>

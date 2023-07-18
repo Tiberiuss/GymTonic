@@ -53,17 +53,17 @@ async function createRoutine(){
 <template>
     <div class="template-div">
         <p v-if="status">{{statusMsg}}</p>
-        <button class="back" @click="router.push('/routine/create')">GO BACK</button>
+        <button class="back" @click="router.go(-1)">GO BACK</button>
+        <button class="create" @click="createRoutine">CREATE ROUTINE</button>
         <div class="name-div">
             <p>
                 Insert the name of the routine: 
                 <input v-model="routineName" class="input-name"/>
             </p>
-            <button class="create" @click="createRoutine">CREATE ROUTINE</button>
         </div>
+        <h1>Preview of exercises:</h1>
         <div class="exercises-div">
-            <h1>Preview of exercises:</h1>
-            <ExerciseIndex :element="JSON.parse(exercise)" v-for="exercise in store.state.selectedExercises" v-bind:key="exercise.id"></ExerciseIndex>
+            <ExerciseIndex class="exercise" :element="JSON.parse(exercise)" v-for="exercise in store.state.selectedExercises" v-bind:key="exercise.id"></ExerciseIndex>
         </div>
     </div>
 </template>
@@ -82,11 +82,19 @@ async function createRoutine(){
 
 .input-name {
     width: 150px;
+    border-color: white;
+    background-color: transparent;
+    outline: none;
+    color: white;
+    transition: all 500ms;
 }
 
-.exercises-div {
-    width: 1/4;
-    height: 70%;
+.input-name:hover {
+    background-color: white;
+    color: black
+}
+
+h1 {
     margin-top: 10vh;
 }
 
@@ -106,11 +114,16 @@ async function createRoutine(){
     height: 30px;
 }
 
+.exercises-div {
+    height: 20%;
+    width: 80%;
+    margin-left: 10%;
+}
+
 @media screen and (max-width: 300px){
     .exercises-div{
         width: 1/4;
         height: 70vh;
-        margin-top: 20vh;
     }
 }
 </style>

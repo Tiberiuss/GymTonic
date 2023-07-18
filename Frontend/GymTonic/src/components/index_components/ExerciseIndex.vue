@@ -2,15 +2,17 @@
     import IconExerciseDescription from '../icons/IconExerciseDescription.vue';
     import IconExerciseProgress from '../icons/IconExerciseProgress.vue';
     import IconAddExercise from '../icons/IconAddExercise.vue';
+    import IconRemoveExercise from '@/components/icons/IconRemoveExercise.vue'
     import { onMounted, ref, computed } from 'vue';
     import { useStore } from 'vuex';
 
     const props = defineProps(['element', 'componentType'])
     const emit = defineEmits(['addExercise', 'deleteExercise'])
 
+    const addButton = ref()
     const exerciseDesc = ref()
     const video = ref();
-    let buttonClicked = false;
+    let buttonClicked = ref(false);
 
     const store = useStore();
 
@@ -18,20 +20,27 @@
 
     onMounted(() => {
         if (selectedExercises.value.has(JSON.stringify(props.element))) {
-            buttonClicked = true
-            exerciseDesc.value.style.backgroundColor = "#a15814";
+            try{
+                buttonClicked.value = true
+                exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), rgb(154, 77, 4))";
+                addButton.value.style.backgroundColor = "var(--red-color)"
+            }catch{
+                exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), var(--orange-color))";
+            }
         }
     })
 
     function clkButton() {
-        buttonClicked = !buttonClicked;
+        buttonClicked.value = !buttonClicked.value;
     
-        if (buttonClicked) {
+        if (buttonClicked.value) {
             emit('addExercise', props.element)
-            exerciseDesc.value.style.backgroundColor = "#a15814";
+            exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), rgb(154, 77, 4))";
+            addButton.value.style.backgroundColor = "var(--red-color)"
         }else{
             emit('deleteExercise', props.element)
-            exerciseDesc.value.style.backgroundColor = "#CC6F1A";
+            exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), var(--orange-color))";
+            addButton.value.style.backgroundColor = "var(--green-color)"
         }
     }
 
@@ -39,8 +48,9 @@
 <template>
     <section class="exercise" @mouseenter="video.play()" @mouseleave="video.play().then(() => {video.currentTime = 0; video.pause();})">
         <div class="img">
-            <button class="add-button" @click="clkButton" v-if="componentType">
-                <IconAddExercise />
+            <button ref="addButton" class="add-button" @click="clkButton" v-if="componentType">
+                <IconAddExercise v-if="!buttonClicked"/>
+                <IconRemoveExercise v-else/>
             </button>
           <video ref="video" class="exercise__video" :src=element.video[0] muted loop></video>
         </div>
@@ -72,24 +82,19 @@
         width: 50px;
         border-radius: 20px;
         border: 0px;
-        background-color: var(--white-transparent-color);
         position: absolute;
         z-index: 10;
+        background-color: var(--green-color);
     }
 
     .exercise {
-<<<<<<< Updated upstream
-        display: grid;
-        grid-template-columns: 50% 50%;
-        padding: 0 1em;
-=======
         margin-top: 40px;
         min-height: 215px;
         max-height: 350px;
         display: grid;
         grid-template-columns: 50% 50%;
-        transition: transform 0.5s
->>>>>>> Stashed changes
+        transition: transform 0.5s;
+        position: relative;
     }
 
     .exercise__video {
