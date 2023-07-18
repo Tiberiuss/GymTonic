@@ -36,58 +36,64 @@ public class ExerciseController {
     }
 
     @GetMapping("/pages/{offset}/{pageSize}")
-    public ResponseEntity<BaseResponse> findAllWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
+    public ResponseEntity<BaseResponse<Page<ExerciseDTO>>> findAllWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
         Page<ExerciseDTO> exerciseList = service.findAllWithPagination(offset, pageSize);
+        BaseResponse.BaseResponseBuilder<Page<ExerciseDTO>> builder = BaseResponse.builder();
         if(!exerciseList.isEmpty()){
-            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseList).build(), HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(exerciseList).build(), HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>(BaseResponse.builder().status("1").message("Not found").build(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("1").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/id={id}")
-    public ResponseEntity<BaseResponse> findExerciseById(@PathVariable String id) {
+    public ResponseEntity<BaseResponse<ExerciseDTO>> findExerciseById(@PathVariable String id) {
+        BaseResponse.BaseResponseBuilder<ExerciseDTO> builder = BaseResponse.builder();
         try {
             ExerciseDTO exerciseDTO = service.findById(id);
-            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTO).build(), HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(exerciseDTO).build(), HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("1").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping(params = "nom")
-    public ResponseEntity<BaseResponse> findExerciseByNameOrMuscleOrMaterial(@RequestParam String nom){
+    public ResponseEntity<BaseResponse<List<ExerciseDTO>>> findExerciseByNameOrMuscleOrMaterial(@RequestParam String nom){
         String muscle = nom;
         String material = nom;
         List<ExerciseDTO> exerciseDTOList = service.findByNameOrMuscleOrMaterial(nom, muscle, material);
+        BaseResponse.BaseResponseBuilder<List<ExerciseDTO>> builder = BaseResponse.builder();
         if(!exerciseDTOList.isEmpty()){
-            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTOList).build(), HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(exerciseDTOList).build(), HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping(params = "name")
-    public ResponseEntity<?> findExerciseByName(@RequestParam("name") String name){
+    public ResponseEntity<BaseResponse<List<ExerciseDTO>>> findExerciseByName(@RequestParam("name") String name){
         List<ExerciseDTO> exerciseDTOList = service.findByName(name);
+        BaseResponse.BaseResponseBuilder<List<ExerciseDTO>> builder = BaseResponse.builder();
         if(!exerciseDTOList.isEmpty()){
-            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTOList).build(), HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(exerciseDTOList).build(), HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/name={name}/pages/{offset}/{pageSize}")
-    public ResponseEntity<BaseResponse> findExerciseByNameWithPagination(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
+    public ResponseEntity<BaseResponse<Page<ExerciseDTO>>> findExerciseByNameWithPagination(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
         Page<ExerciseDTO> exerciseDTOList = service.findByNameWithPagination(name, offset, pageSize);
+        BaseResponse.BaseResponseBuilder<Page<ExerciseDTO>> builder = BaseResponse.builder();
+
         if(!exerciseDTOList.isEmpty()){
-            return new ResponseEntity<>(BaseResponse.builder().status("1").data(exerciseDTOList).build(), HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(exerciseDTOList).build(), HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 

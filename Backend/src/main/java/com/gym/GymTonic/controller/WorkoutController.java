@@ -1,5 +1,7 @@
 package com.gym.GymTonic.controller;
 
+import com.gym.GymTonic.dto.ExerciseDTO;
+import com.gym.GymTonic.dto.RoutineDTO;
 import com.gym.GymTonic.dto.WorkoutDTO;
 import com.gym.GymTonic.model.mongo.Workout;
 import com.gym.GymTonic.payload.BaseResponse;
@@ -21,22 +23,24 @@ public class WorkoutController {
     private final WorkoutService service;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> findAll() {
+    public ResponseEntity<BaseResponse<List<WorkoutDTO>>> findAll() {
         List<WorkoutDTO> workoutList = service.findAll();
+        BaseResponse.BaseResponseBuilder<List<WorkoutDTO>> builder = BaseResponse.builder();
         if (!workoutList.isEmpty()) {
-            return new ResponseEntity<>(BaseResponse.builder().status("1").data(workoutList).build(), HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(workoutList).build(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/id={id}")
-    public ResponseEntity<BaseResponse> findRoutineById(@PathVariable String id) {
+    public ResponseEntity<BaseResponse<WorkoutDTO>> findRoutineById(@PathVariable String id) {
+        BaseResponse.BaseResponseBuilder<WorkoutDTO> builder = BaseResponse.builder();
         try {
             WorkoutDTO workout = service.findById(id);
-            return new ResponseEntity<>(BaseResponse.builder().status("1").data(workout).build(), HttpStatus.OK);
+            return new ResponseEntity<>(builder.status("1").data(workout).build(), HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(builder.status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
