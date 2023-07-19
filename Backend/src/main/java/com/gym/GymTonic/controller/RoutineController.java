@@ -1,6 +1,6 @@
 package com.gym.GymTonic.controller;
 
-import com.gym.GymTonic.dto.ExerciseDTO;
+
 import com.gym.GymTonic.dto.RoutineDTO;
 import com.gym.GymTonic.payload.BaseResponse;
 import com.gym.GymTonic.service.RoutineService;
@@ -10,8 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -45,9 +44,9 @@ public class RoutineController {
         }
     }
 
-    @GetMapping("/user_routine={user_routine}")
-    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByUserId(@PathVariable String user_routine){
-        List<RoutineDTO> routineList = routineService.findByUserId(user_routine);
+    @GetMapping("/user")
+    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByUserId(){
+        List<RoutineDTO> routineList = routineService.findByUserId();
         BaseResponse.BaseResponseBuilder<List<RoutineDTO>> builder = BaseResponse.builder();
         if (!routineList.isEmpty()) {
             return new ResponseEntity<>(builder.status("1").data(routineList).build(), HttpStatus.OK);
@@ -56,8 +55,8 @@ public class RoutineController {
         }
     }
 
-    @GetMapping("/date={date}")
-    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
+    @GetMapping(params = "date")
+    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
         List<RoutineDTO> routineList = routineService.findByDate(date);
         BaseResponse.BaseResponseBuilder<List<RoutineDTO>> builder = BaseResponse.builder();
         if (!routineList.isEmpty()) {
@@ -67,9 +66,9 @@ public class RoutineController {
         }
     }
 
-    @GetMapping(value = "/user_id={user_id}/date={date}")
-    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByDate(@PathVariable String user_id, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
-        List<RoutineDTO> routineList = routineService.findByUserIdAndDate(user_id, date);
+    @GetMapping("/date_user")
+    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByUserIdAndDate(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
+        List<RoutineDTO> routineList = routineService.findByUserIdAndDate(date);
         BaseResponse.BaseResponseBuilder<List<RoutineDTO>> builder = BaseResponse.builder();
         if (!routineList.isEmpty()) {
             return new ResponseEntity<>(builder.status("1").data(routineList).build(), HttpStatus.OK);
@@ -77,6 +76,7 @@ public class RoutineController {
             return new ResponseEntity<>(builder.status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
         }
     }
+
 
     @PostMapping
     public ResponseEntity<BaseResponse> create(@RequestBody RoutineDTO routine){

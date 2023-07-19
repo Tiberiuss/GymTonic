@@ -21,15 +21,16 @@ public class RoutineService {
         return repository.findAll().stream().map(mapper::toDTO).toList();
     }
 
-    public List<RoutineDTO> findByUserId(String id){
-        return repository.findByUserId(id).stream().map(mapper::toDTO).toList();
+    public List<RoutineDTO> findByUserId(){
+        return repository.findByUserId(AuthService.getAuthentication().getId()).stream().map(mapper::toDTO).toList();
     }
 
     public List<RoutineDTO> findByDate(Date date){
         return repository.findByDate(date).stream().map(mapper::toDTO).toList();
     }
 
-    public List<RoutineDTO> findByUserIdAndDate(String id, Date date){
+    public List<RoutineDTO> findByUserIdAndDate(Date date){
+        String id = AuthService.getAuthentication().getId();
         return repository.findByUserIdAndDate(id, date).stream().map(mapper::toDTO).toList();
     }
 

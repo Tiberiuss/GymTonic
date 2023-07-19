@@ -26,7 +26,7 @@ class ExerciseService {
 
     async getAllPaginated(offset:number,size:number):APIResponse<ExerciseListPaginatedResponse> {
         try {
-            const {data:result} = await this.client.get<ExerciseListPaginated>(`/exercise/pages/${offset}/${size}`);
+            const {data:result} = await this.client.get<ExerciseListPaginated>(`/exercise/pages?${offset}&${size}`);
             return {
                 result:{
                     data:result.data.content,
@@ -54,7 +54,7 @@ class ExerciseService {
 
     async getByNamePaginated(name: string,offset:number,size:number):APIResponse<ExerciseListPaginatedResponse> {
         try {
-            const {data:result} = await this.client.get<ExerciseListPaginated>(`/exercise/name=${name}/pages/${offset}/${size}`);
+            const {data:result} = await this.client.get<ExerciseListPaginated>(`/exercise/name=${name}/pages?${offset}&${size}`);
             return {
                 result:{
                     data: result.data.content,
