@@ -20,10 +20,7 @@
     })
 
     watch(selectedOptions, () => {
-        store.commit('inicializeSet', {
-            routineId: selectedOptions.value.id,
-            exercises: selectedOptions.value.exercise
-        })
+        store.commit('inicializeWorkout', selectedOptions.value.id)
     })
 
     onMounted(async() => {

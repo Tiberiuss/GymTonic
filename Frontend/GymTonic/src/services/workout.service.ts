@@ -3,7 +3,7 @@ import type { APIResponse, Sets } from "@/types";
 import {type AxiosInstance} from "axios";
 
 
-class SetService {
+class WorkoutService {
     client: AxiosInstance;
 
     constructor() {
@@ -12,7 +12,7 @@ class SetService {
 
     async createSet(post: Sets): APIResponse<any> {
         try {
-            const {data:result} = await this.client.post("/set", post)
+            const {data:result} = await this.client.post("/workout", post)
             return {
                 result:{
                     status: result.status,
@@ -25,4 +25,4 @@ class SetService {
 
 }
 
-export const setService = new SetService()
+export const workoutService = new WorkoutService()

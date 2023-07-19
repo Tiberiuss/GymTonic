@@ -3,6 +3,7 @@
     import { useStore } from 'vuex';
     import router from '@/router';
     import IconExerciseDescription from '@/components/icons/IconExerciseDescription.vue'
+    import type { Sets } from '@/types';
 
     const props = defineProps(['element'])
     const store = useStore()
@@ -12,23 +13,14 @@
     let setId = 1
     let indexStore = 0
 
-    onBeforeMount(() => {
-        indexStore = store.state.actualSets.logs.findIndex((element: any) => element.exerciseId === props.element.id)
-
-        if (indexStore == -1){
-            emit('errorExercise')
-            return
-        }
-    })
-
     function newSet(){
         store.commit('addSet', {
-            index: indexStore,
-            set: {
-                id: setId,
+                number: setId,
                 reps: 0,
-                weight: 0
-            }
+                weight: 0,
+                exerciseMongo: {
+                    id: props.element.id
+                }
         })
 
         setId += 1
@@ -48,15 +40,15 @@
                     <td>Weight</td>
                     <td></td>
                 </tr>
-                <tr v-for="set in store.state.actualSets.logs[indexStore].sets" v-bind:key="set">
+                <tr v-for="set in store.state.actualSets.set?.filter((set: Sets) => set.exerciseMongo?.id === props.element?.id)" v-bind:key="set">
                     <td>
-                        <input type="number" v-model="set.reps" min="0" @input="store.commit('changeReps', {index: indexStore, setId: set.id, reps: set.reps})"/>    
+                        <input type="number" v-model="set.reps" min="0" @input="store.commit('changeReps', {number: set.number, reps: set.reps})"/>    
                     </td>
                     <td>
-                        <input type="number" v-model="set.weight" min="0" @input="store.commit('changeWeight', {index: indexStore, setId: set.id, weight: set.weight})"/>
+                        <input type="number" v-model="set.weight" min="0" @input="store.commit('changeWeight', {number: set.number, weight: set.weight})"/>
                     </td>
                     <td>
-                        <button class="delete" @click="store.commit('deleteSet', {index: indexStore, setId: set.id})">DELETE</button>
+                        <button class="delete" @click="store.commit('deleteWorkout', set.number)">DELETE</button>
                     </td>
                 </tr>
             </table>

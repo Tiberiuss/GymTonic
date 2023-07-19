@@ -43,7 +43,7 @@ export interface RoutineList {
     status: int
 }
 
-export interface Sets {
+/*export interface Sets {
     id: number,
     reps: number,
     weight: number
@@ -62,23 +62,25 @@ export interface payloadInitializeSets {
 export interface payloadAddSets {
     index: number,
     set: Sets
+}*/
+
+export interface Sets {
+    number: number,
+    reps: number,
+    weight: number,
+    exerciseMongo: {
+        id: number
+    }
 }
 
 export interface payloadReps {
-    index: number,
-    setId: number,
+    number: number,
     reps: number
 }
 
 export interface payloadWeight {
-    index: number,
-    setId: number,
+    number: number,
     weight: number
-}
-
-export interface payloadDeleteSets {
-    index: number,
-    setId: number
 }
 
 export interface dayType{

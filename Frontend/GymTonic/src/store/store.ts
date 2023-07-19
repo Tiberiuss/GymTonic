@@ -1,8 +1,8 @@
 import { createStore } from 'vuex';
-import type { Sets, Logs, payloadInitializeSets, payloadAddSets, payloadReps, payloadWeight, payloadDeleteSets } from '@/types';
+import type { Sets, payloadReps, payloadWeight, payloadDeleteSets } from '@/types';
 
 interface state {
-    actualSets: { routineId: string; userId: number; date: Date; logs: Array<Logs>;};
+    actualSets: { routine: {id: string}; date: Date; set: Array<Sets>;};
     selectedExercises: Set<String>
 }
 
@@ -10,7 +10,13 @@ const store = createStore<state>({
     state () {
         return {
             selectedExercises: new Set(),
-            actualSets: null
+            actualSets: {
+                routine: {
+                    id: ""
+                },
+                date: new Date(),
+                set: new Array<Sets>()
+            }
         }
     },
     mutations: {
@@ -23,41 +29,31 @@ const store = createStore<state>({
         cleanList (state: state) {
             state.selectedExercises.clear()
         },
-        inicializeSet(state: state, payload: payloadInitializeSets){
-            state.actualSets = {
-                "routineId": payload.routineId,
-                "userId": 123,
-                "date": new Date(),
-                "logs": new Array<Logs>()
-            }
-            if (payload.exercises != null){
-                payload.exercises.forEach((exercise) => {
-                    state.actualSets.logs.push({
-                        "exerciseId": exercise.id,
-                        "sets": new Array<Sets>()
-                    })
-                })
-            }
+        inicializeWorkout(state: state, routine: string){
+            state.actualSets.routine.id = routine
+            state.actualSets.date = new Date()
+            state.actualSets.set = new Array<Sets>()
         },
-        addSet(state: state, payload: payloadAddSets){
-            state.actualSets.logs[payload.index].sets.push(payload.set)
+        addSet(state: state, set: Sets){
+            state.actualSets?.set.push(set)
         },
         changeReps(state: state, payload: payloadReps){
-            const indexSet = state.actualSets.logs[payload.index].sets.findIndex((element) => element.id == payload.setId)
-            state.actualSets.logs[payload.index].sets[indexSet].reps = payload.reps
+            // Don't delete 
         },
         changeWeight(state: state, payload: payloadWeight){
-            const indexSet = state.actualSets.logs[payload.index].sets.findIndex((element) => element.id == payload.setId)
-            state.actualSets.logs[payload.index].sets[indexSet].weight = payload.weight
+            // Don't delete
         },
-        deleteSet(state: state, payload: payloadDeleteSets){
-            const indexSet = state.actualSets.logs[payload.index].sets.findIndex((element) => element.id == payload.setId)
-            state.actualSets.logs[payload.index].sets.splice(indexSet,1)
+        deleteWorkout(state: state, number: number){
+            state.actualSets.set = state.actualSets.set.filter((s) => s.number !== number)
         },
         cleanActualSets(state: state){
-            state.actualSets.routineId = ""
-            state.actualSets.userId = -1
-            state.actualSets.logs = new Array<Logs>()
+            state.actualSets = {
+                routine: {
+                    id: ""
+                },
+                date: new Date(),
+                set: new Array<Sets>()
+            }
         }     
     },
     getters: {

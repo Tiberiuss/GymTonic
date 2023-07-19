@@ -68,10 +68,10 @@ class ExerciseService {
 
     async getById(id: string):APIResponse<ExerciseList>{
         try {
-            const {data:result} = await this.client.get<ExerciseList>(`/exercise?id=${id}`);
+            const {data:result} = await this.client.get<ExerciseList>(`/exercise/id=${id}`);            
             return {
                 result:{
-                    data: result.data.splice(1,1),
+                    data: result.data,
                     status: result.status,
                 }
             };

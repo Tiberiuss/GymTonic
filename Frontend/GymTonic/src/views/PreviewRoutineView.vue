@@ -30,7 +30,7 @@ async function createRoutine(){
 
     const postRequest = { 
         "name": routineName.value,
-        "date": "2007-12-03",
+        "date": "2023-07-18",
         "exercise": [] as Exercise[]
     }
 

@@ -3,10 +3,12 @@
     import { useRouter } from 'vue-router';
     import { onBeforeMount } from 'vue';
     import { routineService } from '@/services/routine.service';
+    import { exerciseService } from '@/services/exercise.service';
     import { ref } from 'vue';
     import ExerciseSets from '@/components/sets/ExerciseSets.vue';
     import { useStore } from 'vuex';
-    import { setService } from '@/services/set.service';
+    import { workoutService } from '@/services/workout.service';
+    import type{ Exercise } from '@/types';
 
     const router = useRouter()
     const route = useRoute()
@@ -14,9 +16,11 @@
 
     const routine = ref()
     const state = ref(false)
+    const exercises = ref<Array<Exercise>>(new Array<Exercise>())
     const stateMsg = ref("")
 
     onBeforeMount(async() => {
+        const exercisesAux = ref<Array<Exercise>>(new Array<Exercise>())
         const res = await routineService.getById(String(route.params.idRoutine))
 
         if (res.error){
@@ -25,16 +29,30 @@
             return
         }else if (res.result){
             routine.value = res.result.data
+            let i = 0
+            while(i < routine.value.exercise.length){
+                const res = await exerciseService.getById(routine.value.exercise[i].id)
+                if (res.error){
+                    state.value = true
+                    stateMsg.value = "Error loading the routine exercises."
+                    break
+                }else if (res.result){
+                    exercisesAux.value.push(res.result.data)
+                }
+
+                i += 1;
+            }
         }
 
         if (routine.value == null){
             state.value = true
             stateMsg.value = "The routine doesn't exist."
         }
+        exercises.value = exercisesAux.value
     })
 
     async function routineSave() {
-        const res = await setService.createSet(store.state.actualSets)
+        const res = await workoutService.createSet(store.state.actualSets)
 
         if (res.error){
             state.value = true
@@ -58,9 +76,9 @@
     <div v-if="state">{{ stateMsg }}</div>
     <div v-else class="exercise-information">
         <h1>
-            {{ routine.name }}
+            {{ routine?.name }}
         </h1>
-        <ExerciseSets @errorExercise="errorExercise" :element="element" v-for="element in routine.exercise" v-bind:key="element.id"></ExerciseSets>
+        <ExerciseSets @errorExercise="errorExercise" :element="element" v-for="element in exercises" v-bind:key="element.id"></ExerciseSets>
     </div>
 </template>
 
