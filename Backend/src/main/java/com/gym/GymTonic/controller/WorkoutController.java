@@ -1,9 +1,9 @@
 package com.gym.GymTonic.controller;
 
-import com.gym.GymTonic.dto.ExerciseDTO;
-import com.gym.GymTonic.dto.RoutineDTO;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.gym.GymTonic.dto.Views;
+import com.gym.GymTonic.payload.ChartResponse;
 import com.gym.GymTonic.dto.WorkoutDTO;
-import com.gym.GymTonic.model.mongo.Workout;
 import com.gym.GymTonic.payload.BaseResponse;
 import com.gym.GymTonic.service.WorkoutService;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/workout")
@@ -21,6 +19,17 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:5173")
 public class WorkoutController {
     private final WorkoutService service;
+
+    @GetMapping("/exercise={id}")
+    public ResponseEntity<BaseResponse<List<ChartResponse>>> findWorkoutsByExercise(@PathVariable String id) {
+        BaseResponse.BaseResponseBuilder<List<ChartResponse>> builder = BaseResponse.builder();
+        try {
+            List<ChartResponse> workoutDTOS = service.findByExercise(id);
+            return new ResponseEntity<>(builder.status("1").data(workoutDTOS).build(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(builder.status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping
     public ResponseEntity<BaseResponse<List<WorkoutDTO>>> findAll() {
@@ -45,13 +54,13 @@ public class WorkoutController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody WorkoutDTO workout){
+    public ResponseEntity<BaseResponse> create(@RequestBody @JsonView(Views.CreateWorkout.class) WorkoutDTO workout){
         service.create(workout);
         return new ResponseEntity<>(BaseResponse.builder().status("1").message("Saved").build(), HttpStatus.CREATED);
     }
 
     @PutMapping("/id={id}")
-    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody WorkoutDTO workout){
+    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody @JsonView(Views.CreateWorkout.class) WorkoutDTO workout){
         try{
             service.update(id, workout);
             return new ResponseEntity<>(BaseResponse.builder().status("1").data(service.findById(id)).build(), HttpStatus.OK);

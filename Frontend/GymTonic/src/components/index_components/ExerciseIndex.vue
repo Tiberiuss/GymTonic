@@ -63,7 +63,7 @@
                     <router-link :to="`/index/${element.id}`">
                         <IconExerciseDescription></IconExerciseDescription>
                     </router-link>
-                    <router-link :to="`/chart`">
+                    <router-link :to="`/chart/${element.id}`">
                         <IconExerciseProgress></IconExerciseProgress>
                     </router-link>
                 </div>
@@ -88,11 +88,9 @@
     }
 
     .exercise {
-        margin-top: 40px;
-        min-height: 215px;
-        max-height: 350px;
         display: grid;
         grid-template-columns: 50% 50%;
+        padding: 0 1em;
         transition: transform 0.5s;
         position: relative;
     }

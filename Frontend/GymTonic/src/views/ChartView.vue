@@ -1,46 +1,59 @@
 <script setup lang="ts">
 import * as d3 from 'd3';
-import {onMounted, ref} from "vue";
-import {types} from "sass";
-import Number = types.Number;
+import {computed, onBeforeMount, ref} from "vue";
+import {workoutService} from "@/services/workout.service";
+import {useRoute} from "vue-router";
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
+const route = useRoute();
 const svg = ref();
+const data = ref<Array<Array<[string, number]>>>();
+
+const marks = computed(() => data.value!==undefined ? ({
+  start:data.value[0][1],
+  peak:Math.max(...data.value.map(d=>+(d[1]))),
+  end:data.value[data.value.length-1][1],
+  change:+(data.value[data.value.length-1][1]) - +(data.value[0][1])
+}) : ({
+  start:0,
+  peak:0,
+  end:0,
+  change:0
+}))
+
 const margin = {top: 10, right: 50, bottom: 50, left: 50};
 const w = 500;
 const h = 500;
 const width = w - margin.left - margin.right;
 const height = h - margin.top - margin.bottom;
-const data = [["5/07/2023",1],["7/07/2023",2],["10/07/2023",5],["12/07/2023",1]]
-const marks = {
-  start:data[0][1],
-  peak:Math.max(...data.map(d=>+(d[1]))),
-  end:data[data.length-1][1],
-  change:+(data[data.length-1][1]) - +(data[0][1])
-}
+//const data = [["5/07/2023",1],["7/07/2023",2],["10/07/2023",5],["12/07/2023",1]]
 
 
-data.forEach(d => {
-  d[0] = d3.timeParse("%d/%m/%Y")(d[0])
-})
 
-onMounted(() => {
+onBeforeMount(async () => {
+  const {result:logs} = await workoutService.getAll(route.params.itemId);
+  logs.data.forEach(d => {
+    console.log(d.date)
+    d.date = d3.timeParse("%Y-%m-%d")(d.date)
+  })
+  data.value = logs.data.length>0 ? logs.data.map(l => [l.date,l.weight]) : undefined;
+
+  const dataPoints = data.value ?? [];
+
   // CHART
   const g = d3.select(svg.value)
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
   // X axis
-  const x = d3.scaleTime().domain(d3.extent(data,d => d[0])).range([0,width]);
+  const x = d3.scaleTime().domain(d3.extent(dataPoints,d => d[0])).range([0,width]);
   g.append('g')
       .attr("transform", "translate(0," + height + ")")
       .attr('class', 'axis x')
       .call(d3.axisBottom(x).ticks(5).tickSize(-height).tickPadding(10));
   // Y axis
-  const y = d3.scaleLinear().domain([0,10]).range([height,0]);
+  const y = d3.scaleLinear().domain([0,marks.value.peak+5]).range([height,0]);
   g.append('g')
       .attr('class', 'axis y')
       .call(d3.axisLeft(y).tickSize(-width).tickPadding(10));
@@ -68,7 +81,7 @@ onMounted(() => {
   const path = g.append("g");
 
   path.append("g")
-      .datum(data)
+      .datum(dataPoints)
       .attr("fill", "none")
       .attr("stroke", "steelblue")
       .attr("stroke-width", 1.5)
@@ -81,7 +94,7 @@ onMounted(() => {
 
   path.append("g")
       .selectAll("circles")
-      .data(data)
+      .data(dataPoints)
       .enter()
       .append("circle")
         .attr("cx",(d) => x(d[0]))
@@ -100,7 +113,7 @@ onMounted(() => {
 <template>
   <button class="back" @click="router.go(-1)">GO BACK</button>
   <div class="chart">
-    <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`"></svg>
+    <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`" :width="w" :height="h"></svg>
     <div>
       <table class="table">
         <thead>

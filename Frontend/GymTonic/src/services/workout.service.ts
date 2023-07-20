@@ -12,14 +12,28 @@ class WorkoutService {
 
     async createSet(post: Sets): APIResponse<any> {
         try {
-            const {data:result} = await this.client.post("/workout", post)
+            const {data: result} = await this.client.post("/workout", post)
             return {
-                result:{
+                result: {
                     status: result.status,
                 }
             };
-        }catch{
-            return {error:true}
+        } catch {
+            return {error: true}
+        }
+    }
+
+    async getAll(exercise_id:string):APIResponse<any> {
+        try {
+            const {data:result} = await this.client.get<any>(`/workout/exercise=${exercise_id}`);
+            return {
+                result:{
+                    data: result.data,
+                    status: result.status,
+                }
+            };
+        } catch (e) {
+            return {error:true};
         }
     }
 

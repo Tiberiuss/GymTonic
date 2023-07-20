@@ -6,7 +6,7 @@ import LandingComponent from "@/components/LandingComponent.vue";
   <LandingComponent class="main">
     <h1 class="main__title">GYM TONIC</h1>
     <h2 class="main__sub">The best way to exercise</h2>
-    <router-link class="button main__button--margin" to="/index">GET STARTED</router-link>
+    <router-link class="button main__button--margin" to="/hub">GET STARTED</router-link>
 
     <div class="main__ball one"></div>
     <div class="main__ball two"></div>

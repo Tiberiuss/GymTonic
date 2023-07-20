@@ -58,7 +58,7 @@ const router = createRouter({
       meta: {auth:true}
     },
     {
-      path: '/chart',
+      path: '/chart/:itemId',
       name: 'chart',
       component: () => import('@/views/ChartView.vue'),
       meta: {auth:false}

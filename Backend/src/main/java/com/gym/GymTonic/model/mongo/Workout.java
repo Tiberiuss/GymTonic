@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,9 @@ public class Workout {
 
     @DBRef
     private Routine routine;
+
+    @DocumentReference
+    private UserModel user;
 
     private LocalDate date;
     private List<Set> set;

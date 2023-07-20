@@ -1,14 +1,14 @@
 <script setup lang="ts">
     import { useRouter, useRoute } from 'vue-router'
-    import axios from 'axios'
-    import {onBeforeMount, onUpdated, ref } from 'vue'
+    import {onBeforeMount, ref } from 'vue'
     import { exerciseService } from '@/services/exercise.service'
 
     const router = useRouter()
     const route = useRoute()
     const statusMsg = ref('')
-    const status = ref(false)
+    const status = ref(true)
     const exercise = ref()
+
 
     onBeforeMount(async() => {
         const res = await exerciseService.getById(String(route.params.itemId))
@@ -17,7 +17,8 @@
             status.value = true
             statusMsg.value = 'Error loading the exercise.'
         } else if (res.result) {
-            exercise.value = res.result.data[0]
+            exercise.value = res.result.data
+            status.value=false
         }
 
         if (exercise.value == null) {
@@ -28,7 +29,7 @@
 </script>
 
 <template>
-    <button onclick="window.history.go(-1);" class="back">GO BACK</button>
+    <button @click="router.go(-1);" class="back">GO BACK</button>
     <p v-if="status">{{ statusMsg }}</p>
     <div v-else class="detail-grid">
         <div>
