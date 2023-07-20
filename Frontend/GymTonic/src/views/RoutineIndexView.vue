@@ -10,6 +10,8 @@
     const store = useStore()
 
     const routines = ref()
+    const routineDone = ref<any>(null)
+    const last = ref<boolean>(false)
     const status = ref<boolean>(false)
     const statusMsg = ref<string>("")
     const selectedOptions = ref<selectedOption>({
@@ -32,10 +34,9 @@
         }else if (res.result){
             routines.value = res.result.data
         }
-
     })
 
-    function changeDay(){
+    async function changeDay(day: string, lastDate: boolean){
         selectedOptions.value = {
             date: "", 
             exercise: new Array<Exercise>(),
@@ -43,6 +44,16 @@
             name: ""
         }
         store.commit("cleanActualSets")
+
+        const res = await routineService.getByDate(day)
+
+        if (res.error){
+            routineDone.value = null
+        } else if (res.result){
+            routineDone.value = res.result.data[0]
+        }
+
+        last.value = lastDate
     }
 
 </script>
@@ -52,16 +63,16 @@
     <button class="back" @click="router.go(-1)">GO BACK</button>
     <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
     <div class="routines-div">
-        <select v-model="selectedOptions" class="select-routine">
+        <select v-if="!routineDone && !last" v-model="selectedOptions" class="select-routine">
             <option v-bind:value="''" disabled>Select a routine.</option>
             <option v-for="routine in routines" v-bind:value="routine" v-bind:key="routine.name">
                 {{ routine.name }}
             </option>
         </select>
-        <div v-if="selectedOptions.id != ''" class="routine-show">
+        <div v-if="selectedOptions.id != '' || routineDone != null" class="routine-show">
             <button class="see-routine-button" @click="router.push('/routine/' + selectedOptions.id + '/sets')">
                 <h1>SELECTED ROUTINE</h1>
-                <p class="routine-name">NAME: {{ selectedOptions.name}}</p>
+                <p class="routine-name">NAME: {{ selectedOptions.name || routineDone.name}}</p>
                 <img class="img-routine" src="@/assets/routine-show.jpg"/>
             </button>
         </div>
@@ -86,6 +97,7 @@
 .routines-div {
     margin-left: 20%;
     margin-right: 20%;
+    height: 70%;
 }
 
 .select-routine {
@@ -126,10 +138,23 @@
     height: 100%;
     border-radius: 10vw;
     border: 0px;
-    margin-top: 5vh;
+    margin-top: 2vh;
     background-color: transparent;
     transition: 500ms;
 }
+
+.see-routine-button:hover {
+    transform: scale(1.05);
+}
+
+.see-routine-button:hover h1 {
+    z-index: 999;
+}
+
+.see-routine-button:hover p{
+    z-index: 999;
+}
+
 
 .see-routine-button h1 {
     position: absolute;
@@ -137,10 +162,6 @@
     margin-left: 12%;
     margin-top: 5%;
     font-size: 3em;
-}
-
-.see-routine-button:hover {
-    transform: scale(1.1);
 }
 
 .routine-show img {

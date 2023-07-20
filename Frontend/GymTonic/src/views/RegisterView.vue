@@ -19,7 +19,7 @@ async function register() {
       error.value = "Something went wrong."
     } else {
       error.value = null;
-      return router.go(0)
+      return router.push('/hub')
     }
   }else {
     error.value = "Those passwords didn’t match. Try again.";

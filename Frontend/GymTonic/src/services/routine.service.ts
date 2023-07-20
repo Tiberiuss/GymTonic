@@ -49,6 +49,20 @@ class RoutineService {
             return {error:true};
         }
     }
+
+    async getByDate(date: string):APIResponse<RoutineList> {
+        try {
+            const {data:result} = await this.client.get<RoutineList>(`/routine?date=${date}`)
+            return {
+                result:{
+                    data: result.data,
+                    status: result.status
+                }
+            }
+        } catch (e) {
+            return {error:true}
+        }
+    }
 }
 
 export const routineService = new RoutineService()

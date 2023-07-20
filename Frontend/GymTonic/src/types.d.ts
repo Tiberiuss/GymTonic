@@ -85,7 +85,9 @@ export interface payloadWeight {
 
 export interface dayType{
     letter: string,
+    strDate: string,
     day: number,
     today: boolean,
-    iam: boolean
+    iam: boolean,
+    routine: Routine
 }

@@ -1,13 +1,14 @@
 <script setup lang="ts">
     import IconNextDate from '@/components/icons/IconNextDate.vue';
     import IconBackDate from '@/components/icons/IconBackDate.vue';
-    import { ref } from 'vue';
-    import type { dayType } from "@/types";
+    import { onMounted, ref } from 'vue';
+    import type { dayType, Routine } from "@/types";
+    import { routineService } from '@/services/routine.service';
 
     const emit = defineEmits(['change-day'])
 
     const date = ref<Date>(new Date())
-    const actualDate = ref<string>(new Date().toLocaleDateString())
+    const actualDateStr = ref<string>(new Date().toLocaleDateString())
     const dateStr = ref<string>(date.value.toLocaleDateString())
     const week = ref<dayType[]>([])
     
@@ -19,51 +20,88 @@
 
     let lettersDay = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S']
 
-    for (let i=0; i<7; i++){
-        week.value.push({
-            letter: lettersDay[i],
-            day: date.value.getDate(),
-            today: (actualDate.value == date.value.toLocaleDateString()) ? true : false,
-            iam: (actualDate.value == date.value.toLocaleDateString()) ? true : false
-        })
+    let lastDate = false
+    const actualDate = new Date()
 
-        date.value.setDate(date.value.getDate() + 1)
-    }
-    date.value.setDate(date.value.getDate() - (7 - auxDay))
-    dateStr.value = date.value.toLocaleDateString()
+    onMounted(async() => {
+        for (let i=0; i<7; i++){
+            let todayDate = date.value.toISOString().slice(0, 10)
+            let res = await routineService.getByDate(todayDate)
+            let routine: any = null
+            if (res.result){
+                routine = res.result.data
+            }
+
+            week.value.push({
+                letter: lettersDay[i],
+                strDate: todayDate,
+                day: date.value.getDate(),
+                today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
+                iam: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
+                routine: routine
+            })
+
+            date.value.setDate(date.value.getDate() + 1)
+        }
+        date.value.setDate(date.value.getDate() - (7 - auxDay))
+        dateStr.value = date.value.toLocaleDateString()
+    })
     
-    function backWeek(){
+    async function backWeek(){
         date.value.setDate((date.value.getDate() - date.value.getDay()) - 7)
         week.value = []
 
         for (let i=0; i<7; i++){
+            let todayDate = date.value.toISOString().slice(0, 10)
+            let res = await routineService.getByDate(todayDate)
+            let routine: any = null
+            if (res.result){
+                routine = res.result.data
+            }
+
             week.value.push({
                 letter: lettersDay[i],
+                strDate: todayDate,
                 day: date.value.getDate(),
-                today: (actualDate.value === date.value.toLocaleDateString()) ? true : false,
-                iam: (i == 0) ? true : false
+                today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
+                iam: (i == 0) ? true : false,
+                routine: routine
             })
 
             date.value.setDate(date.value.getDate() + 1)
         }
 
         date.value.setDate(date.value.getDate() - 7)
-
         dateStr.value = date.value.toLocaleDateString()
         actualMonth = date.value.getMonth()
         actualYear = date.value.getFullYear()
+        if (date.value < actualDate){
+            lastDate = true
+        }else{
+            lastDate = false
+        }
+        emit('change-day', date.value.toISOString().slice(0,10), lastDate)
     }
 
-    function nextWeek(){
+    async function nextWeek(){
         date.value.setDate((date.value.getDate() - date.value.getDay()) + 7)
         week.value = []
 
         for (let i=0; i<7; i++){
+            let todayDate = date.value.toISOString().slice(0, 10)
+            let res = await routineService.getByDate(todayDate)
+            let routine: any = null
+            if (res.result){
+                routine = res.result.data
+            }
+
             week.value.push({
                 letter: lettersDay[i],
+                strDate: todayDate,
                 day: date.value.getDate(),
-                today: (actualDate.value === date.value.toLocaleDateString()) ? true : false,
-                iam: (i == 0) ? true : false
+                today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
+                iam: (i == 0) ? true : false,
+                routine: routine
             })
 
             date.value.setDate(date.value.getDate() + 1)
@@ -73,6 +111,12 @@
         dateStr.value = date.value.toLocaleDateString()
         actualMonth = date.value.getMonth()
         actualYear = date.value.getFullYear()
+        if (date.value < actualDate){
+            lastDate = true
+        }else{
+            lastDate = false
+        }
+        emit('change-day', date.value.toISOString().slice(0,10), lastDate)
     }
 
     function newIam(day: dayType){
@@ -117,7 +161,13 @@
             date.value.setDate(date.value.getDate() - auxMove)
         }
         dateStr.value = date.value.toLocaleDateString()
-        emit('change-day')
+        if (date.value < actualDate){
+            lastDate = true
+        }else{
+            lastDate = false
+        }
+
+        emit('change-day', date.value.toISOString().slice(0,10), lastDate)
     }
 </script>
 
@@ -135,10 +185,12 @@
         <div class="day-grid">
             <button v-for="day in week" @click="newIam(day)" v-bind:class="[(day.today)?'today':'day']" v-bind:key="day.letter">
                 <div v-if="day.iam" class="iam">
+                    <div v-if="day.routine != null" class="routine-notify"></div>
                     <p>{{ day.letter }}</p>
                     <p>{{ day.day }}</p>
                 </div>
                 <div v-else>
+                    <div v-if="day.routine != null" class="routine-notify"></div>
                     <p>{{ day.letter }}</p>
                     <p>{{ day.day }}</p>
                 </div>
@@ -148,6 +200,16 @@
 </template>
 
 <style>
+.routine-notify {
+    background-color: var(--orange-color);
+    width: 7px;
+    height: 7px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -7px;
+    border-radius: 10px;
+}
+
 .date-div {
     text-align: center;
     width: 100vw;
@@ -177,7 +239,7 @@
 }
 
 .day:hover {
-    background-color: var(--red-color);
+    background-color: white;
 } 
 
 .today {
@@ -208,10 +270,16 @@
 }
 
 @media screen and (max-width: 800px) {
-    .day-grid {
-        margin-left: 0%;
-    }
     
+    .routine-notify {
+        background-color: var(--orange-color);
+        width: 7px;
+        height: 7px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+    }
+
     .day {
         height: 80px;
         width: 40px;
@@ -236,7 +304,19 @@
         width: 100vw;
         height: 60px;    
         display: grid;
+        margin-left: 0%;
         grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
+    }
+
+    .routine-notify {
+        width: 5px;
+        height: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        border-color: var(--orange-color);
+        border-radius: 10px;
+        margin-top:1px;
+        margin-bottom: -3px;
     }
     
     .day {
@@ -257,7 +337,18 @@
 
     .iam {
         height: 50px;
-        padding-top: 0px;
+        padding-top: 5px;
+    }
+
+    .iam .routine-notify {
+        width: 5px;
+        height: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -4px;
+        border-color: var(--orange-color);
+        border-radius: 10px;
+        margin-bottom: -3px;
     }
 }
 
@@ -286,6 +377,7 @@
     .iam {
         height: 50px;
         width: 30px;
+        padding-top: 0px;
     }
 }
 

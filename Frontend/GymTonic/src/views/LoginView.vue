@@ -16,7 +16,7 @@ async function login(){
   const res = await userService.login(user.value,password.value);
   if (res.error)
     error.value = "Wrong credentials.";
-  else return router.go(0)
+  else return router.push('/hub')
 }
 
 </script>
