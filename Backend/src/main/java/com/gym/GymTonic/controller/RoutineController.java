@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class RoutineController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByUserId(){
+    public ResponseEntity<BaseResponse<List<RoutineDTO>>> findRoutineByUserId() {
         List<RoutineDTO> routineList = routineService.findByUserId();
         BaseResponse.BaseResponseBuilder<List<RoutineDTO>> builder = BaseResponse.builder();
         if (!routineList.isEmpty()) {
@@ -79,23 +78,23 @@ public class RoutineController {
 
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody RoutineDTO routine){
+    public ResponseEntity<BaseResponse> create(@RequestBody RoutineDTO routine) {
         routineService.create(routine);
         return new ResponseEntity<>(BaseResponse.builder().status("1").message("Saved").build(), HttpStatus.CREATED);
     }
 
     @PutMapping("/id={id}")
-    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody RoutineDTO routine){
-        try{
+    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody RoutineDTO routine) {
+        try {
             routineService.update(id, routine);
             return new ResponseEntity<>(BaseResponse.builder().status("1").data(routineService.findById(id)).build(), HttpStatus.OK);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/id={id}")
-    public ResponseEntity<BaseResponse> delete(@PathVariable String id){
+    public ResponseEntity<BaseResponse> delete(@PathVariable String id) {
         try {
             routineService.findById(id);
             routineService.delete(id);

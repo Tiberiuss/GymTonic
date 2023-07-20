@@ -24,14 +24,14 @@ public class JWTUtil {
     private int TOKEN_EXPIRATION_MS;
 
     public String extractUser(String token) {
-        return extractClaim(token,Claims::getSubject);
+        return extractClaim(token, Claims::getSubject);
     }
 
     private Date extractExpiration(String token) {
-        return extractClaim(token,Claims::getExpiration);
+        return extractClaim(token, Claims::getExpiration);
     }
 
-    public <T> T extractClaim(String token, Function<Claims,T> claimsResolver){
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
@@ -45,22 +45,22 @@ public class JWTUtil {
                 .getBody();
     }
 
-    public String generateToken(UserModel userModel){
-        return generateToken(new HashMap<>(),userModel);
+    public String generateToken(UserModel userModel) {
+        return generateToken(new HashMap<>(), userModel);
     }
 
-    public String generateToken(Map<String,Object> extraClaims, UserModel userModel){
-         return Jwts
-                 .builder()
-                 .setClaims(extraClaims)
-                 .setSubject(userModel.getUsername())
-                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_MS))
-                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                 .compact();
+    public String generateToken(Map<String, Object> extraClaims, UserModel userModel) {
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userModel.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_MS))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUser(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }

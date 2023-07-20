@@ -24,7 +24,7 @@ public class ExerciseService {
     }
 
     public Page<ExerciseDTO> findAllWithPagination(int offset, int pageSize) {
-        return (Page<ExerciseDTO>) repositoryElastic.findAll(PageRequest.of(offset, pageSize)).map(mapper::toDTO);
+        return repositoryElastic.findAll(PageRequest.of(offset, pageSize)).map(mapper::toDTO);
     }
 
 
@@ -38,16 +38,16 @@ public class ExerciseService {
         return mapper.toDTO(repositoryElastic.findById(id).get());
     }
 
-    public List<ExerciseDTO> findByName(String name){
+    public List<ExerciseDTO> findByName(String name) {
         return repositoryElastic.findByNameContaining(name).stream().map(mapper::toDTO).toList();
     }
 
-    public List<ExerciseDTO> findByNameOrMuscleOrMaterial(String name, String muscle, String material){
+    public List<ExerciseDTO> findByNameOrMuscleOrMaterial(String name, String muscle, String material) {
         return repositoryElastic.findByNameOrMuscleOrMaterialContaining(name, muscle, material).stream().map(mapper::toDTO).toList();
     }
 
-    public Page<ExerciseDTO> findByNameWithPagination(String name, int offset, int pageSize){
-        return (Page<ExerciseDTO>) repositoryElastic.findAllByNameStartingWith(name, PageRequest.of(offset, pageSize)).map(mapper::toDTO);
+    public Page<ExerciseDTO> findByNameWithPagination(String name, int offset, int pageSize) {
+        return repositoryElastic.findAllByNameStartingWith(name, PageRequest.of(offset, pageSize)).map(mapper::toDTO);
     }
 
 

@@ -2,9 +2,9 @@ package com.gym.GymTonic.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.gym.GymTonic.dto.Views;
-import com.gym.GymTonic.payload.ChartResponse;
 import com.gym.GymTonic.dto.WorkoutDTO;
 import com.gym.GymTonic.payload.BaseResponse;
+import com.gym.GymTonic.payload.ChartResponse;
 import com.gym.GymTonic.service.WorkoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,23 +54,23 @@ public class WorkoutController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody @JsonView(Views.CreateWorkout.class) WorkoutDTO workout){
+    public ResponseEntity<BaseResponse> create(@RequestBody @JsonView(Views.CreateWorkout.class) WorkoutDTO workout) {
         service.create(workout);
         return new ResponseEntity<>(BaseResponse.builder().status("1").message("Saved").build(), HttpStatus.CREATED);
     }
 
     @PutMapping("/id={id}")
-    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody @JsonView(Views.CreateWorkout.class) WorkoutDTO workout){
-        try{
+    public ResponseEntity<BaseResponse> update(@PathVariable String id, @RequestBody @JsonView(Views.CreateWorkout.class) WorkoutDTO workout) {
+        try {
             service.update(id, workout);
             return new ResponseEntity<>(BaseResponse.builder().status("1").data(service.findById(id)).build(), HttpStatus.OK);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return new ResponseEntity<>(BaseResponse.builder().status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/id={id}")
-    public ResponseEntity<BaseResponse> delete(@PathVariable String id){
+    public ResponseEntity<BaseResponse> delete(@PathVariable String id) {
         try {
             service.findById(id);
             service.delete(id);

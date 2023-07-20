@@ -18,6 +18,6 @@ public enum Muscle {
     CALVES;
 
     public static Muscle fromString(String s) {
-        return Muscle.valueOf(s.trim().replace(" ","_"));
+        return Muscle.valueOf(s.trim().replace(" ", "_"));
     }
 }

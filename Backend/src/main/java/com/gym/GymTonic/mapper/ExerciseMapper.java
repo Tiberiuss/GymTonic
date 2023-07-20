@@ -11,7 +11,10 @@ import org.mapstruct.MappingConstants;
 )
 public interface ExerciseMapper {
     ExerciseMongo toEntityMongo(ExerciseDTO exerciseDTO);
+
     ExerciseElastic toEntityElastic(ExerciseDTO exerciseDTO);
+
     ExerciseDTO toDTO(ExerciseElastic exerciseElastic);
+
     ExerciseDTO toDTO(ExerciseMongo exerciseMongo);
 }

@@ -3,7 +3,10 @@ package com.gym.GymTonic.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.gym.GymTonic.model.Material;
 import com.gym.GymTonic.model.Muscle;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Collection;
 
 @NoArgsConstructor

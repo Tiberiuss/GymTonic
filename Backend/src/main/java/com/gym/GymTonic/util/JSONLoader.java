@@ -3,13 +3,10 @@ package com.gym.GymTonic.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gym.GymTonic.dto.ExerciseDTO;
-import com.gym.GymTonic.model.elastic.ExerciseElastic;
 import com.gym.GymTonic.model.Material;
 import com.gym.GymTonic.model.Muscle;
 import com.gym.GymTonic.service.ExerciseService;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;

@@ -1,9 +1,8 @@
 package com.gym.GymTonic.security;
 
 
-
-import com.gym.GymTonic.util.JWTUtil;
 import com.gym.GymTonic.service.UserService;
+import com.gym.GymTonic.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,12 +40,12 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         username = jwtUtil.extractUser(token);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.loadUserByUsername(username);
-            if (jwtUtil.isTokenValid(token,userDetails)){
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+            if (jwtUtil.isTokenValid(token, userDetails)) {
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }

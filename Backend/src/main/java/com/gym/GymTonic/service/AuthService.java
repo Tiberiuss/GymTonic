@@ -32,19 +32,19 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-        if(userRepository.existsByUsername(request.getUsername())) {
+        if (userRepository.existsByUsername(request.getUsername())) {
             return new AuthResponse();
         }
 
         UserModel userModel = new UserModel(request.getUsername(), passwordEncoder.encode(request.getPassword()));
         userRepository.save(userModel);
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         String token = jwtUtil.generateToken(userModel);
         return new AuthResponse(token);
     }
 
     public AuthResponse login(AuthRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         UserModel userModel = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtUtil.generateToken(userModel);
         return new AuthResponse(token);

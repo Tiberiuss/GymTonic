@@ -1,11 +1,9 @@
 package com.gym.GymTonic.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.gym.GymTonic.model.mongo.Routine;
-import com.gym.GymTonic.model.mongo.Set;
-import com.gym.GymTonic.model.mongo.UserModel;
-import lombok.*;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;

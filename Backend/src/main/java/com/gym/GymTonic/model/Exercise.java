@@ -1,12 +1,11 @@
 package com.gym.GymTonic.model;
 
-import java.util.Collection;
-
-import org.springframework.data.annotation.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+
+import java.util.Collection;
 
 
 @NoArgsConstructor

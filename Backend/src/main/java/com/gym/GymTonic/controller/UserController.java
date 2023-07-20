@@ -17,9 +17,9 @@ public class UserController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request){
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         AuthResponse registerResp = authService.register(request);
-        if (registerResp.getToken() == null){
+        if (registerResp.getToken() == null) {
             return new ResponseEntity<AuthResponse>(registerResp, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<AuthResponse>(registerResp, HttpStatus.OK);
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request){
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         return new ResponseEntity<AuthResponse>(authService.login(request), HttpStatus.OK);
     }
 }

@@ -1,8 +1,6 @@
 package com.gym.GymTonic.mapper;
 
-import com.gym.GymTonic.dto.RoutineDTO;
 import com.gym.GymTonic.dto.SetDTO;
-import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.model.mongo.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -12,6 +10,7 @@ import org.mapstruct.MappingConstants;
 )
 public interface SetMapper {
     Set toEntity(SetDTO setDTO);
+
     SetDTO toDTO(Set set);
 
 }

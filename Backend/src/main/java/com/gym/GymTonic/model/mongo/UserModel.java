@@ -1,6 +1,8 @@
 package com.gym.GymTonic.model.mongo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,7 +18,7 @@ import java.util.Collection;
 public class UserModel implements UserDetails {
     @Id
     private String id;
-    @Indexed(unique=true)
+    @Indexed(unique = true)
     private String username;
     private String password;
     private Boolean accountExpired = false;

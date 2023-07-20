@@ -1,9 +1,6 @@
 package com.gym.GymTonic.mapper;
 
-import com.gym.GymTonic.dto.ExerciseDTO;
 import com.gym.GymTonic.dto.RoutineDTO;
-import com.gym.GymTonic.model.elastic.ExerciseElastic;
-import com.gym.GymTonic.model.mongo.ExerciseMongo;
 import com.gym.GymTonic.model.mongo.Routine;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -14,6 +11,7 @@ import org.mapstruct.MappingConstants;
 )
 public interface RoutineMapper {
     Routine toEntity(RoutineDTO routineDTO);
+
     RoutineDTO toDTO(Routine routine);
 
 }

@@ -2,7 +2,6 @@ package com.gym.GymTonic.service;
 
 import com.gym.GymTonic.dto.RoutineDTO;
 import com.gym.GymTonic.mapper.RoutineMapper;
-import com.gym.GymTonic.model.mongo.Routine;
 import com.gym.GymTonic.repository.mongo.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,15 +20,15 @@ public class RoutineService {
         return repository.findAll().stream().map(mapper::toDTO).toList();
     }
 
-    public List<RoutineDTO> findByUserId(){
+    public List<RoutineDTO> findByUserId() {
         return repository.findByUserId(AuthService.getAuthentication().getId()).stream().map(mapper::toDTO).toList();
     }
 
-    public List<RoutineDTO> findByDate(Date date){
+    public List<RoutineDTO> findByDate(Date date) {
         return repository.findByDate(date).stream().map(mapper::toDTO).toList();
     }
 
-    public List<RoutineDTO> findByUserIdAndDate(Date date){
+    public List<RoutineDTO> findByUserIdAndDate(Date date) {
         String id = AuthService.getAuthentication().getId();
         return repository.findByUserIdAndDate(id, date).stream().map(mapper::toDTO).toList();
     }
