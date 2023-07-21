@@ -7,10 +7,12 @@ import com.gym.GymTonic.payload.BaseResponse;
 import com.gym.GymTonic.payload.ChartResponse;
 import com.gym.GymTonic.service.WorkoutService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,17 @@ public class WorkoutController {
         BaseResponse.BaseResponseBuilder<List<ChartResponse>> builder = BaseResponse.builder();
         try {
             List<ChartResponse> workoutDTOS = service.findByExercise(id);
+            return new ResponseEntity<>(builder.status("1").data(workoutDTOS).build(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(builder.status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/date_user")
+    public ResponseEntity<BaseResponse<List<WorkoutDTO>>> findWorkoutsByExercise(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
+        BaseResponse.BaseResponseBuilder<List<WorkoutDTO>> builder = BaseResponse.builder();
+        try {
+            List<WorkoutDTO> workoutDTOS = service.findByDateAndUserId(date);
             return new ResponseEntity<>(builder.status("1").data(workoutDTOS).build(), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(builder.status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);

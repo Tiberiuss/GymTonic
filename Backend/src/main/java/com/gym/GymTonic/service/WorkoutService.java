@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +26,11 @@ public class WorkoutService {
 
     public WorkoutDTO findById(String id) {
         return mapper.toDTO(repository.findByIdAndUserId(id, AuthService.getAuthentication().getId()).get());
+    }
+
+    public List<WorkoutDTO> findByDateAndUserId(Date date) {
+        return repository.findByDateAndUserId(date, AuthService.getAuthentication().getId()).stream().map(mapper::toDTO).toList();
+
     }
 
     public void create(WorkoutDTO workout) {
