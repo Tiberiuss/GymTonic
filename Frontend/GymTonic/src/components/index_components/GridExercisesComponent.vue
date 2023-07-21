@@ -132,7 +132,6 @@
   display: flex;
   flex-direction: column;
   padding: 1em;
-  height: 100vh;
 }
 
 .section-grid {
@@ -142,13 +141,11 @@
     margin-top: 1em;
     padding-left: 1em;
     padding-right: 1em;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     flex: 1;
 }
 
 .section-grid__load {
-  grid-column: 1/-1;
   text-align: center;
 }
 

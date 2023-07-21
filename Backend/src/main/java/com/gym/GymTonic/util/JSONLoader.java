@@ -54,8 +54,10 @@ public class JSONLoader {
                 List<String> videos = StreamSupport.stream(el.get("videoURL").spliterator(), false)
                         .map(JsonNode::textValue)
                         .toList();
-
-                ExerciseDTO exerciseDTO = new ExerciseDTO(id, name, material, muscle, videos);
+                List<String> steps = StreamSupport.stream(el.get("steps").spliterator(),false)
+                        .map(JsonNode::textValue)
+                        .toList();
+                ExerciseDTO exerciseDTO = new ExerciseDTO(id, name, material, muscle, videos,steps);
                 exerciseService.create(exerciseDTO);
             }
         } catch (IOException e) {

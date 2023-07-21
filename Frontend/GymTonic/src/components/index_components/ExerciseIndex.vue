@@ -52,7 +52,7 @@
                 <IconAddExercise v-if="!buttonClicked"/>
                 <IconRemoveExercise v-else/>
             </button>
-          <video ref="video" class="exercise__video" :src=element.video[0] muted loop></video>
+          <video ref="video" class="exercise__video" :src=element.video[0] muted loop ></video>
         </div>
         <div ref="exerciseDesc" class="exercise-desc">
             <div class="exercise-extra">

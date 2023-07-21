@@ -6,6 +6,7 @@ export interface Exercise {
     muscle:string[],
     name:string,
     video:string[],
+    steps:string[]
 }
 
 export interface ExerciseList {

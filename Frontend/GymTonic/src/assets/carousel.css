@@ -1,0 +1,7 @@
+:root {
+    --vc-clr-primary: white;
+}
+
+.carousel__pagination {
+    padding-left: 0;
+}

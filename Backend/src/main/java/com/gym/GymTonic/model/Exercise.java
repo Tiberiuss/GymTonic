@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.Collection;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -18,4 +19,5 @@ public class Exercise {
     private Material material;
     private Collection<Muscle> muscle;
     private Collection<String> video;
+    private List<String> steps;
 }

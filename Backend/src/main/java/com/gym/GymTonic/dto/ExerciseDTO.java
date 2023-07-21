@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,4 +24,6 @@ public class ExerciseDTO {
     private Collection<Muscle> muscle;
     @JsonView(Views.Private.class)
     private Collection<String> video;
+    @JsonView(Views.Private.class)
+    private List<String> steps;
 }
