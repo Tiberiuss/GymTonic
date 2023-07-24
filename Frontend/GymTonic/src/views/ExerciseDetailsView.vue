@@ -30,7 +30,7 @@
 </script>
 
 <template>
-    <button @click="router.go(-1);" class="back">GO BACK</button>
+    <button @click="router.go(-1);" class="button">GO BACK</button>
     <p v-if="status">{{ statusMsg }}</p>
     <div v-else class="detail">
         <div>
@@ -76,14 +76,6 @@
 </template>
 
 <style>
-.back {
-    border-radius: 5px;
-    background-color: var(--red-color);
-    color: black;
-    border: 0px;
-    height: 30px;
-    margin: 20px;
-}
 
 .exercise__info {
   margin-right: 1em;
@@ -94,11 +86,10 @@
 }
 
 .detail {
-  margin-top: auto;
   display: grid;
   grid-template-columns: 30% 70%;
   grid-gap: 1em;
-  background-color: #672c1b; /*#2c3e50;*/
+  background-color: var(--secondary); /*#2c3e50;*/
   border-radius: 1em;
   padding: 1em;
     margin: 2em;

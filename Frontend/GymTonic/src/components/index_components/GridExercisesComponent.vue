@@ -99,7 +99,7 @@
 </script>
 
 <template>
-<button class="back" @click="$router.go(-1)">GO BACK</button>
+<button class="button" @click="$router.go(-1)">GO BACK</button>
 <div class="exercises">
     <p v-if="componentType">{{ statusMsg }}</p>
     <div>
@@ -120,13 +120,6 @@
 </template>
 
 <style>
-
-.back {
-  margin: 10px;
-  border: 0px;
-  border-radius: 5px;
-  background-color: var(--red-color);
-}
 
 .exercises {
   display: flex;

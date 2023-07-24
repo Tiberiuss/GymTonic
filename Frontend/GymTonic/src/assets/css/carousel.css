@@ -1,5 +1,6 @@
 :root {
-    --vc-clr-primary: white;
+    --vc-clr-primary: var(--text);
+    --vc-pgn-background-color: var(--background);
 }
 
 .carousel__pagination {

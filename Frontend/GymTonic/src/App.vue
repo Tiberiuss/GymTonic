@@ -16,11 +16,6 @@ import router from "@/router";
     position: absolute;
     right: 0;
     background-color: var(--secondary);
-    border: none;
-    border-radius: 1em;
-    padding: 0.5em;
-    margin: 0.5em;
-    z-index: 10;
   }
 
 </style>

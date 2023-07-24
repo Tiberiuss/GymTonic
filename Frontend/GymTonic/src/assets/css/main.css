@@ -15,9 +15,11 @@ body {
    text-decoration: none;
    color: var(--text);
    font-weight: 800;
-   background-color: var(--accent);
+   background-color: var(--primary);
    padding: 0.5rem;
+    margin: 0.5rem;
    border-radius: 2rem;
+    border:1px solid #fff1;
 }
 
 .button:hover {

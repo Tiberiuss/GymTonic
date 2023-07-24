@@ -55,23 +55,16 @@
           <video ref="video" class="exercise__video" :src=element.video[0] muted loop ></video>
         </div>
         <div ref="exerciseDesc" class="exercise-desc">
-            <div class="exercise-extra">
-                <p class="exercise-title">
-                    {{ element.name }}
-                </p>
-                <div class="exercise-icons">
-                    <router-link :to="`/index/${element.id}`">
-                        <IconExerciseDescription></IconExerciseDescription>
-                    </router-link>
-                    <router-link :to="`/chart/${element.id}`">
-                        <IconExerciseProgress></IconExerciseProgress>
-                    </router-link>
-                </div>
-            </div>
-            <div class="exercise-muscles">
-                <p class="muscle-text" v-for="muscle in element['muscle']" v-bind:key="muscle.id">
-                    {{ muscle }}
-                </p>
+            <p class="exercise-title">
+                {{ element.name }}
+            </p>
+            <div class="exercise-icons">
+                <router-link :to="`/index/${element.id}`">
+                    <IconExerciseDescription></IconExerciseDescription>
+                </router-link>
+                <router-link :to="`/chart/${element.id}`">
+                    <IconExerciseProgress></IconExerciseProgress>
+                </router-link>
             </div>
         </div>
     </section>
@@ -88,17 +81,17 @@
     }
 
     .exercise {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        padding: 0 1em;
-        transition: transform 0.5s;
+        margin: 0 1em;
         position: relative;
+        border-radius: 1rem;
+        overflow:hidden;
     }
 
     .exercise__video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+        min-height: 10rem;
     }
 
     .img video {
@@ -106,97 +99,38 @@
     }
 
     .exercise-desc {
-        background-image: linear-gradient(to right, rgb(154, 77, 4), var(--orange-color));
-        border-bottom-right-radius: 20px;
-        display: grid;
-        grid-template-rows: 60% 40%;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-size: 200% 100%;
+        background-position: 100% 0;
+        background-image: linear-gradient(to right, var(--secondary), var(--primary));
+        transition: background-position 1s;
     }
 
-    .exercise:hover {
-        transform: scale(1.02);
+    .exercise-desc a {
+        color: var(--background);
+        padding: 0.5rem;
     }
 
-    .exercise:hover > .exercise-desc > .exercise-extra{
-        background-color: rgb(154, 77, 4);
-        transition: background-color 500ms linear;
+    .exercise-desc a:hover {
+        color: var(--text);
     }
 
-    .exercise:hover > .exercise-desc > .exercise-muscles{
-        background-color: rgb(154, 77, 4);
-        transition: background-color 500ms linear;
-        border-bottom-right-radius: 20px;
+    .exercise:hover > .exercise-desc{
+        background-position: 0 0;
     }
 
-    .exercise-extra {
-        display: grid;
-        grid-template-columns: 85% 15%;
-        grid-gap: 5px;
-        padding-top: 5px;
-        padding-left: 5px;
-        padding-right: 5px;
+    .exercise-icons {
+        display: flex;
     }
-
-    .exercise-muscles {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        column-gap: 1vw;
-        margin-left: 1vw;
-    }
-
     .exercise-title {
         display: inline;
         font-size: 20px;
-    }
-
-    .muscle-text {
-        background-color: black;
-        color: white;
-        border-radius: 20px;
-        text-align: center;
-        height: 20px;
-        font-size: 9px;
-    }
-
-    @media screen and (max-width: 1000px) {
-        .exercise{
-            display: grid;
-            grid-template-columns: 50% 50%;
-        }
-
-        .exercise-title {
-            display: inline;
-            font-size: 17px;
-        }
-
-        .exercise-extra {
-            display: grid;
-            grid-template-columns: 80% 20%;
-            grid-gap: 10px;
-            padding-top: 5px;
-            padding-left: 5px;
-        }
-    }
-
-    @media screen and (max-width: 300px) {
-        .exercise-extra {
-            display: grid;
-            grid-template-columns: 70% 30%;
-            grid-gap: 10px;
-            padding-top: 5px;
-            padding-left: 5px;
-        }
-
-        .exercise-title {
-            font-size: 15px;
-        }
-
-        .muscle-text {
-            background-color: black;
-            color: white;
-            border-radius: 20px;
-            text-align: center;
-            height: 20px;
-            font-size: 9px;
-        }
+        margin: 0;
+        padding-left: 0.4rem;
     }
 </style>

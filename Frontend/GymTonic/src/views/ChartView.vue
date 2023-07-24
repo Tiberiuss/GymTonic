@@ -111,14 +111,14 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <button class="back" @click="router.go(-1)">GO BACK</button>
+  <button class="button" @click="router.go(-1)">GO BACK</button>
   <div class="chart">
-    <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`" :width="w" :height="h"></svg>
+      <h1>EXERCISE NAME</h1>
+    <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`"></svg>
     <div>
       <table class="table">
         <thead>
         <tr>
-          <th></th>
           <th>START</th>
           <th>PEAK</th>
           <th>END</th>
@@ -127,7 +127,6 @@ onBeforeMount(async () => {
         </thead>
         <tbody>
         <tr>
-          <td>EXERCISE_NAME</td>
           <td>{{ marks.start }}kg</td>
           <td>{{ marks.peak }}kg</td>
           <td>{{ marks.end }}kg</td>
@@ -140,22 +139,16 @@ onBeforeMount(async () => {
 </template>
 
 <style lang="scss">
-  .back {
-    margin: 10px;
-    border: 0px;
-    border-radius: 5px;
-    background-color: var(--red-color);
-  }
-
   .chart {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+      margin-top: 2rem;
+      padding: 0 1rem;
 
     &__svg {
       background-color: #2c3e50;
-      margin-top: 5rem;
       padding: 1rem;
       border-radius: 1rem;
     }
