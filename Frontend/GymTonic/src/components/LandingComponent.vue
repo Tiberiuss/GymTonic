@@ -11,7 +11,6 @@
 .main {
   overflow: hidden;
   position: relative;
-  color: white;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -21,7 +20,7 @@
 
   &__ball {
     position: absolute;
-    background-color: var(--orange-color);
+    background-color: var(--primary);
     height: 20rem;
     width: 20rem;
     border-radius: 10em;

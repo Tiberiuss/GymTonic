@@ -7,13 +7,13 @@
 <template>
     <div class="hub">
         <button class="index-hub" @click="router.push('/index')">
-            <img src="@/assets/exercises-hub.jpg"/>
+            <img src="@/assets/images/exercises-hub.jpg"/>
         </button>
         <button class="routine-hub" @click="router.push('/routine')">
-            <img src="@/assets/routine-hub.jpg"/>
+            <img src="@/assets/images/routine-hub.jpg"/>
         </button>
         <button class="progress-hub" @click="router.push('/chart')">
-            <img src="@/assets/progress-hub.jpg"/>
+            <img src="@/assets/images/progress-hub.jpg"/>
         </button>
     </div>
 </template>

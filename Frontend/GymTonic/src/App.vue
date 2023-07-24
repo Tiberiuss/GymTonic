@@ -5,7 +5,7 @@ import router from "@/router";
 </script>
 
 <template>
-    <button v-if="userService.isAuthenticated()" type="button" @click="userService.removeToken()" class="session">Logout</button>
+    <button v-if="userService.isAuthenticated()" type="button" @click="userService.removeToken()" class="button session">Logout</button>
     <button v-else type="button" @click="router.push('/login')" class="session">Login</button>
 
     <RouterView />
@@ -15,13 +15,12 @@ import router from "@/router";
   .session {
     position: absolute;
     right: 0;
-    background-color: white;
-    color: black;
+    background-color: var(--secondary);
     border: none;
     border-radius: 1em;
-    padding: 0.2em;
+    padding: 0.5em;
     margin: 0.5em;
     z-index: 10;
   }
-    @import '@/style/global-variables.css';
+
 </style>

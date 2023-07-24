@@ -73,7 +73,7 @@
             <button class="see-routine-button" @click="router.push('/routine/' + selectedOptions.id + '/sets')">
                 <h1>SELECTED ROUTINE</h1>
                 <p class="routine-name">NAME: {{ selectedOptions.name || routineDone.name}}</p>
-                <img class="img-routine" src="@/assets/routine-show.jpg"/>
+                <img class="img-routine" src="@/assets/images/routine-show.jpg"/>
             </button>
         </div>
     </div>

@@ -8,4 +8,10 @@
     --form-user-color: rgba(217, 217, 217, 0.12);
     --input-user-color: rgba(217, 217, 217, 0.40);
     --acc-exist-color: rgba(217, 217, 217, 1);
+
+    --text: #e8e6ea;
+    --background: #0f0e11;
+    --primary: #5a5463;
+    --secondary: #1e1c21;
+    --accent: #827b8e;
 }
