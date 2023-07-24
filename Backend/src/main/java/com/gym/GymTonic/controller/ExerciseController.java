@@ -31,7 +31,7 @@ public class ExerciseController {
     }
 
     @GetMapping("/pages")
-    public ResponseEntity<BaseResponse<Page<ExerciseDTO>>> findAllWithPagination(@RequestParam(value = "offset", required = false, defaultValue = "0") int offset, @RequestParam(value = "page", required = false, defaultValue = "10") int pageSize) {
+    public ResponseEntity<BaseResponse<Page<ExerciseDTO>>> findAllWithPagination(@RequestParam(value = "offset", required = false) int offset, @RequestParam(value = "page", required = false) int pageSize) {
         Page<ExerciseDTO> exerciseList = service.findAllWithPagination(offset, pageSize);
         BaseResponse.BaseResponseBuilder<Page<ExerciseDTO>> builder = BaseResponse.builder();
         if (!exerciseList.isEmpty()) {
@@ -78,7 +78,7 @@ public class ExerciseController {
 
     //@GetMapping("/name={name}/pages/{offset}/{pageSize}")
     @GetMapping("/name={name}/pages")
-    public ResponseEntity<BaseResponse<Page<ExerciseDTO>>> findExerciseByNameWithPagination(@PathVariable String name, @RequestParam(value = "offset", required = false, defaultValue = "0") int offset, @RequestParam(value = "page", required = false, defaultValue = "10") int pageSize) {
+    public ResponseEntity<BaseResponse<Page<ExerciseDTO>>> findExerciseByNameWithPagination(@PathVariable String name, @RequestParam(value = "offset", required = false) int offset, @RequestParam(value = "page", required = false) int pageSize) {
         Page<ExerciseDTO> exerciseDTOList = service.findByNameWithPagination(name, offset, pageSize);
         BaseResponse.BaseResponseBuilder<Page<ExerciseDTO>> builder = BaseResponse.builder();
 
