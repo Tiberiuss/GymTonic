@@ -68,6 +68,12 @@ const router = createRouter({
       name: 'routineindex',
       component: () => import('@/views/RoutineIndexView.vue'),
       meta: {auth:true,header:true}
+    },
+    {
+      path: '/workout/:idWorkout/sets/:date',
+      name: 'workoutsets',
+      component: () => import('@/views/WorkoutSetsView.vue'),
+      meta: {auth:true}
     }
   ]
 })

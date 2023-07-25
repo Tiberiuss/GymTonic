@@ -11,7 +11,6 @@
 
     const table = ref()
     let setId = 1
-    let indexStore = 0
 
     function newSet(){
         store.commit('addSet', {

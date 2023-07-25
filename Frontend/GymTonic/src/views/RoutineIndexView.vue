@@ -12,7 +12,6 @@
 
     const routines = ref()
     const routineDone = ref<any>(null)
-    const last = ref<boolean>(false)
     const todayRef = ref<string>("")
     const status = ref<boolean>(false)
     const statusMsg = ref<string>("")
@@ -22,6 +21,7 @@
         id: "",
         name: ""
     })
+    const child = ref(null)
 
     watch(selectedOptions, () => {
         store.commit('inicializeWorkout', {
@@ -40,10 +40,10 @@
             routines.value = res.result.data
         }
 
-        changeDay(new Date().toISOString().split('T')[0], false, true)
+        changeDay(new Date().toISOString().split('T')[0])
     })
 
-    async function changeDay(day: string, lastDate: boolean, today: boolean){
+    async function changeDay(day: string){
         selectedOptions.value = {
             date: "", 
             exercise: new Array<Exercise>(),
@@ -116,14 +116,15 @@
                 }
             }
         }
+
+        child.value.notify()
     }
 
     function createSet(){
         if (routineDone.value == null)
             router.push('/routine/' + selectedOptions.value.id + '/sets/' + todayRef.value)
         else{
-            status.value = true
-            statusMsg.value = "You can only add a workout today."
+            router.push('/workout/' + routineDone.value.id + '/sets/' + todayRef.value)
         }
     }
 
@@ -131,26 +132,26 @@
 
 <template>
     <section class="routine">
-        <DateComponent @change-day="changeDay"></DateComponent>
-        <p class="status" v-if="status">{{ statusMsg }}</p>
-        <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
-        <div class="routines-div">
-            <select v-if="(routineDone == null || routineDone?.id == '') && !last" v-model="selectedOptions" class="select-routine">
-                <option v-bind:value="''" disabled>Select a routine.</option>
-                <option v-for="routine in routines" v-bind:value="routine" v-bind:key="routine.name">
-                    {{ routine.name }}
-                </option>
-            </select>
-            <button v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="delete-routine-index" @click="removeFromId">DELETE</button>
-            <div v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="routine-show">
-                <button class="see-routine-button" @click="createSet">
-                    <div>
-                        <h1>SELECTED ROUTINE: {{ selectedOptions.name || routineDone?.routine?.name}}</h1>
-                    </div>
-                    <img class="img-routine" src="@/assets/images/routine-show.jpg"/>
-                </button>
-            </div>
+    <DateComponent ref="child" @change-day="changeDay"></DateComponent>
+    <p class="status" v-if="status">{{ statusMsg }}</p>
+    <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
+    <div class="routines-div">
+        <select v-if="routineDone == null || routineDone?.id == ''" v-model="selectedOptions" class="select-routine">
+            <option v-bind:value="''" disabled>Select a routine.</option>
+            <option v-for="routine in routines" v-bind:value="routine" v-bind:key="routine.name">
+                {{ routine.name }}
+            </option>
+        </select>
+        <button v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="delete-routine-index" @click="removeFromId">DELETE {{ (selectedOptions.id) != null ? "ROUTINE" : "WORKOUT" }}</button>
+        <div v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="routine-show">
+            <button class="see-routine-button" @click="createSet">
+                <div>
+                    <h1>SELECTED ROUTINE: {{ selectedOptions.name || routineDone?.routine?.name}}</h1>
+                </div>
+                <img class="img-routine" src="@/assets/images/routine-show.jpg"/>
+            </button>
         </div>
+    </div>
     </section>
 </template>
 

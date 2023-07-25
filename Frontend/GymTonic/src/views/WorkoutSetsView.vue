@@ -2,7 +2,6 @@
     import { useRoute } from 'vue-router';
     import { useRouter } from 'vue-router';
     import { onBeforeMount } from 'vue';
-    import { routineService } from '@/services/routine.service';
     import { exerciseService } from '@/services/exercise.service';
     import { ref } from 'vue';
     import ExerciseSets from '@/components/sets/ExerciseSets.vue';
@@ -14,31 +13,24 @@
     const route = useRoute()
     const store = useStore()
 
-    const routine = ref()
+    const workout = ref()
     const state = ref(false)
     const exercises = ref<Array<Exercise>>(new Array<Exercise>())
     const stateMsg = ref("")
 
     onBeforeMount(async() => {
         const exercisesAux = ref<Array<Exercise>>(new Array<Exercise>())
-        const res = await routineService.getById(String(route.params.idRoutine))
+        const res = await workoutService.getById(String(route.params.idWorkout))
 
-        if (!store.getters.isWorkoutInitializedPropertly()){
-            store.commit('inicializeWorkout', {
-                routine: String(route.params.idRoutine),
-                date: String(route.params.date)
-            })
-        }
-
-        if (res.error){
+        if (res.error) {
             state.value = true
-            stateMsg.value = "Error loading the routine."
+            stateMsg.value = "Error loading the workout"
             return
         }else if (res.result){
-            routine.value = res.result.data
+            workout.value = res.result.data
             let i = 0
-            while(i < routine.value.exercise.length){
-                const res = await exerciseService.getById(routine.value.exercise[i].id)
+            while(i < workout.value.routine.exercise.length){
+                const res = await exerciseService.getById(workout.value.routine.exercise[i].id)
                 if (res.error){
                     state.value = true
                     stateMsg.value = "Error loading the routine exercises."
@@ -51,44 +43,50 @@
             }
         }
 
-        if (routine.value == null){
+        if (workout.value == null){
             state.value = true
             stateMsg.value = "The routine doesn't exist."
         }
         exercises.value = exercisesAux.value
+
+        store.state.actualSets.routine.id = workout.value.routine.id
+        store.state.actualSets.set = workout.value.set
     })
 
-    async function routineSave() {
-        const res = await workoutService.createSet(store.state.actualSets)
-
-        if (res.error){
-            state.value = true
-            stateMsg.value = "The sets aren't saved."
-        }else if (res.result){
-            store.commit("cleanActualSets")
+    async function update() {
+        const res = await workoutService.updateWorkout(workout.value.id, store.state.actualSets)
+    
+        if (res.error) {
+            state.value = true;
+            stateMsg.value = "Error updating."
+        }else if (res.result) {
             router.push('/routine')
         }
-    }
-
-    function errorExercise() {
-        state.value = true;
-        stateMsg.value = "Error while reading exercises."
     }
 
 </script>
 
 <template>
-    <button class="save" @click="routineSave">SAVE</button>
+    <button class="back-sets" @click="router.push('/routine')">GO BACK</button>
+    <button class="save"  @click="update">SAVE</button>
     <div v-if="state">{{ stateMsg }}</div>
     <div v-else class="exercise-information">
         <h1>
-            {{ routine?.name }}
+            {{ workout?.routine?.name }}
         </h1>
-        <ExerciseSets @errorExercise="errorExercise" :element="element" v-for="element in exercises" v-bind:key="element.id"></ExerciseSets>
+        <ExerciseSets :element="element" v-for="element in exercises" v-bind:key="element.id"></ExerciseSets>
     </div>
 </template>
 
 <style>
+.back-sets {
+    border-radius: 5px;
+    background-color: var(--red-color);
+    color: black;
+    border: 0px;
+    height: 30px;
+    margin: 20px;
+}
 
 .save {
     border-radius: 5px;

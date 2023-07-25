@@ -63,6 +63,33 @@ class WorkoutService {
             return {error:true}
         }
     }
+
+    async getById(id: string):APIResponse<WorkoutList> {
+        try {
+            const {data:result} = await this.client.get<WorkoutList>(`/workout/id=${id}`)
+            return {
+                result:{
+                    data: result.data,
+                    status: result.status
+                }
+            }
+        } catch (e) {
+            return {error:true}
+        }
+    }
+
+    async updateWorkout(id: string, post: any):APIResponse<any> {
+        try {
+            const {data: result} = await this.client.put(`/workout/id=${id}`, post)
+            return {
+                result: {
+                    status: result.status,
+                }
+            };
+        } catch {
+            return {error: true}
+        }
+    }
 }
 
 export const workoutService = new WorkoutService()

@@ -182,8 +182,16 @@
             today = true
         }
 
-        emit('change-day', date.value.toISOString().slice(0,10), lastDate, today)
+        emit('change-day', date.value.toISOString().slice(0,10))
     }
+
+    function notify(){
+        week.value[date.value.getDay()].workout = null
+    }
+
+    defineExpose({
+        notify
+    })
 </script>
 
 <template>
@@ -239,7 +247,7 @@
 .day-grid {
     height: 100px;    
     display: grid;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-columns: repeat(7, 10%);
     margin-left: 20%;
 }
 
@@ -320,7 +328,7 @@
         height: 60px;    
         display: grid;
         margin-left: 0%;
-        grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
+        grid-template-columns: repeat(7, 14%);
     }
 
     .workout-notify {
@@ -330,7 +338,7 @@
         margin-right: auto;
         border-color: var(--orange-color);
         border-radius: 10px;
-        margin-top:1px;
+        margin-top: 1px;
         margin-bottom: -3px;
     }
     
@@ -352,7 +360,7 @@
 
     .iam {
         height: 50px;
-        padding-top: 5px;
+        padding-top: 2px;
     }
 
     .iam .workout-notify {
@@ -360,7 +368,7 @@
         height: 5px;
         margin-left: auto;
         margin-right: auto;
-        margin-top: -4px;
+        margin-top: -2px;
         border-color: var(--orange-color);
         border-radius: 10px;
         margin-bottom: -3px;
@@ -372,7 +380,7 @@
         width: 100vw;
         height: 60px;    
         display: grid;
-        grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
+        grid-template-columns: repeat(7, 14%);
     }
 
     .day {
