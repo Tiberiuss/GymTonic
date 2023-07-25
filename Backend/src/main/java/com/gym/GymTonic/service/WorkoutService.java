@@ -44,7 +44,9 @@ public class WorkoutService {
     }
 
     public void update(String id, WorkoutDTO workout) {
-        workout.setId(id);
+        Workout entity = mapper.toEntity(workout);
+        entity.setUser(AuthService.getAuthentication());
+        entity.setId(id);
         repository.save(mapper.toEntity(workout));
     }
 
