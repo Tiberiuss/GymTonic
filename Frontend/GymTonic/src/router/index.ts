@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'landing',
-      component: () => import('@/views/LandingView.vue')
+      component: () => import('@/views/LandingView.vue'),
     },
     {
       path: '/login',
@@ -31,43 +31,43 @@ const router = createRouter({
       path: '/index',
       name: 'index',
       component: () => import('@/views/IndexView.vue'),
-      meta: {auth:true}
+      meta: {auth:true,header:true}
     },
     {
       path: '/index/:itemId',
       name: 'index-item',
       component: () => import('@/views/ExerciseDetailsView.vue'),
-      meta: {auth:true}
+      meta: {auth:true,header:true}
     },
     {
       path: '/routine/create',
       name: 'createroutine',
       component: () => import('@/views/CreateRoutine.vue'),
-      meta: {auth:true}
+      meta: {auth:true,header:true}
     },
     {
       path: '/routine/create/addname',
       name: 'addnameroutine',
       component: () => import('@/views/PreviewRoutineView.vue'),
-      meta: {auth:true}
+      meta: {auth:true, header: true}
     },
     {
       path: '/routine/:idRoutine/sets/:date',
       name: 'routinesets',
       component: () => import('@/views/RoutineSetsView.vue'),
-      meta: {auth:true}
+      meta: {auth:true, header:true}
     },
     {
       path: '/chart/:itemId',
       name: 'chart',
       component: () => import('@/views/ChartView.vue'),
-      meta: {auth:false}
+      meta: {auth:false, header: true}
     },
     {
       path: '/routine',
       name: 'routineindex',
       component: () => import('@/views/RoutineIndexView.vue'),
-      meta: {auth:true}
+      meta: {auth:true,header:true}
     }
   ]
 })

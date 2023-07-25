@@ -25,6 +25,7 @@
     width: 20rem;
     border-radius: 10em;
     filter: blur(5rem);
+      z-index: -1;
 
     &.one {
       top: -10rem;

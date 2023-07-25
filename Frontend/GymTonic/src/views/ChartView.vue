@@ -111,7 +111,6 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <button class="button" @click="router.go(-1)">GO BACK</button>
   <div class="chart">
       <h1>EXERCISE NAME</h1>
     <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`"></svg>

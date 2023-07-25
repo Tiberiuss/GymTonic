@@ -78,7 +78,6 @@
 </script>
 
 <template>
-    <button class="back-sets" @click="router.push('/routine')">GO BACK</button>
     <button class="save" @click="routineSave">SAVE</button>
     <div v-if="state">{{ stateMsg }}</div>
     <div v-else class="exercise-information">
@@ -90,14 +89,6 @@
 </template>
 
 <style>
-.back-sets {
-    border-radius: 5px;
-    background-color: var(--red-color);
-    color: black;
-    border: 0px;
-    height: 30px;
-    margin: 20px;
-}
 
 .save {
     border-radius: 5px;

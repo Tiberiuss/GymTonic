@@ -81,7 +81,6 @@
     }
 
     .exercise {
-        margin: 0 1em;
         position: relative;
         border-radius: 1rem;
         overflow:hidden;

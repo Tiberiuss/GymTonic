@@ -30,11 +30,6 @@
 </script>
 
 <template>
-<<<<<<< Updated upstream
-    <button @click="router.go(-1);" class="button">GO BACK</button>
-=======
-    <button @click="router.go(-1)" class="back">GO BACK</button>
->>>>>>> Stashed changes
     <p v-if="status">{{ statusMsg }}</p>
     <div v-else class="detail">
         <div>

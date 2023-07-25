@@ -130,46 +130,37 @@
 </script>
 
 <template>
-    <DateComponent @change-day="changeDay"></DateComponent>
-    <p class="status" v-if="status">{{ statusMsg }}</p>
-    <button class="back" @click="router.push('/hub')">GO BACK</button>
-    <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
-    <div class="routines-div">
-        <select v-if="(routineDone == null || routineDone?.id == '') && !last" v-model="selectedOptions" class="select-routine">
-            <option v-bind:value="''" disabled>Select a routine.</option>
-            <option v-for="routine in routines" v-bind:value="routine" v-bind:key="routine.name">
-                {{ routine.name }}
-            </option>
-        </select>
-        <button v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="delete-routine-index" @click="removeFromId">DELETE</button>
-        <div v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="routine-show">
-            <button class="see-routine-button" @click="createSet">
-                <div>
-                    <h1>SELECTED ROUTINE: {{ selectedOptions.name || routineDone?.routine?.name}}</h1>
-                </div>
-                <img class="img-routine" src="@/assets/images/routine-show.jpg"/>
-            </button>
+    <section class="routine">
+        <DateComponent @change-day="changeDay"></DateComponent>
+        <p class="status" v-if="status">{{ statusMsg }}</p>
+        <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
+        <div class="routines-div">
+            <select v-if="(routineDone == null || routineDone?.id == '') && !last" v-model="selectedOptions" class="select-routine">
+                <option v-bind:value="''" disabled>Select a routine.</option>
+                <option v-for="routine in routines" v-bind:value="routine" v-bind:key="routine.name">
+                    {{ routine.name }}
+                </option>
+            </select>
+            <button v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="delete-routine-index" @click="removeFromId">DELETE</button>
+            <div v-if="selectedOptions.id != '' || (routineDone != null && routineDone?.id != '')" class="routine-show">
+                <button class="see-routine-button" @click="createSet">
+                    <div>
+                        <h1>SELECTED ROUTINE: {{ selectedOptions.name || routineDone?.routine?.name}}</h1>
+                    </div>
+                    <img class="img-routine" src="@/assets/images/routine-show.jpg"/>
+                </button>
+            </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <style>
-
-.back {
-    margin: 10px;
-    border: 0px;
-    border-radius: 5px;
-    background-color: var(--red-color);
-    margin-left: 20%;
-    transition: 500ms;
+.routine {
+    padding: 2em;
 }
 
 .status {
     margin-left: 20%;
-}
-
-.back:hover {
-    background-color: #a83c1e;
 }
 
 .routines-div {

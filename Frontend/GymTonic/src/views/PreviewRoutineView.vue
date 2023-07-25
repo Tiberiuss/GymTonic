@@ -53,7 +53,6 @@ async function createRoutine(){
 <template>
     <div class="template-div">
         <p v-if="status">{{statusMsg}}</p>
-        <button class="back" @click="router.push('/routine/create')">GO BACK</button>
         <button class="create" @click="createRoutine">CREATE ROUTINE</button>
         <div class="name-div">
             <p>
@@ -101,14 +100,6 @@ h1 {
 .create {
     border-radius: 5px;
     background-color: var(--orange-color);
-    color: black;
-    border: 0px;
-    height: 30px;
-}
-
-.back {
-    border-radius: 5px;
-    background-color: var(--red-color);
     color: black;
     border: 0px;
     height: 30px;
