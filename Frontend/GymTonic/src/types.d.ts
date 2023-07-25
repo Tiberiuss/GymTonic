@@ -44,26 +44,10 @@ export interface RoutineList {
     status: int
 }
 
-/*export interface Sets {
-    id: number,
-    reps: number,
-    weight: number
+export interface WorkoutList {
+    data: Sets[],
+    status: int
 }
-
-export interface Logs {
-    exerciseId: string,
-    sets: Array<Sets>
-}
-
-export interface payloadInitializeSets {
-    routineId: string,
-    exercises: Array<Exercise>
-}
-
-export interface payloadAddSets {
-    index: number,
-    set: Sets
-}*/
 
 export interface Sets {
     number: number,
@@ -84,11 +68,16 @@ export interface payloadWeight {
     weight: number
 }
 
+export interface payloadCreateWorkout {
+    routine: string,
+    date: string
+}
+
 export interface dayType{
     letter: string,
     strDate: string,
     day: number,
     today: boolean,
     iam: boolean,
-    routine: Routine
+    workout: Sets
 }

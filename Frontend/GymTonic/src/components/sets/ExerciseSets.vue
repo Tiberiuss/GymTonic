@@ -28,12 +28,14 @@
 </script>
 
 <template>
-            <h2>
+    <div class="exercise-set">
+            <h2 class="element-name-h2">
                 {{element.name}}
+                <button class="more-info-button" @click="router.push('/index/' + element.id)">
+                    <IconExerciseDescription></IconExerciseDescription>
+                </button>
             </h2>
-            <button class="more-info-button" @click="router.push('/index/' + element.id)">
-                <IconExerciseDescription></IconExerciseDescription>
-            </button>
+            
             <table class="table-sets" ref="table">
                 <tr class="table-header">
                     <td>Reps</td>
@@ -55,20 +57,31 @@
             <button class="newset" @click="newSet">
                 NEW SET
             </button>
+        </div>
 </template>
 
 <style>
-.more-info-button {
+
+.exercise-set {
     background-color: var(--white-transparent-color);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.element-name-h2 {
+    color: black;
+}
+
+.more-info-button {
+    background-color: transparent;
     border: 0px;
     border-radius: 10px;
-    margin-bottom: 5px;
 }
 
 .table-sets {
-    background-color: var(--orange-color);
+    background-color: var(--input-user-color);
     color: black;
-    border-radius: 30px;
+    border-radius: 20px;
 }
 
 .table-sets * {
@@ -78,6 +91,7 @@
 .table-sets td {
     width: 300px;
     text-align: center;
+    padding-bottom: 10px;
 }
 
 .newset {
@@ -99,8 +113,9 @@
 }
 
 .delete {
-    background-color: var(--red-delete-color);
+    background-color: var(--red-color);
     border: 0px;
     border-radius: 30px;
 }
+
 </style>

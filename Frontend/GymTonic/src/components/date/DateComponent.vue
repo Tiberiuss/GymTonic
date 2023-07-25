@@ -1,9 +1,9 @@
 <script setup lang="ts">
     import IconNextDate from '@/components/icons/IconNextDate.vue';
     import IconBackDate from '@/components/icons/IconBackDate.vue';
-    import { onMounted, ref } from 'vue';
-    import type { dayType, Routine } from "@/types";
-    import { routineService } from '@/services/routine.service';
+    import { onMounted, ref, watch } from 'vue';
+    import type { dayType, Sets } from "@/types";
+    import { workoutService } from '@/services/workout.service';
 
     const emit = defineEmits(['change-day'])
 
@@ -21,15 +21,16 @@
     let lettersDay = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S']
 
     let lastDate = false
+    let today = false
     const actualDate = new Date()
 
     onMounted(async() => {
         for (let i=0; i<7; i++){
             let todayDate = date.value.toISOString().slice(0, 10)
-            let res = await routineService.getByDate(todayDate)
-            let routine: any = null
-            if (res.result){
-                routine = res.result.data
+            let res = await workoutService.getByDate(todayDate)
+            let workout: any = null
+            if (res.result && res.result.data.length != 0){
+                workout = res.result.data
             }
 
             week.value.push({
@@ -38,7 +39,7 @@
                 day: date.value.getDate(),
                 today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
                 iam: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
-                routine: routine
+                workout: workout
             })
 
             date.value.setDate(date.value.getDate() + 1)
@@ -53,10 +54,10 @@
 
         for (let i=0; i<7; i++){
             let todayDate = date.value.toISOString().slice(0, 10)
-            let res = await routineService.getByDate(todayDate)
-            let routine: any = null
-            if (res.result){
-                routine = res.result.data
+            let res = await workoutService.getByDate(todayDate)
+            let workout: any = null
+            if (res.result && res.result.data.length != 0){
+                workout = res.result.data
             }
 
             week.value.push({
@@ -65,7 +66,7 @@
                 day: date.value.getDate(),
                 today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
                 iam: (i == 0) ? true : false,
-                routine: routine
+                workout: workout
             })
 
             date.value.setDate(date.value.getDate() + 1)
@@ -80,7 +81,12 @@
         }else{
             lastDate = false
         }
-        emit('change-day', date.value.toISOString().slice(0,10), lastDate)
+
+        if (date.value == actualDate){
+            today = true
+        }
+
+        emit('change-day', date.value.toISOString().slice(0,10), lastDate, today)
     }
 
     async function nextWeek(){
@@ -89,10 +95,10 @@
 
         for (let i=0; i<7; i++){
             let todayDate = date.value.toISOString().slice(0, 10)
-            let res = await routineService.getByDate(todayDate)
-            let routine: any = null
-            if (res.result){
-                routine = res.result.data
+            let res = await workoutService.getByDate(todayDate)
+            let workout: any = null
+            if (res.result && res.result.data.length != 0){
+                workout = res.result.data
             }
 
             week.value.push({
@@ -101,7 +107,7 @@
                 day: date.value.getDate(),
                 today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
                 iam: (i == 0) ? true : false,
-                routine: routine
+                workout: workout
             })
 
             date.value.setDate(date.value.getDate() + 1)
@@ -116,7 +122,12 @@
         }else{
             lastDate = false
         }
-        emit('change-day', date.value.toISOString().slice(0,10), lastDate)
+
+        if (date.value == actualDate){
+            today = true
+        }
+
+        emit('change-day', date.value.toISOString().slice(0,10), lastDate, today)
     }
 
     function newIam(day: dayType){
@@ -167,7 +178,11 @@
             lastDate = false
         }
 
-        emit('change-day', date.value.toISOString().slice(0,10), lastDate)
+        if (date.value == actualDate){
+            today = true
+        }
+
+        emit('change-day', date.value.toISOString().slice(0,10), lastDate, today)
     }
 </script>
 
@@ -185,12 +200,12 @@
         <div class="day-grid">
             <button v-for="day in week" @click="newIam(day)" v-bind:class="[(day.today)?'today':'day']" v-bind:key="day.letter">
                 <div v-if="day.iam" class="iam">
-                    <div v-if="day.routine != null" class="routine-notify"></div>
+                    <div v-if="day.workout != null" class="workout-notify"></div>
                     <p>{{ day.letter }}</p>
                     <p>{{ day.day }}</p>
                 </div>
                 <div v-else>
-                    <div v-if="day.routine != null" class="routine-notify"></div>
+                    <div v-if="day.workout != null" class="workout-notify"></div>
                     <p>{{ day.letter }}</p>
                     <p>{{ day.day }}</p>
                 </div>
@@ -200,7 +215,7 @@
 </template>
 
 <style>
-.routine-notify {
+.workout-notify {
     background-color: var(--orange-color);
     width: 7px;
     height: 7px;
@@ -271,7 +286,7 @@
 
 @media screen and (max-width: 800px) {
     
-    .routine-notify {
+    .workout-notify {
         background-color: var(--orange-color);
         width: 7px;
         height: 7px;
@@ -308,7 +323,7 @@
         grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
     }
 
-    .routine-notify {
+    .workout-notify {
         width: 5px;
         height: 5px;
         margin-left: auto;
@@ -340,7 +355,7 @@
         padding-top: 5px;
     }
 
-    .iam .routine-notify {
+    .iam .workout-notify {
         width: 5px;
         height: 5px;
         margin-left: auto;

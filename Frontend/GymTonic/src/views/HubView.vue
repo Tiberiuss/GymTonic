@@ -20,11 +20,12 @@
 
 <style>
 .hub {
-    display: grid;
-    grid-template-columns: 45% 45%;
-    grid-template-rows: 35% 52%;
-    grid-gap: 5%;
     margin: 5%;
+    display: grid;
+    grid-template-rows: 30% 30% 30%;
+    grid-gap: 5%;
+    margin-left: 30%;
+    margin-right: 30%;
 }
 
 .index-hub {
@@ -51,10 +52,6 @@
     background-color: transparent;
 }
 
-.progress-hub {
-    grid-column: 1 / -1;
-}
-
 .hub button img {
     width: 100%;
     height: 100%;
@@ -70,6 +67,7 @@ button img:hover {
     .hub {
         grid-template-columns: 100%;
         grid-template-rows: 27% 27% 27%;
+        margin: 5%;
     }
 }
 

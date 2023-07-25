@@ -23,6 +23,13 @@
         const exercisesAux = ref<Array<Exercise>>(new Array<Exercise>())
         const res = await routineService.getById(String(route.params.idRoutine))
 
+        if (!store.getters.isWorkoutInitializedPropertly()){
+            store.commit('inicializeWorkout', {
+                routine: String(route.params.idRoutine),
+                date: String(route.params.date)
+            })
+        }
+
         if (res.error){
             state.value = true
             stateMsg.value = "Error loading the routine."
@@ -71,7 +78,7 @@
 </script>
 
 <template>
-    <button class="back-sets" @click="router.go(-1)">GO BACK</button>
+    <button class="back-sets" @click="router.push('/routine')">GO BACK</button>
     <button class="save" @click="routineSave">SAVE</button>
     <div v-if="state">{{ stateMsg }}</div>
     <div v-else class="exercise-information">
@@ -103,10 +110,12 @@
 }
 
 .exercise-information {
-    margin: 30px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
 }
 
 .exercise-information div {
-    margin-top: 50px;
+    margin-bottom: 50px;
 }
 </style>

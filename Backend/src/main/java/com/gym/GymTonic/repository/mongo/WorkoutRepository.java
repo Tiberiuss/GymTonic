@@ -13,5 +13,6 @@ public interface WorkoutRepository extends MongoRepository<Workout, String> {
     List<Workout> findAllByUserId(String id);
 
     Optional<Workout> findByIdAndUserId(String id, String user_id);
+    
     List<Workout> findByDateAndUserId(Date date, String userId);
 }

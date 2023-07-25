@@ -52,7 +52,7 @@ const router = createRouter({
       meta: {auth:true}
     },
     {
-      path: '/routine/:idRoutine/sets',
+      path: '/routine/:idRoutine/sets/:date',
       name: 'routinesets',
       component: () => import('@/views/RoutineSetsView.vue'),
       meta: {auth:true}

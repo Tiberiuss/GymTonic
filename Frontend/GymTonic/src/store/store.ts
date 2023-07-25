@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import type { Sets, payloadReps, payloadWeight, payloadDeleteSets } from '@/types';
+import type { Sets, payloadReps, payloadWeight, payloadDeleteSets, payloadCreateWorkout } from '@/types';
 
 interface state {
     actualSets: { routine: {id: string}; date: Date; set: Array<Sets>;};
@@ -29,9 +29,9 @@ const store = createStore<state>({
         cleanList (state: state) {
             state.selectedExercises.clear()
         },
-        inicializeWorkout(state: state, routine: string){
-            state.actualSets.routine.id = routine
-            state.actualSets.date = new Date()
+        inicializeWorkout(state: state, payload: payloadCreateWorkout){
+            state.actualSets.routine.id = payload.routine
+            state.actualSets.date = new Date(payload.date)
             state.actualSets.set = new Array<Sets>()
         },
         addSet(state: state, set: Sets){
@@ -59,6 +59,9 @@ const store = createStore<state>({
     getters: {
         isExerciseSelected: (state: state) => (exercise: String) => {
             return state.selectedExercises.has(exercise)
+        },
+        isWorkoutInitializedPropertly: (state: state) => () =>{
+            return state.actualSets.routine.id != ""
         }
     }
 })

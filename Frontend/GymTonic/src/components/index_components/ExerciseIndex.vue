@@ -22,10 +22,10 @@
         if (selectedExercises.value.has(JSON.stringify(props.element))) {
             try{
                 buttonClicked.value = true
-                exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), rgb(154, 77, 4))";
+                exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, var(--orange-dark-color), var(--orange-dark-color))";
                 addButton.value.style.backgroundColor = "var(--red-color)"
             }catch{
-                exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), var(--orange-color))";
+                exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, var(--orange-dark-color), var(--orange-color))";
             }
         }
     })
@@ -35,11 +35,11 @@
     
         if (buttonClicked.value) {
             emit('addExercise', props.element)
-            exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), rgb(154, 77, 4))";
+            exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, var(--orange-dark-color), var(--orange-dark-color))";
             addButton.value.style.backgroundColor = "var(--red-color)"
         }else{
             emit('deleteExercise', props.element)
-            exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, rgb(154, 77, 4), var(--orange-color))";
+            exerciseDesc.value.style.backgroundImage = "linear-gradient(to right, var(--orange-dark-color), var(--orange-color))";
             addButton.value.style.backgroundColor = "var(--green-color)"
         }
     }

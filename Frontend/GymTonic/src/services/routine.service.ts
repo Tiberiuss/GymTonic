@@ -22,6 +22,19 @@ class RoutineService {
         }
     }
 
+    async removeRoutine(id: string): APIResponse<any> {
+        try {
+            const {data:result} = await this.client.delete("routine/id=" + id)
+            return {
+                result:{
+                    status: result.status,
+                }
+            };
+        }catch{
+            return {error:true}
+        }
+    }
+
     async getById(id: string):APIResponse<RoutineList>{
         try {
             const {data:result} = await this.client.get<RoutineList>(`/routine/id=${id}`);
@@ -47,20 +60,6 @@ class RoutineService {
             };
         } catch (e) {
             return {error:true};
-        }
-    }
-
-    async getByDate(date: string):APIResponse<RoutineList> {
-        try {
-            const {data:result} = await this.client.get<RoutineList>(`/routine?date=${date}`)
-            return {
-                result:{
-                    data: result.data,
-                    status: result.status
-                }
-            }
-        } catch (e) {
-            return {error:true}
         }
     }
 }
