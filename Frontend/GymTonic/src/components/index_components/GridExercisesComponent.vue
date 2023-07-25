@@ -99,7 +99,7 @@
 </script>
 
 <template>
-<button class="back" @click="(componentType) ? $router.push('/routine') : router.push('/hub')">GO BACK</button>
+<button class="button back" @click="(componentType) ? $router.push('/routine') : router.push('/hub')">GO BACK</button>
 <div class="exercises">
     <p v-if="componentType">{{ statusMsg }}</p>
     <div>

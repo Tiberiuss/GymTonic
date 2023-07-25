@@ -6,7 +6,7 @@ import router from "@/router";
 
 <template>
     <button v-if="userService.isAuthenticated()" type="button" @click="userService.removeToken()" class="button session">Logout</button>
-    <button v-else type="button" @click="router.push('/login')" class="session">Login</button>
+    <button v-else type="button" @click="router.push('/login')" class="button session">Login</button>
 
     <RouterView />
 </template>

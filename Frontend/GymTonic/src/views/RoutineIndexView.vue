@@ -147,7 +147,7 @@
                 <div>
                     <h1>SELECTED ROUTINE: {{ selectedOptions.name || routineDone?.routine?.name}}</h1>
                 </div>
-                <img class="img-routine" src="@/assets/routine-show.jpg"/>
+                <img class="img-routine" src="@/assets/images/routine-show.jpg"/>
             </button>
         </div>
     </div>
