@@ -44,7 +44,9 @@ const store = createStore<state>({
             // Don't delete
         },
         deleteWorkout(state: state, number: number){
-            state.actualSets.set = state.actualSets.set.filter((s) => s.number !== number)
+            state.actualSets.set = state.actualSets.set
+                .filter((s) => s.number !== number)
+                .map((s,index) => {s.number=index+1; return s;})
         },
         cleanActualSets(state: state){
             state.actualSets = {

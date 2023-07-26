@@ -47,7 +47,7 @@ public class WorkoutService {
         Workout entity = mapper.toEntity(workout);
         entity.setUser(AuthService.getAuthentication());
         entity.setId(id);
-        repository.save(mapper.toEntity(workout));
+        repository.save(entity);
     }
 
     public List<ChartResponse> findByExercise(String id) {

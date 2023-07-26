@@ -11,19 +11,16 @@
     const emit = defineEmits(['errorExercise'])
 
     const table = ref()
-    let setId = 1
 
     function newSet(){
         store.commit('addSet', {
-                number: setId,
+                number: store.state.actualSets.set?.filter((set: Sets) => set.exerciseMongo?.id === props.element?.id).length+1,
                 reps: 0,
                 weight: 0,
                 exerciseMongo: {
                     id: props.element.id
                 }
         })
-
-        setId += 1
     }
 </script>
 
