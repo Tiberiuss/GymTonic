@@ -4,6 +4,7 @@
     import router from '@/router';
     import IconExerciseDescription from '@/components/icons/IconExerciseDescription.vue'
     import type { Sets } from '@/types';
+    import IconExerciseProgress from "@/components/icons/IconExerciseProgress.vue";
 
     const props = defineProps(['element'])
     const store = useStore()
@@ -28,11 +29,14 @@
 
 <template>
     <div class="exercise-set">
-            <h2 class="element-name-h2">
+            <h2 class="exercise__name">
                 {{element.name}}
-                <button class="more-info-button" @click="router.push('/index/' + element.id)">
+                <router-link :to="`/index/${element.id}`">
                     <IconExerciseDescription></IconExerciseDescription>
-                </button>
+                </router-link>
+                <router-link :to="`/chart/${element.id}`">
+                    <IconExerciseProgress></IconExerciseProgress>
+                </router-link>
             </h2>
             
             <table class="table-sets" ref="table">
@@ -67,14 +71,18 @@
     border-radius: 20px;
 }
 
-.element-name-h2 {
+.exercise__name {
     color: black;
 }
 
-.more-info-button {
-    background-color: transparent;
-    border: 0px;
-    border-radius: 10px;
+.exercise__name a{
+    color:var(--background);
+    margin: 0 0.1em;
+    vertical-align: text-top;
+}
+
+.exercise__name a:hover {
+    color: var(--text);
 }
 
 .table-sets {

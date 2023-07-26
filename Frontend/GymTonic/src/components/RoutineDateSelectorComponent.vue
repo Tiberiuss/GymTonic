@@ -235,7 +235,6 @@
 
 .date-div {
     text-align: center;
-    width: 100vw;
     background-color: var(--form-user-color);
 }
 

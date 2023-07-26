@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ExerciseIndex from '@/components/index_components/ExerciseIndex.vue';
+import ExerciseComponent from '@/components/ExerciseComponent.vue';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -62,7 +62,7 @@ async function createRoutine(){
         </div>
         <h1>Preview of exercises:</h1>
         <div class="exercises-div">
-            <ExerciseIndex class="exercise-index" :element="JSON.parse(exercise)" v-for="exercise in store.state.selectedExercises" v-bind:key="exercise.id"></ExerciseIndex>
+            <ExerciseComponent class="exercise-index" :element="JSON.parse(exercise)" v-for="exercise in store.state.selectedExercises" v-bind:key="exercise.id"></ExerciseComponent>
         </div>
     </div>
 </template>

@@ -2,7 +2,7 @@
     import { onMounted, ref, toRefs, watch } from 'vue';
     import { useRouter } from 'vue-router';
     import { routineService } from '@/services/routine.service';
-    import DateComponent from '@/components/date/DateComponent.vue';
+    import RoutineDateSelectorComponent from '@/components/RoutineDateSelectorComponent.vue';
     import { useStore } from 'vuex';
     import type { selectedOption, Exercise } from '@/types';
     import { workoutService } from '@/services/workout.service';
@@ -132,7 +132,7 @@
 
 <template>
     <section class="routine">
-    <DateComponent ref="child" @change-day="changeDay"></DateComponent>
+    <RoutineDateSelectorComponent ref="child" @change-day="changeDay"></RoutineDateSelectorComponent>
     <p class="status" v-if="status">{{ statusMsg }}</p>
     <button @click="router.push('/routine/create')" class="button-routine">Create a routine</button>
     <div class="routines-div">

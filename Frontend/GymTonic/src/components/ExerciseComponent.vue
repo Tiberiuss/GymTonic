@@ -1,7 +1,7 @@
 <script setup lang="ts">
-    import IconExerciseDescription from '../icons/IconExerciseDescription.vue';
-    import IconExerciseProgress from '../icons/IconExerciseProgress.vue';
-    import IconAddExercise from '../icons/IconAddExercise.vue';
+    import IconExerciseDescription from './icons/IconExerciseDescription.vue';
+    import IconExerciseProgress from './icons/IconExerciseProgress.vue';
+    import IconAddExercise from './icons/IconAddExercise.vue';
     import IconRemoveExercise from '@/components/icons/IconRemoveExercise.vue'
     import { onMounted, ref, computed } from 'vue';
     import { useStore } from 'vuex';

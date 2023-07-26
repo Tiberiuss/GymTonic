@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GridExercisesComponent from '@/components/index_components/GridExercisesComponent.vue';
+import GridExercisesComponent from '@/components/ExerciseListComponent.vue';
 import { ref } from 'vue';
 
 const create = ref("new")

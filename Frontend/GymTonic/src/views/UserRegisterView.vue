@@ -3,8 +3,7 @@ import LandingComponent from "@/components/LandingComponent.vue";
 import {ref} from "vue";
 import {userService} from "@/services/user.service";
 import {useRouter} from "vue-router";
-import IconError from "@/components/icons/IconError.vue";
-import FormValidation from "@/components/FormValidation.vue";
+import FormValidationComponent from "@/components/FormValidationComponent.vue";
 
 const router = useRouter()
 const user = ref();
@@ -35,7 +34,7 @@ async function register() {
       <input class="form__input" v-model="user"  type="text" id="user" placeholder="Username" required>
       <input class="form__input" v-model="password" type="password" id="passwd" placeholder="Password" required>
       <input class="form__input" v-model="password_confirm" type="password" id="passwd_confirm" placeholder="Confirm Password" required>
-      <FormValidation :error="error"/>
+      <FormValidationComponent :error="error"/>
       <router-link class="form__existing_acc" to="/login">Already have an account?</router-link>
       <input class="form__button button" type="submit" value="START NOW">
     </form>

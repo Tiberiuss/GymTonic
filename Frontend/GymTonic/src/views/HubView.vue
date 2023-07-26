@@ -17,14 +17,16 @@
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .hub {
     padding: 5rem;
-    gap: 2rem;
+    gap: 4rem;
     display: grid;
     grid-template-columns: 50% 50%;
     overflow: hidden;
     height: 100vh;
+    justify-content: space-evenly;
+    align-content: space-evenly;
 }
 
 .banner{
@@ -38,6 +40,7 @@
     border: 0px;
     background-color: transparent;
     transition: transform 500ms ease-in-out;
+    padding: 0;
 
     &__img {
         width: 100%;
@@ -62,7 +65,7 @@
 }
 
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 992px) {
     .hub {
         grid-template-columns: none;
         grid-template-rows: 50% 50%;

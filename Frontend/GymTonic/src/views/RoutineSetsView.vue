@@ -5,7 +5,7 @@
     import { routineService } from '@/services/routine.service';
     import { exerciseService } from '@/services/exercise.service';
     import { ref } from 'vue';
-    import ExerciseSets from '@/components/sets/ExerciseSets.vue';
+    import RoutineSetsComponent from '@/components/RoutineSetsComponent.vue';
     import { useStore } from 'vuex';
     import { workoutService } from '@/services/workout.service';
     import type{ Exercise } from '@/types';
@@ -84,7 +84,7 @@
         <h1>
             {{ routine?.name }}
         </h1>
-        <ExerciseSets @errorExercise="errorExercise" :element="element" v-for="element in exercises" v-bind:key="element.id"></ExerciseSets>
+        <RoutineSetsComponent @errorExercise="errorExercise" :element="element" v-for="element in exercises" v-bind:key="element.id"></RoutineSetsComponent>
     </div>
 </template>
 

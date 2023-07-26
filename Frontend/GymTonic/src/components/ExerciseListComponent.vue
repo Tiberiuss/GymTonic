@@ -1,17 +1,18 @@
 <script setup lang="ts">
-    import SearchComponent from './SearchComponent.vue';
-    import ExerciseIndex from './ExerciseIndex.vue';
+    import ExerciseComponent from './ExerciseComponent.vue';
     import {ref, onMounted, onUnmounted} from 'vue';
     import {exerciseService} from "@/services/exercise.service";
     import type {Exercise} from "@/types";
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
+    import IconSearch from "@/components/icons/IconSearch.vue";
 
     const store = useStore();
     const router = useRouter();
     const exercises = ref<Exercise[]>([]);
     const status = ref(false);
     const statusMsg = ref("");
+    const query = ref("")
     const grid = ref();
 
     const searchValue = ref("");
@@ -102,12 +103,15 @@
 <div class="exercises">
     <p v-if="componentType">{{ statusMsg }}</p>
     <div>
-        <SearchComponent  @set-query="sendQuery"/>
+        <input class="searchbar" type="text" v-model="query" placeholder="Search..." @input="sendQuery"/>
+        <button class="button-search" @click="sendQuery">
+            <IconSearch/>
+        </button>
         <button v-if="componentType" @click="nextCreate" class="create-routine">NEXT</button>
     </div>
     <div v-if="!status" class="section-grid" ref="grid">
-        <ExerciseIndex @addExercise="store.commit('addExercise', JSON.stringify(element))" @deleteExercise="store.commit('deleteExercise', JSON.stringify(element))" :component-type=componentType :element=element v-for="element in exercises" v-bind:key="element.id">
-        </ExerciseIndex>
+        <ExerciseComponent @addExercise="store.commit('addExercise', JSON.stringify(element))" @deleteExercise="store.commit('deleteExercise', JSON.stringify(element))" :component-type=componentType :element=element v-for="element in exercises" v-bind:key="element.id">
+        </ExerciseComponent>
       <div class="section-grid__load">
         <span ref="loader">NO MORE RESULTS...</span>
       </div>
@@ -119,6 +123,22 @@
 </template>
 
 <style>
+.searchbar {
+    border-radius: 2px;
+    border-color: transparent;
+    background-color: var(--secondary);
+    width: 200px;
+    height: 30px;
+    margin-right: -25px;
+    color: white;
+}
+
+.button-search {
+    background-color: transparent;
+    border: 0px;
+    height: 25px;
+    width: 25px;
+}
 
 .exercises {
   display: flex;
