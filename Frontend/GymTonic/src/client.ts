@@ -12,11 +12,21 @@ axiosInstance.interceptors.request.use(
         if (localStorage.getItem("token"))
             config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
         return config;
-},
+    }
+)
+
+axiosInstance.interceptors.response.use(
+    (config) => {
+        if (localStorage.getItem("token"))
+            config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+        return config;
+    },
     (error) => {
         if (error.response.status === 403) {
             localStorage.removeItem("token");
+            window.location.href="/login"
         }
+        return Promise.reject(error);
     }
 )
 export default axiosInstance;

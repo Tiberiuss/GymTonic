@@ -1,10 +1,13 @@
 package com.gym.GymTonic.security;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gym.GymTonic.service.UserService;
 import com.gym.GymTonic.util.JWTUtil;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,14 +40,21 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
         // Get jwt token and validate
         token = header.split(" ")[1].trim();
-        username = jwtUtil.extractUser(token);
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserByUsername(username);
-            if (jwtUtil.isTokenValid(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        try{
+            username = jwtUtil.extractUser(token);
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userService.loadUserByUsername(username);
+                    if (jwtUtil.isTokenValid(token, userDetails)) {
+                        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    }
             }
+        } catch (JwtException jwtException) {
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+            response.getOutputStream().print(jwtException.getMessage());
+            return;
         }
         filterChain.doFilter(request, response);
     }
