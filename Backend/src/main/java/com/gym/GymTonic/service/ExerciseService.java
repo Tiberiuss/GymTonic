@@ -27,6 +27,9 @@ public class ExerciseService {
         return repositoryElastic.findAll(PageRequest.of(offset, pageSize)).map(mapper::toDTO);
     }
 
+    public long count(){
+        return repositoryElastic.count();
+    }
 
     public void create(ExerciseDTO exerciseDTO) {
         ExerciseMongo exerciseMongo = repositoryMongo.save(mapper.toEntityMongo(exerciseDTO));

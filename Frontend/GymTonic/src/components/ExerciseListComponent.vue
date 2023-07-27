@@ -12,7 +12,7 @@
     const exercises = ref<Exercise[]>([]);
     const status = ref(false);
     const statusMsg = ref("");
-    const query = ref("")
+    const query = ref("");
     const grid = ref();
 
     const searchValue = ref("");
@@ -61,13 +61,13 @@
       unwatchScroll();
     })
 
-    async function sendQuery(value: any) {
+    async function sendQuery() {
         unwatchScroll();
-        grid.value.scrollTo(0,0);
+        grid.value?.scrollTo(0,0);
         status.value = false
         offset.value=0;
-        searchValue.value = value;
-        const res = await exerciseService.getByNamePaginated(value,offset.value,pageSize);
+        searchValue.value = query.value;
+        const res = await exerciseService.getByNamePaginated(query.value,offset.value,pageSize);
         if(res.error) {
             console.log(res.error);
             exercises.value=[];

@@ -34,10 +34,12 @@ public class JSONLoader {
 
     @PostConstruct
     private void initDB() {
-        if (mongoTemplate.estimatedCount("exerciseMongo") > 0) {
+        if (mongoTemplate.estimatedCount("exerciseMongo") > 0 && exerciseService.count() > 0) {
             return;
         }
         elasticsearchOperations.indexOps(IndexCoordinates.of("exercise")).delete();
+        mongoTemplate.dropCollection("exerciseMongo");
+
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode exercise = objectMapper.readTree(resourceFile.getInputStream());
