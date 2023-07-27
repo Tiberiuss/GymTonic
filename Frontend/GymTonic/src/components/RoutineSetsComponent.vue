@@ -1,10 +1,9 @@
 <script setup lang="ts">
-    import { onBeforeMount, ref } from 'vue';
+    import { ref } from 'vue';
     import { useStore } from 'vuex';
-    import router from '@/router';
     import IconExerciseDescription from '@/components/icons/IconExerciseDescription.vue'
+    import IconExerciseProgress from '@/components/icons/IconExerciseProgress.vue'
     import type { Sets } from '@/types';
-    import IconExerciseProgress from "@/components/icons/IconExerciseProgress.vue";
 
     const props = defineProps(['element'])
     const store = useStore()
@@ -86,6 +85,8 @@
     background-color: var(--input-user-color);
     color: black;
     border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .table-sets * {

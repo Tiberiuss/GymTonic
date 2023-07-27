@@ -236,6 +236,8 @@
 .date-div {
     text-align: center;
     background-color: var(--form-user-color);
+    border-radius: 30px;
+    max-width: 45em;
 }
 
 .change-date {
@@ -246,17 +248,19 @@
 .day-grid {
     height: 100px;    
     display: grid;
-    grid-template-columns: repeat(7, 10%);
-    margin-left: 20%;
+    grid-template-columns: repeat(7, 14.2%);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .day {
     background-color: var(--grey-color);
     height: 80px;
     width: 50px;
-    margin-left: 50%;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 30px;
-    border: 0px;
+    border: 0;
     transition: 800ms;
 }
 
@@ -267,7 +271,8 @@
 .today {
     height: 80px;
     width: 50px;
-    margin-left: 50%;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 30px;
     background-color: var(--orange-color);
     border: 0px;
@@ -323,11 +328,10 @@
 
 @media screen and (max-width: 600px) {
     .day-grid {
-        width: 100vw;
-        height: 60px;    
         display: grid;
+        height: 60px;
         margin-left: 0%;
-        grid-template-columns: repeat(7, 14%);
+        grid-template-columns: repeat(7, 14.2%);
     }
 
     .workout-notify {
@@ -376,10 +380,8 @@
 
 @media screen and (max-width: 400px) {
     .day-grid {
-        width: 100vw;
-        height: 60px;    
         display: grid;
-        grid-template-columns: repeat(7, 14%);
+        grid-template-columns: repeat(7, 14.2%);
     }
 
     .day {
@@ -404,8 +406,31 @@
 }
 
 @media screen and (max-width: 300px) {
-    .date-div h1 {
-        float: left;
+    .date-div h1{
+        font-size: smaller;
+    }
+
+    .day-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 14.2%);
+    }
+
+    .day {
+        height: 50px;
+        width: 30px;
+        border-radius: 30px;
+    }
+
+    .today {
+        height: 50px;
+        width: 30px;
+        border-radius: 30px;
+    }
+
+    .iam {
+        height: 50px;
+        width: 30px;
+        padding-top: 0px;
     }
 }
 

@@ -69,3 +69,5 @@ const store = createStore<state>({
 })
 
 export const vueStore = store;
+
+export const mutations = store.mutations;
