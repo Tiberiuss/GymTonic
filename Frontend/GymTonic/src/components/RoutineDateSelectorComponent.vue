@@ -1,8 +1,8 @@
 <script setup lang="ts">
     import IconNextDate from '@/components/icons/IconNextDate.vue';
     import IconBackDate from '@/components/icons/IconBackDate.vue';
-    import { onMounted, ref, watch } from 'vue';
-    import type { dayType, Sets } from "@/types";
+    import { onMounted, ref } from 'vue';
+    import type { dayType } from "@/types";
     import { workoutService } from '@/services/workout.service';
 
     const emit = defineEmits(['change-day'])
@@ -11,6 +11,7 @@
     const actualDateStr = ref<string>(new Date().toLocaleDateString())
     const dateStr = ref<string>(date.value.toLocaleDateString())
     const week = ref<dayType[]>([])
+    const loading = ref(false);
     
     let auxDay = date.value.getDay()
     let actualMonth = date.value.getMonth()
@@ -25,114 +26,66 @@
     const actualDate = new Date()
 
     onMounted(async() => {
-        for (let i=0; i<7; i++){
-            let todayDate = date.value.toISOString().slice(0, 10)
-            let res = await workoutService.getByDate(todayDate)
-            let workout: any = null
-            if (res.result && res.result.data.length != 0){
-                workout = res.result.data
-            }
-
-            week.value.push({
-                letter: lettersDay[i],
-                strDate: todayDate,
-                day: date.value.getDate(),
-                today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
-                iam: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
-                workout: workout
-            })
-
-            date.value.setDate(date.value.getDate() + 1)
-        }
-        date.value.setDate(date.value.getDate() - (7 - auxDay))
+        week.value = await fetchWeek();
         dateStr.value = date.value.toLocaleDateString()
     })
-    
-    async function backWeek(){
-        date.value.setDate((date.value.getDate() - date.value.getDay()) - 7)
-        week.value = []
+    async function changeWeek(days:number){
+        date.value.setDate((date.value.getDate() - date.value.getDay()) + days);
+        week.value = await fetchWeek();
 
-        for (let i=0; i<7; i++){
-            let todayDate = date.value.toISOString().slice(0, 10)
-            let res = await workoutService.getByDate(todayDate)
-            let workout: any = null
-            if (res.result && res.result.data.length != 0){
-                workout = res.result.data
-            }
-
-            week.value.push({
-                letter: lettersDay[i],
-                strDate: todayDate,
-                day: date.value.getDate(),
-                today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
-                iam: (i == 0) ? true : false,
-                workout: workout
-            })
-
-            date.value.setDate(date.value.getDate() + 1)
+        updateDates();
+        // TODO why the lastDate and today??
+        let returnDate = date.value;
+        if (actualDate >= date.value && actualDate <= new Date(new Date(date.value.getTime()).setDate(date.value.getDate() + 7))) {
+           returnDate = actualDate;
         }
-
-        date.value.setDate(date.value.getDate() - 7)
-        dateStr.value = date.value.toLocaleDateString()
-        actualMonth = date.value.getMonth()
-        actualYear = date.value.getFullYear()
-        if (date.value < actualDate){
-            lastDate = true
-        }else{
-            lastDate = false
-        }
-
-        if (date.value == actualDate){
-            today = true
-        }
-
-        emit('change-day', date.value.toISOString().slice(0,10), lastDate, today)
+        emit('change-day', returnDate.toISOString().slice(0,10), lastDate, today);
     }
 
-    async function nextWeek(){
-        date.value.setDate((date.value.getDate() - date.value.getDay()) + 7)
-        week.value = []
-
-        for (let i=0; i<7; i++){
-            let todayDate = date.value.toISOString().slice(0, 10)
-            let res = await workoutService.getByDate(todayDate)
-            let workout: any = null
-            if (res.result && res.result.data.length != 0){
-                workout = res.result.data
-            }
-
-            week.value.push({
-                letter: lettersDay[i],
-                strDate: todayDate,
-                day: date.value.getDate(),
-                today: (actualDateStr.value == date.value.toLocaleDateString()) ? true : false,
-                iam: (i == 0) ? true : false,
-                workout: workout
-            })
-
-            date.value.setDate(date.value.getDate() + 1)
-        }
-
-        date.value.setDate(date.value.getDate() - 7)
-        dateStr.value = date.value.toLocaleDateString()
-        actualMonth = date.value.getMonth()
-        actualYear = date.value.getFullYear()
-        if (date.value < actualDate){
-            lastDate = true
-        }else{
-            lastDate = false
-        }
-
-        if (date.value == actualDate){
-            today = true
-        }
-
-        emit('change-day', date.value.toISOString().slice(0,10), lastDate, today)
+    function backWeek(){
+        changeWeek(-7);
     }
 
-    function newIam(day: dayType){
-        week.value.forEach((day) => day.iam = false)        
-        day.iam = true
+    function nextWeek(){
+        changeWeek(7);
+    }
+
+    function updateDates(){
+        dateStr.value = date.value.toLocaleDateString();
+        actualMonth = date.value.getMonth();
+        actualYear = date.value.getFullYear();
+        lastDate = date.value < actualDate;
+        today = date.value === actualDate;
+    }
+    async function fetchWeek(){
+        let fetchedWeek = []
+        let auxDate = new Date(date.value.getTime())
+        let todayInWeek = actualDate >= date.value && actualDate <= new Date(new Date(date.value.getTime()).setDate(date.value.getDate() + 7))
+
+        for (let i=0; i<7; i++){
+            let workout: any = null
+            let todayDate = auxDate.toISOString().slice(0, 10)
+            let res = await workoutService.getByDate(todayDate)
+            if (res.result && res.result.data.length !== 0){
+                workout = res.result.data
+            }
+            fetchedWeek.push({
+                letter: lettersDay[i],
+                strDate: todayDate,
+                day: auxDate.getDate(),
+                today: actualDateStr.value === auxDate.toLocaleDateString(),
+                selected: todayInWeek ? actualDateStr.value === auxDate.toLocaleDateString() : i===0,
+                workout: workout
+            })
+            auxDate.setDate(auxDate.getDate() + 1)
+        }
+
+        return fetchedWeek;
+    }
+
+    function changeSelected(day: dayType){
+        week.value.forEach((day) => day.selected = false)
+        day.selected = true
         let auxMove = date.value.getDate() - day.day
         if (auxMove > 7){
             if (actualMonth == 0 || actualMonth == 2 || actualMonth == 4 || actualMonth == 6 || actualMonth == 7 || actualMonth == 9 || actualMonth == 11){
@@ -206,14 +159,14 @@
             </button>
         </h1>
         <div class="day-grid">
-            <button v-for="day in week" @click="newIam(day)" v-bind:class="[(day.today)?'today':'day']" v-bind:key="day.letter">
-                <div v-if="day.iam" class="iam">
-                    <div v-if="day.workout != null" class="workout-notify"></div>
+            <button v-for="day in week" @click="changeSelected(day)" :class="(day.today)?'today':'day'" :key="day.day">
+                <div v-if="day.selected" class="iam">
+                    <div v-if="day.workout !== null" class="workout-notify"></div>
                     <p>{{ day.letter }}</p>
                     <p>{{ day.day }}</p>
                 </div>
                 <div v-else>
-                    <div v-if="day.workout != null" class="workout-notify"></div>
+                    <div v-if="day.workout !== null" class="workout-notify"></div>
                     <p>{{ day.letter }}</p>
                     <p>{{ day.day }}</p>
                 </div>
@@ -224,7 +177,7 @@
 
 <style>
 .workout-notify {
-    background-color: var(--orange-color);
+    background-color: var(--text);
     width: 7px;
     height: 7px;
     margin-left: auto;

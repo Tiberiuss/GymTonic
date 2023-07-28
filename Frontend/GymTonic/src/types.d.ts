@@ -78,6 +78,6 @@ export interface dayType{
     strDate: string,
     day: number,
     today: boolean,
-    iam: boolean,
+    selected: boolean,
     workout: Sets
 }
