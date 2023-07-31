@@ -57,4 +57,19 @@ const route = useRoute();
     }
 }
 
+@media screen and (max-width: 300px) {
+    .nav {
+        margin: 0;
+
+        &:before {
+            content: none;
+            flex: 1;
+        }
+
+        &__account {
+            margin-right: 1em;
+        }
+    }
+}
+
 </style>

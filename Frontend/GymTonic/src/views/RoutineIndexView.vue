@@ -213,7 +213,7 @@
     border-radius: 10px;
     border: 0px;
     background-color: transparent;
-    transition: transform 500ms ease-in-out;
+    transition: 500ms ease-in-out;
     padding: 0;
     margin-top: 1em;
 }
@@ -229,7 +229,7 @@
 }
 
 .see-routine-button:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .delete-routine-index {
@@ -245,11 +245,33 @@
     border-radius: 30px;
 }
 
-
-
 @media screen and (max-width: 800px){
     .routine {
-        width: 22em;
+        width: 90vw
+    }
+
+    .button-routine {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 450px){
+    .routine {
+        width: 90vw
+    }
+
+    .button-routine {
+        font-size: 14px;
+        float: none;
+        margin-top: 1em;
+    }
+
+    .routine-show {
+        height: 70%;
+    }
+
+    .img_text {
+        font-size: 1.5em;
     }
 }
 </style>

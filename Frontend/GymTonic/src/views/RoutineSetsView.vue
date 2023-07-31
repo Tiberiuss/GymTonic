@@ -108,4 +108,12 @@
 .exercise-information div {
     margin-bottom: 50px;
 }
+
+@media screen and (max-width: 400px) {
+    .exercise-information {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+}
 </style>

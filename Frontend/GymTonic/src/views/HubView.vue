@@ -70,6 +70,27 @@
         grid-template-columns: none;
         grid-template-rows: 50% 50%;
     }
+
+    .banner {
+            &__text {
+                font-size: 150%;
+            }
+        }
 }
 
+@media screen and (max-width: 500px) {
+    .hub {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+}
+
+@media screen and (max-width: 360px) {
+
+    .banner {
+            &__text {
+                font-size: 130%;
+            }
+        }
+}
 </style>
