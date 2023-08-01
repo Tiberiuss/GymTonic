@@ -62,7 +62,7 @@ async function createRoutine(){
         </div>
         <h1>Preview of exercises:</h1>
         <div class="exercises-div">
-            <ExerciseComponent class="exercise-index" :element="JSON.parse(exercise)" v-for="exercise in store.state.selectedExercises" v-bind:key="exercise.id"></ExerciseComponent>
+            <ExerciseComponent class="exercise-index" :element="JSON.parse(exercise)" v-for="exercise in store.state.selectedExercises" :key="exercise.id"></ExerciseComponent>
         </div>
     </div>
 </template>

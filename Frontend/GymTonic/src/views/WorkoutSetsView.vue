@@ -74,7 +74,7 @@
         <h1>
             {{ workout?.routine?.name }}
         </h1>
-        <RoutineSetsComponent :element="element" v-for="element in exercises" v-bind:key="element.id"></RoutineSetsComponent>
+        <RoutineSetsComponent :element="element" v-for="element in exercises" :key="element.id"></RoutineSetsComponent>
     </div>
 </template>
 

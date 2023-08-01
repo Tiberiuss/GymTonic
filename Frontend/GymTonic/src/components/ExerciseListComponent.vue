@@ -110,7 +110,7 @@
         <button v-if="componentType" @click="nextCreate" class="create-routine">NEXT</button>
     </div>
     <div v-if="!status" class="section-grid" ref="grid">
-        <ExerciseComponent @addExercise="store.commit('addExercise', JSON.stringify(element))" @deleteExercise="store.commit('deleteExercise', JSON.stringify(element))" :component-type=componentType :element=element v-for="element in exercises" v-bind:key="element.id">
+        <ExerciseComponent @addExercise="store.commit('addExercise', JSON.stringify(element))" @deleteExercise="store.commit('deleteExercise', JSON.stringify(element))" :component-type=componentType :element=element v-for="element in exercises" :key="element.id">
         </ExerciseComponent>
       <div class="section-grid__load">
         <span ref="loader">NO MORE RESULTS...</span>

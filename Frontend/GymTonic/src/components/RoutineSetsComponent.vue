@@ -7,7 +7,6 @@
 
     const props = defineProps(['element'])
     const store = useStore()
-    const emit = defineEmits(['errorExercise'])
 
     const table = ref()
 
@@ -41,7 +40,7 @@
                     <td>Weight</td>
                     <td></td>
                 </tr>
-                <tr v-for="set in store.state.actualSets.set?.filter((set: Sets) => set.exerciseMongo?.id === props.element?.id)" v-bind:key="set">
+                <tr v-for="set in store.state.actualSets.set?.filter((set: Sets) => set.exerciseMongo?.id === props.element?.id)" :key="set">
                     <td>
                         <input type="number" v-model="set.reps" min="0" @input="store.commit('changeReps', {number: set.number, reps: set.reps})"/>    
                     </td>

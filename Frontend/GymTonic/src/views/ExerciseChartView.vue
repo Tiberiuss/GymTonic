@@ -3,9 +3,6 @@ import * as d3 from 'd3';
 import {computed, onBeforeMount, ref} from "vue";
 import {workoutService} from "@/services/workout.service";
 import {useRoute} from "vue-router";
-import { useRouter } from 'vue-router';
-
-const router = useRouter()
 
 const route = useRoute();
 const svg = ref();

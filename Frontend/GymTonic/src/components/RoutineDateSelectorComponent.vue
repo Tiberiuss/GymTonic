@@ -11,9 +11,7 @@
     const actualDateStr = ref<string>(new Date().toLocaleDateString())
     const dateStr = ref<string>(date.value.toLocaleDateString())
     const week = ref<dayType[]>([])
-    const loading = ref(false);
     
-    let auxDay = date.value.getDay()
     let actualMonth = date.value.getMonth()
     let actualYear = date.value.getFullYear()
 

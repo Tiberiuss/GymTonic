@@ -70,11 +70,6 @@
         }
     }
 
-    function errorExercise() {
-        state.value = true;
-        stateMsg.value = "Error while reading exercises."
-    }
-
 </script>
 
 <template>
@@ -84,7 +79,7 @@
         <h1>
             {{ routine?.name }}
         </h1>
-        <RoutineSetsComponent @errorExercise="errorExercise" :element="element" v-for="element in exercises" v-bind:key="element.id"></RoutineSetsComponent>
+        <RoutineSetsComponent :element="element" v-for="element in exercises" :key="element.id"></RoutineSetsComponent>
     </div>
 </template>
 

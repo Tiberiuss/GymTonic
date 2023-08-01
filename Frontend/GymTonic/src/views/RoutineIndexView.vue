@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onMounted, ref, toRefs, watch } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
     import { useRouter } from 'vue-router';
     import { routineService } from '@/services/routine.service';
     import RoutineDateSelectorComponent from '@/components/RoutineDateSelectorComponent.vue';
@@ -137,7 +137,7 @@
         <p class="status" v-if="status">{{ statusMsg }}</p>
         <select v-if="routineDone == null || routineDone?.id == ''" v-model="selectedOptions" class="select-routine">
             <option v-bind:value="''" disabled>Select a routine.</option>
-            <option v-for="routine in routines" v-bind:value="routine" v-bind:key="routine.name">
+            <option v-for="routine in routines" v-bind:value="routine" :key="routine.name">
                 {{ routine.name }}
             </option>
         </select>

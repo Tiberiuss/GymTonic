@@ -1,10 +1,9 @@
 <script setup lang="ts">
-    import { useRouter, useRoute } from 'vue-router'
+    import { useRoute } from 'vue-router'
     import {onBeforeMount, ref } from 'vue'
     import { exerciseService } from '@/services/exercise.service'
     import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
-    const router = useRouter()
     const route = useRoute()
     const statusMsg = ref('')
     const status = ref(true)
