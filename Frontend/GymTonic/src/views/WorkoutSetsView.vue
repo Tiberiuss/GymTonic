@@ -67,7 +67,6 @@
 </script>
 
 <template>
-    <button class="back-sets" @click="router.push('/routine')">GO BACK</button>
     <button class="save"  @click="update">SAVE</button>
     <div v-if="state">{{ stateMsg }}</div>
     <div v-else class="exercise-information">

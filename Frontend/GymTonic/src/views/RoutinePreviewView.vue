@@ -40,7 +40,7 @@ async function createRoutine(){
 
     await routineService.createRoutine(postRequest).then( () => {
         store.commit('cleanList')
-        router.push({ path: '/routine/create' })
+        router.push({ path: '/routine' })
     }).catch( () => {
         store.commit('cleanList')
         status.value = true
