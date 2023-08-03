@@ -59,16 +59,14 @@
           <hr>
           <span>Material: <span>{{ exercise.material }}</span></span>
           <hr>
-          <div class="exercise__steps">
-            <span>Steps:</span>
-            <ol>
-              <li v-for="step in exercise.steps" :key="step">
-                {{ step }}
-              </li>
-            </ol>
-          </div>
-
-
+        </div>
+        <div class="exercise__steps">
+          <span>Steps:</span>
+          <ol>
+            <li v-for="step in exercise.steps" :key="step">
+              {{ step }}
+            </li>
+          </ol>
         </div>
     </div>
 </template>
@@ -81,11 +79,13 @@
 
 .exercise__steps {
   text-align: justify;
+  grid-column: 1/-1;
+  margin-right: 1em;
 }
 
 .detail {
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 50% 50%;
   grid-gap: 1em;
   background-color: var(--secondary); /*#2c3e50;*/
   border-radius: 1em;

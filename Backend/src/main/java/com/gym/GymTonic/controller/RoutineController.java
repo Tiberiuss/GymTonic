@@ -25,11 +25,7 @@ public class RoutineController {
     public ResponseEntity<BaseResponse<List<RoutineDTO>>> findAll() {
         List<RoutineDTO> routineList = routineService.findAll();
         BaseResponse.BaseResponseBuilder<List<RoutineDTO>> builder = BaseResponse.builder();
-        if (!routineList.isEmpty()) {
-            return new ResponseEntity<>(builder.status("1").data(routineList).build(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(builder.status("0").message("Not found").build(), HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(builder.status("1").data(routineList).build(), HttpStatus.OK);
     }
 
     @GetMapping("/id={id}")

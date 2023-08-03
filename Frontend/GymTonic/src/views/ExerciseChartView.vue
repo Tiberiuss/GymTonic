@@ -7,6 +7,7 @@ import {useRoute} from "vue-router";
 const route = useRoute();
 const svg = ref();
 const data = ref<Array<Array<[string, number]>>>();
+const exerciseName = ref();
 
 const marks = computed(() => data.value!==undefined ? ({
   start:data.value[0][1],
@@ -31,13 +32,17 @@ const height = h - margin.top - margin.bottom;
 
 onBeforeMount(async () => {
   const {result:logs} = await workoutService.getAll(route.params.itemId);
-  logs.data.forEach(d => {
+  console.log(logs);
+  let charts = logs?.data.charts;
+  charts.forEach(d => {
     console.log(d.date)
     d.date = d3.timeParse("%Y-%m-%d")(d.date)
   })
-  data.value = logs.data.length>0 ? logs.data.map(l => [l.date,l.weight]) : undefined;
+  data.value = charts.length>0 ? charts.map(l => [l.date,l.weight]) : undefined;
 
   const dataPoints = data.value ?? [];
+  
+  exerciseName.value = logs?.data.exerciseName;
 
   // CHART
   const g = d3.select(svg.value)
@@ -109,28 +114,28 @@ onBeforeMount(async () => {
 
 <template>
   <div class="chart">
-      <h1>EXERCISE NAME</h1>
-    <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`"></svg>
-    <div>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>START</th>
-          <th>PEAK</th>
-          <th>END</th>
-          <th>CHANGE</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>{{ marks.start }}kg</td>
-          <td>{{ marks.peak }}kg</td>
-          <td>{{ marks.end }}kg</td>
-          <td :style="{color: marks.change>=0 ? 'yellowgreen' : 'red'}">{{ marks.change }}kg</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+      <h1>{{exerciseName}}</h1>
+      <div class="chart__results">
+        <svg class="chart__svg" ref="svg" :viewBox="`0 0 ${w} ${h}`"></svg>
+        <table class="table">
+            <thead>
+            <tr>
+              <th>START</th>
+              <th>PEAK</th>
+              <th>END</th>
+              <th>CHANGE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{ marks.start }}kg</td>
+              <td>{{ marks.peak }}kg</td>
+              <td>{{ marks.end }}kg</td>
+              <td :style="{color: marks.change>=0 ? 'yellowgreen' : 'red'}">{{ marks.change }}kg</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
   </div>
 </template>
 
@@ -147,10 +152,23 @@ onBeforeMount(async () => {
       background-color: #2c3e50;
       padding: 1rem;
       border-radius: 1rem;
+      width: 100%;
     }
+
+    &__results{
+      width: 45em;
+      padding: 0 5em;
+
+      @media (max-width: 580px) {
+        width: 30em;
+      }
+    }
+  
   }
 
   .table {
     color: white;
   }
+
+
 </style>

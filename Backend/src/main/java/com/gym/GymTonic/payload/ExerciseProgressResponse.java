@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ChartResponse {
+public class ExerciseProgressResponse {
     private LocalDate date;
     private float weight;
 }

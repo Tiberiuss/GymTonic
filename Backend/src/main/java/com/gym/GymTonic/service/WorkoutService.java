@@ -2,10 +2,15 @@ package com.gym.GymTonic.service;
 
 import com.gym.GymTonic.dto.WorkoutDTO;
 import com.gym.GymTonic.mapper.WorkoutMapper;
+import com.gym.GymTonic.model.mongo.ExerciseMongo;
 import com.gym.GymTonic.model.mongo.Workout;
-import com.gym.GymTonic.payload.ChartResponse;
+import com.gym.GymTonic.payload.ExerciseChartResponse;
+import com.gym.GymTonic.payload.ExerciseProgressResponse;
+import com.gym.GymTonic.repository.mongo.ExerciseMongoRepository;
 import com.gym.GymTonic.repository.mongo.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class WorkoutService {
 
+    private final ExerciseMongoRepository exerciseMongoRepository;
     private final WorkoutRepository repository;
     private final WorkoutMapper mapper;
 
@@ -50,27 +56,27 @@ public class WorkoutService {
         repository.save(entity);
     }
 
-    public List<ChartResponse> findByExercise(String id) {
+    public ExerciseChartResponse findByExercise(String id) {
         String user_id = AuthService.getAuthentication().getId();
-        List<Workout> workouts = repository.findByUserId(user_id);
+        List<Workout> workouts = repository.findByUserIdOrderByDate(user_id);
+        ExerciseMongo exercise = exerciseMongoRepository.findById(id).get();
 
         workouts.forEach(i -> i.getSet().removeIf(set -> !set.getExerciseMongo().getId().equals(id)));
 
 
-        List<ChartResponse> chartResponses = new ArrayList<>();
+        List<ExerciseProgressResponse> chartResponses = new ArrayList<>();
         for (Workout w : workouts) {
             LocalDate localDate = w.getDate();
             w.getSet().stream()
                     .filter(set -> set.getExerciseMongo().getId().equals(id))
-                    .map(set -> new ChartResponse(localDate, set.getWeight()))
-                    .collect(Collectors.groupingBy(ChartResponse::getDate, Collectors.maxBy(Comparator.comparing(ChartResponse::getWeight))))
+                    .map(set -> new ExerciseProgressResponse(localDate, set.getWeight()))
+                    .collect(Collectors.groupingBy(ExerciseProgressResponse::getDate, Collectors.maxBy(Comparator.comparing(ExerciseProgressResponse::getWeight))))
                     .values()
                     .stream()
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toCollection(() -> chartResponses));
         }
-
-        return chartResponses;
+        return new ExerciseChartResponse(exercise.getName(),chartResponses);
     }
 }

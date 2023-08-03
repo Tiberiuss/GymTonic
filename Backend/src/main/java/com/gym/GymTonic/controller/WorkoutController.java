@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.gym.GymTonic.dto.Views;
 import com.gym.GymTonic.dto.WorkoutDTO;
 import com.gym.GymTonic.payload.BaseResponse;
-import com.gym.GymTonic.payload.ChartResponse;
+import com.gym.GymTonic.payload.ExerciseChartResponse;
+import com.gym.GymTonic.payload.ExerciseProgressResponse;
 import com.gym.GymTonic.service.WorkoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,10 +24,10 @@ public class WorkoutController {
     private final WorkoutService service;
 
     @GetMapping("/exercise={id}")
-    public ResponseEntity<BaseResponse<List<ChartResponse>>> findWorkoutsByExercise(@PathVariable String id) {
-        BaseResponse.BaseResponseBuilder<List<ChartResponse>> builder = BaseResponse.builder();
+    public ResponseEntity<BaseResponse<ExerciseChartResponse>> findWorkoutsByExercise(@PathVariable String id) {
+        BaseResponse.BaseResponseBuilder<ExerciseChartResponse> builder = BaseResponse.builder();
         try {
-            List<ChartResponse> workoutDTOS = service.findByExercise(id);
+            ExerciseChartResponse workoutDTOS = service.findByExercise(id);
             return new ResponseEntity<>(builder.status("1").data(workoutDTOS).build(), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(builder.status("0").message("Data is not found").build(), HttpStatus.NOT_FOUND);
